@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string("name");
             $table->float("price", 5, 2);
             $table->integer("amount");
+            // TODO: voeg foreign key instuctie toe om tabel te koppelen
             $table->integer("category_id");
             $table->timestamps();
         });

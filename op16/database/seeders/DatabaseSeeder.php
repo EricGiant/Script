@@ -14,6 +14,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        // TODO: voeg een grocery en cateogory seeder toe voor test data
+
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([

@@ -23,6 +23,7 @@
             <th>
                 <form action = "/edit" method = "get">
                     <input type = "submit" value = "UPDATE">
+                    <!-- TODO: alleen id hoeft gepost te worden voor een update, de rest van de velden kan dus weg -->
                     <input type = "hidden" name = "id" value = {{$grocery->id}}>
                     <input type = "hidden" name = "name" value = {{$grocery->name}}>
                     <input type = "hidden" name = "price" value = {{$grocery->price}}>

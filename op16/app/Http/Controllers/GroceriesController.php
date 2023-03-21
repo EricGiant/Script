@@ -14,6 +14,8 @@ class GroceriesController
 
         //calculate total price && add zeros if need to price
         $totalPrice = 0;
+
+        // TODO: bereken totaalprijs mbv array_reduce functie (zie php.net voor documentatie en voorbeelden)
         for($i = 0; $i < sizeof($groceries); $i++)
         {
             //add zeros
@@ -41,6 +43,7 @@ class GroceriesController
 
     function store(Request $request)
     {
+        // TODO: plaats validatie regels in Laravel form validation class (zie Laravel documentatie)
         //validate entry
         $request -> validate([
             "name" => "required|between:2,100",
@@ -84,6 +87,8 @@ class GroceriesController
             "amount" => "required|digits_between:1,100",
             "category" => "required|digits_between:1,9"  //potentially add a check that checks if the category value is equal to an existing cato ID
         ]);
+
+        // TODO: pas route-model binding toe zodat je een find query bespaart (zie Laravel documentatie)
 
         //get entry ID
         $ID = $_GET["id"];
