@@ -1,0 +1,25 @@
+form label
+{
+    display: block;
+}
+form div
+{
+    margin-bottom: 20px;
+}
+form textarea
+{
+    width: 80%;
+    height: 400px;
+    resize:  none;
+}
+#dropdown
+{
+    border: 2px solid black;
+    text-align: left;
+    margin: auto;
+    max-height: 100px;
+    overflow-y: scroll;
+    width: fit-content;
+    padding: 5px;
+    font-size: 20px;
+}
