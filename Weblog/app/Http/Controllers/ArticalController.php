@@ -28,6 +28,7 @@ class ArticalController extends Controller
             //get articals with selected categories
             $articals = $articals -> whereHas("categories", function(Builder $query) use ($selectedCategories) 
             {
+                // TODO: moet category_id niet id zijn?
                 $query -> whereIn("category_id", $selectedCategories); //this line erros due to weird intelephenses, disable method diagnostic or potentially get a IDE helper https://github.com/barryvdh/laravel-ide-helper 
             }) -> get();
         }
@@ -58,6 +59,8 @@ class ArticalController extends Controller
     public function store(ArticalRequest $request)
     {
         //make artical DB entry
+        // TODO: plaats altijd de gevalideerde data uit ArticalRequest in de new functie, en niet de data via request->get, omdat
+        // laatstgenoemde niet gevalideerd, en dus onveilig, is!
         $artical = new Artical([
             "author_id" => auth() -> user() -> id,
             "title" => $request -> get("title"),
@@ -73,6 +76,7 @@ class ArticalController extends Controller
         {
             //check if file is actual image
             $extention = $request -> file("image") -> extension();
+            // TODO: extension controleren via Laravel Form Validator class
             if($extention == "png" || $extention == "jpg")
             {
                 //check if file is smaller than 16MB
@@ -88,6 +92,7 @@ class ArticalController extends Controller
         $artical -> save();
 
         //make artical_category_junction DB entries and save it
+        // TODO: vervangen voor sync
         foreach($request -> get("categories") as $category)
         {
             $junction = new artical_category_junction([
@@ -105,15 +110,18 @@ class ArticalController extends Controller
     public function show($id)
     {
         //get artical
+        // TODO: route-model binding toepassen
         $artical = Artical::find($id);
 
         //check if artical has been found
+        // TODO: controle kan er uit, of anders controleren op instanceof ipv null
         if($artical == null)
         {
             return redirect("/");
         }
 
         //check if artical is premium and if user is premium
+        // TODO: schrijf eigen middleware om onderstaande controle uit te voeren zodat je show functie netter blijft (minder code bevat)
         if($artical -> isPremium)
         {
             //check if user is premium
@@ -169,6 +177,7 @@ class ArticalController extends Controller
         }
         
         //check if selected artical is an artical the user has writen
+        // TODO: maak policy voor onderstaande controle, voor nettere, herbuikbare code
         if($artical -> author_id != auth() -> user() -> id)
         {
             return redirect("/profileEdit");

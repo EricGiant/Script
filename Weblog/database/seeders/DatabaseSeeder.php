@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        // TODO: maak voor iedere entiteit (users, articles, etc.) een eigen seeder die vanuit deze file aanroepen wordt.
         DB::table("users") -> insert([
             [
                 "name" => "testNotP",

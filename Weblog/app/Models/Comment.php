@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Comment extends Model
 {
     use HasFactory;
+
+    // TODO: voeg ontbrekende relatie met article toe, en met user
 }

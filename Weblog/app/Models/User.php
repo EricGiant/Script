@@ -47,4 +47,6 @@ class User extends Authenticatable
     {
         $this -> attributes["password"] = bcrypt($password);
     }
+
+    // TODO: voeg ontbrekende relaties toe (articles, comments)
 }

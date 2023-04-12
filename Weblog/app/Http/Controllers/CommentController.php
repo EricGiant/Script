@@ -9,6 +9,7 @@ class CommentController extends Controller
     //store comment in DB
     public function store(Request $request)
     {
+        // TODO: ongebruikte code verwijderen
         DD($request);
     }
     

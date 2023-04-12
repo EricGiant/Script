@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::redirect("/", "articalIndex");
 
+// TODO: pas route::resource toe voor compactere code met consistende namen / url's: /articalIndex moet "/articles" worden. Dit gaat automatisch goed als je route:resource gebruikt.
 Route::get("/articalIndex", [ArticalController::class ,"index"]);
 Route::get("/articalCreate", [ArticalController::class, "create"]);
 Route::post("/articalStore", [ArticalController::class, "store"]);

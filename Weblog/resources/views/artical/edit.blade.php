@@ -48,6 +48,7 @@
     </div>
     <input type = "submit">
 </form>
+<!-- TODO: categorieen moeten via apart scherm toegevoegd worden, dus niet iva article edit scherm -->
 <form action = "/categoryStore" method = "get" onsubmit = "getArticalData()" id = "addCategory">
     <label for = "name">ADD NEW CATEGORY</label>
     <input type = "text" name = "name" required>
@@ -59,5 +60,6 @@
     @endif>
     <input type = "submit">
 </form>
+<!-- TODO: probeer zo min mogelijk met javascript te werken  -->
 <script src = "/js/artical/update.js"></script>
 @endsection

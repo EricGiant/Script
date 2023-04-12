@@ -20,6 +20,7 @@
             <a href = "/articalShow/{{$artical -> id}}">
                 <div class = "category">
                     @foreach($artical -> categories as $category)
+                    <!-- TODO: gebruik iets als implode() om onderstaande te bereiken -->
                         @if($loop -> last)
                             {{$category -> name}}
                         @else

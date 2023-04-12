@@ -19,6 +19,7 @@ class ProfileController extends Controller
     public function edit()
     {
         //get writen articals by user 
+        // TODO: werk zoveel mogelijk via model relaties, dus auth()->user()->articles
         $articals = Artical::where("author_id", "=", auth() -> user() -> id) -> get();
 
         //sort on upload date aka inverse collection since most recent ID is the most recent post
