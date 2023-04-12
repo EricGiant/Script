@@ -2,55 +2,87 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ArticalRequest;
 use App\Models\Artical;
 use App\Models\artical_category_junction;
 use App\Models\Category;
-use App\Models\User;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class ArticalController extends Controller
 {
     //show index page
-    public function index()
+    public function index(Request $request)
     {
-        //get articals
-        $articals = Artical::all();
+        //make empty query builder
+        $articals = Artical::query();
+
+        //get categories
+        $categories = Category::all();
+        
+        if($request -> has("categories"))
+        {
+            //get selected categories
+            $selectedCategories = $request -> get("categories");
+
+            //get articals with selected categories
+            $articals = $articals -> whereHas("categories", function(Builder $query) use ($selectedCategories) 
+            {
+                $query -> whereIn("category_id", $selectedCategories); //this line erros due to weird intelephenses, disable method diagnostic or potentially get a IDE helper https://github.com/barryvdh/laravel-ide-helper 
+            }) -> get();
+        }
+        else
+        {
+            //get all articals
+            $articals = $articals -> get();
+        }
 
         //sort on upload date aka inverse collection since most recent ID is the most recent post
         $articals = $articals -> reverse();
 
         //load page
-        return view("artical/index", ["articals" => $articals]);
+        return view("artical/index", ["articals" => $articals, "categories" => $categories]);
     }
 
     //show writing page
     public function create()
     {
-        //writing page is currently broken so this code is all to be reworked
-
         //get categories
         $categories = Category::all();
 
         //load page
-        return view("artical/create", ["categories" => $categories, "action" => "/articalStore"]);
+        return view("artical/create", ["categories" => $categories]);
     }
 
-    //store new artical in DB
-    public function store(Request $request)
+    //stores new artical in DB
+    public function store(ArticalRequest $request)
     {
-        //validate entry
-        $attributes = $request -> validate([
-            "title" => "required|max:255",
-            "content" => "required",
-            "categories" => "required|min:1"
-        ]);
-
         //make artical DB entry
         $artical = new Artical([
             "author_id" => auth() -> user() -> id,
             "title" => $request -> get("title"),
-            "content" => $request -> get("content")
+            "content" => $request -> get("content"),
+            "isPremium" => $request -> get("premium")
         ]);
+
+        //wont work normally BECAUSE I CANT FIND THE FCKING FILE THAT INCREASED PACKET SIZE SO ONLY WORKS VIA SQL COMMANDS
+        //SET GLOBAL max_allowed_packet=1073741824;
+    
+        //add image if needed
+        if($request -> file("image"))
+        {
+            //check if file is actual image
+            $extention = $request -> file("image") -> extension();
+            if($extention == "png" || $extention == "jpg")
+            {
+                //check if file is smaller than 16MB
+                if($request -> file("image") -> getSize() / 1024 / 1024 < 16);
+                {
+                    //add image to DB entry
+                    $artical -> image = $request -> file("image") -> get();
+                }
+            }
+        }
 
         //save artical DB entry
         $artical -> save();
@@ -81,6 +113,20 @@ class ArticalController extends Controller
             return redirect("/");
         }
 
+        //check if artical is premium and if user is premium
+        if($artical -> isPremium)
+        {
+            //check if user is premium
+            if(auth() -> user() == null || !auth() -> user() -> isPremium)
+            {
+                //return to index
+                return redirect("/");
+            }
+        }
+
+        //encode image to base64 so img can load it
+        $artical -> image = base64_encode($artical -> image);
+
         //load page
         return view("artical/show", ["artical" => $artical]);
     }
@@ -88,72 +134,79 @@ class ArticalController extends Controller
     //show edit page for selected artical
     public function edit($id)
     {
-        //this uses the same page as the create page this will most likely be made into a new page instead 
-        //so all this code is to be changed
-
         //get artical
         $artical = Artical::find($id);
-        
+
         //check if artical has been found
         if($artical == null)
         {
             return redirect("/profileEdit");
         }
-
+        
         //check if selected artical is an artical the user has writen
         if($artical -> author_id != auth() -> user() -> id)
         {
             return redirect("/profileEdit");
         }
 
-        //change categories into array so code can be reused on create page so a new page isn't needed to be made
-        $selectedCategories = [];
-        for($i = 0; $i < sizeOf($artical -> categories); $i++)
-        {
-            array_push($selectedCategories, $artical -> categories[$i] -> id);
-        }
-
         //get all categories
         $categories = Category::all();
 
-        dd(session());
-
         //load page
-        return view("artical/create") -> with("title", $artical -> title) -> with("content", $artical -> content) -> with("category", $selectedCategories) -> with("action", "/articalUpdate") -> with("categories", $categories);
+        return view("artical/edit", ["artical" => $artical, "categories" => $categories]);
     }
 
     //update selected artical in DB
-    public function update(Request $request)
+    public function update(ArticalRequest $request, $id)
     {
-        //
+        //find entry
+        $artical = Artical::find($id);
+
+        //check if artical has been found
+        if($artical == null)
+        {
+            return redirect("/profileEdit");
+        }
+        
+        //check if selected artical is an artical the user has writen
+        if($artical -> author_id != auth() -> user() -> id)
+        {
+            return redirect("/profileEdit");
+        }
+
+        //update junction entries
+        $artical -> categories() -> sync($request -> categories);
+
+        //add image if needed
+        if($request -> file("image"))
+        {
+            //check if file is actual image
+            $extention = $request -> file("image") -> extension();
+            if($extention == "png" || $extention == "jpg")
+            {
+                //check if file is smaller than 16KB
+                if($request -> file("image") -> getSize() / 1024 / 1024 < 16);
+                {
+                    //add image to DB entry
+                    $artical -> image = $request -> file("image") -> get();
+                }
+            }
+        }
+
+        //update artical entry
+        $artical -> title = $request -> get("title");
+        $artical -> content = $request -> get("content");
+        $artical -> isPremium = $request -> get("premium");
+        $artical -> save();
+
+
+        //redirect to manage articals page
+        return redirect("/profileEdit");
     }
 
     //deletes selected artical in DB
     public function destroy()
     {
         //
-    }
-
-    //store new category to DB
-    public function storeCategory(Request $request)
-    {
-        //code itself is fine but the pages this function is attachted to are to be changed
-        //this should also properly be in it's own controller
-
-        //validate entry
-        $attributes = $request -> validate([
-            "name" => "required|max:255"
-        ]);
-
-        //make DB entry
-        $category = new Category([
-            "name" => $request -> name
-        ]);
-
-        //save DB entry
-        $category -> save();
-
-        //redirect to writing page and load in all old data
-        return back() -> with("title", $request -> data_title) -> with("content", $request -> data_content) -> with("category", $request -> data_category);
     }
 }

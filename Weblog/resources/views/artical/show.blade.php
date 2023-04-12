@@ -18,6 +18,9 @@
 <div id = "title">
     {{$artical -> title}}
 </div>
+<div>
+    <img src = "data:image/png;base64,{{$artical -> image}}" id = "image">
+</div>
 <div id = "content">
     {{$artical -> content}}
 </div>

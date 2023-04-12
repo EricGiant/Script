@@ -12,7 +12,7 @@ form textarea
     height: 400px;
     resize:  none;
 }
-#dropdown
+#categories
 {
     border: 2px solid black;
     text-align: left;

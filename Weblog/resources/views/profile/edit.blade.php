@@ -13,6 +13,11 @@
                     @endif
                 @endforeach
             </div>
+            @if($artical -> isPremium)
+                <div class = "premium">
+                    PREMIUM
+                </div>
+            @endif
             <div class = "title">
                 {{$artical -> title}}
             </div>

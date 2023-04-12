@@ -6,4 +6,5 @@
         <a href = "/profileIndex" style = "text-decoration: none; margin-right: 10px">PROFILE</a>
         <a href = "/userDestroy" style = "text-decoration: none">LOGOUT</a>
     @endguest
+    @yield("categorySort")
 </div>

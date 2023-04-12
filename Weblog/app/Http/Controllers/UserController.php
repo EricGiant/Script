@@ -39,7 +39,6 @@ class UserController extends Controller
         return redirect("/");
     }
 
-    //new controller for logging in/logging out should be made
     //login user
     public function show(Request $request)
     {
