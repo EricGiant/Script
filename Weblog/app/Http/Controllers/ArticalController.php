@@ -28,7 +28,6 @@ class ArticalController extends Controller
             //get articals with selected categories
             $articals = $articals -> whereHas("categories", function(Builder $query) use ($selectedCategories) 
             {
-                // TODO: moet category_id niet id zijn?
                 $query -> whereIn("category_id", $selectedCategories); //this line erros due to weird intelephenses, disable method diagnostic or potentially get a IDE helper https://github.com/barryvdh/laravel-ide-helper 
             }) -> get();
         }
