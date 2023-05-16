@@ -30,8 +30,9 @@ class UserController extends Controller
         ]);
 
         //save entry to DB
-        $user = User::create($attributes);
-
+        $user = new User($attributes);
+        $user -> save();
+        
         //log user in
         auth() -> login($user);
 

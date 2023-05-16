@@ -5,8 +5,10 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\Premium;
 use App\Models\Artical;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,24 +21,34 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::redirect("/", "articalIndex");
+Route::redirect("/", "artical");
 
-Route::get("/articalIndex", [ArticalController::class ,"index"]);
-Route::get("/articalCreate", [ArticalController::class, "create"]);
-Route::post("/articalStore", [ArticalController::class, "store"]);
-Route::get("/articalShow/{artical}", [ArticalController::class, "show"]) -> whereNumber("artical");
-Route::get("/articalEdit/{artical}", [ArticalController::class, "edit"]) -> whereNumber("artical");
-Route::post("/articalUpdate/{artical}", [ArticalController::class, "update"]) -> whereNumber("artical");
-Route::get("/articalDestroy", [ArticalController::class, "destroy"]);
+//ARTICAL ROUTES
+Route::get("/artical", [ArticalController::class, "index"]);
+Route::get("/artical/create", [ArticalController::class, "create"]) -> middleware("isLoggedIn");
+Route::post("/artical", [ArticalController::class, "store"]);
+Route::get("artical/{artical}", [ArticalController::class, "show"]) -> middleware("premium");
+Route::get("/artical/edit/{artical}", [ArticalController::class, "edit"]);
+Route::post("/artical/update/{artical}", [ArticalController::class, "update"]);
+Route::post("/artical/destroy/{artical}", [ArticalController::class, "destroy"]);
+    
 
-Route::get("/categoryStore", [CategoryController::class, "store"]);
+//CATEGORY ROUTES
+Route::post("/category", [CategoryController::class, "store"]);
 
-Route::get("/userIndex", [UserController::class, "index"]);
-Route::get("/userCreate", [UserController::class, "create"]);
-Route::post("/userStore", [UserController::class, "store"]);
-Route::post("/userShow", [UserController::class, "show"]);
-Route::get("/userDestroy", [UserController::class, "destroy"]);
+//COMMENT ROUTES
+Route::post("/comment", [CommentController::class, "store"]) -> middleware("isLoggedIn");
+Route::post("/comment/update/{comment}", [CommentController::class, "update"]);
+Route::post("/comment/destroy/{comment}", [CommentController::class, "destroy"]);
 
-Route::get("/profileIndex", [ProfileController::class, "index"]);
-Route::get("/profileEdit", [ProfileController::class, "edit"]);
-Route::get("/profileUpdate", [ProfileController::class, "update"]);
+//PROFILE ROUTES
+Route::get("/profile", [ProfileController::class, "index"]);
+Route::get("/profile/edit", [ProfileController::class, "edit"]);
+Route::get("/profile/update", [ProfileController::class, "update"]);
+
+//USER ROUTES
+Route::get("/user", [UserController::class, "index"]);
+Route::get("/user/create", [UserController::class, "create"]);
+Route::post("/user", [UserController::class, "store"]);
+Route::post("/user/show", [UserController::class, "show"]);
+Route::get("/user/destroy", [UserController::class, "destroy"]);

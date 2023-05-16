@@ -7,34 +7,44 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    //this can keep page data when the values are given via request when following the naming scheme: data_[name of the key]
     //save new category to DB
     public function store(Request $request)
     {
         //validate entry
         $attributes = $request -> validate([
-            "name" => "required|max:255"
+            "name" => "required|max:255|unique:categories,name"
         ]);
 
         //make DB entry
-        $category = new Category([
-            "name" => $request -> name
-        ]);
+        $category = new Category($attributes);
 
         //save DB entry
         $category -> save();
+        
+        //get back location route name
+        $cameFrom = str_replace("http://localhost:8000", "", back() -> getTargetUrl());
 
-        //get categories
-        $categories = Category::all();
-
-        //redirect to writing page or update page
-        if(isset($request -> id))
+        //get data
+        $requestData = $request -> toArray();
+        $keyWords = array_keys($requestData);
+        $data = [];
+        for($i = 0; $i < count($requestData); $i++)
         {
-            return view("artical/edit", ["title" => $request -> data_title, "content" => $request -> data_content, "selectedCategories" => $request -> data_category, "id" => $request -> id, "categories" => $categories, "isPremium" => $request -> data_premium]);
-        }
-        else
-        {
-            return view("artical/create", ["title" => $request -> data_title, "content" => $request -> data_content, "selectedCategories" => $request -> data_category, "categories" => $categories]);
+            if(str_contains($keyWords[$i], "data_"))
+            {
+                //get the key value for the array
+                $key = str_replace("data_" , "",  $keyWords[$i]);
 
+                //get the data for the key
+                $keyData = $requestData[$keyWords[$i]];
+
+                //load it into array
+                $data[$key] = $keyData;
+            }
         }
+
+        //load in page
+        return redirect($cameFrom) -> with(["data" => $data]);
     }
 }

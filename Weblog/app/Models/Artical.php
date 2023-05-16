@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Artical extends Model
 {
@@ -18,5 +19,10 @@ class Artical extends Model
     public function author(): BelongsTo
     {
         return $this -> BelongsTo(User::class);
+    }
+
+    public function comments(): HasMany
+    {
+        return $this -> hasMany(Comment::class);
     }
 }

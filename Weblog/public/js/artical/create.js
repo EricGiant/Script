@@ -34,13 +34,13 @@ function getArticalData()
         var category = document.createElement("input");
         category.value = selectedCategories[i];
         category.type = "hidden";
-        category.name = "data_category[]";
+        category.name = "data_selectedCategories[]";
         form.appendChild(category);
     }
 
     //make premium
     var premium = document.createElement("input");
-    if(document.getElementsByName("premium")[1].checked)
+    if(document.getElementsByName("isPremium")[1].checked)
     {
         premium.value = 1;
     }
@@ -49,6 +49,6 @@ function getArticalData()
         premium.value = 0;
     }
     premium.type = "hidden";
-    premium.name = "data_premium";
+    premium.name = "data_isPremium";
     form.appendChild(premium);
 }

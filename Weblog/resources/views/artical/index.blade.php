@@ -2,7 +2,7 @@
 <link rel = "stylesheet" href = "/css/artical/index.css">
 @section("categorySort")
     <p id = "categoriesSort" onclick = "changeMenu()">SORT BY CATEGORY</p>
-    <form method = "get" action = "/articalIndex">
+    <form method = "get" action = "/artical">
         <div id = "categoriesMenu" style = "display: none">
             <div id = "categoriesSelect">
                 @foreach($categories as $category)
@@ -17,15 +17,12 @@
 @section("content")
     @foreach($articals as $artical)
         <div class = "artical">
-            <a href = "/articalShow/{{$artical -> id}}">
+            <a href = "/artical/{{$artical -> id}}">
                 <div class = "category">
-                    @foreach($artical -> categories as $category)
-                        @if($loop -> last)
-                            {{$category -> name}}
-                        @else
-                            {{$category -> name}},
-                        @endif
-                    @endforeach
+                    @php
+                        $artical -> categories = $artical -> categories -> implode("name", ", ", "");
+                    @endphp
+                    {{$artical -> categories}}
                 </div>
                 <div class = "author">
                     BY {{$artical -> author -> name}}

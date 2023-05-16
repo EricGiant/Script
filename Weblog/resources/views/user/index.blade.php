@@ -1,7 +1,7 @@
 @extends("layout/base")
 <link rel = "stylesheet" href = "/css/user/index.css">
 @section("content")
-<form action = "/userShow" method = "post">
+<form action = "/user/show" method = "post">
     @csrf
     <div>
         <label for = "name">NAME</label>
@@ -26,5 +26,5 @@
     </div>
     <input type = "submit">
 </form>
-<a href = "/userCreate" style = "text-decoration: none;">MAKE ACCOUNT</a>
+<a href = "/user/create" style = "text-decoration: none;">MAKE ACCOUNT</a>
 @endsection

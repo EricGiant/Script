@@ -17,7 +17,8 @@ class ArticalRequest extends FormRequest
             "title" => "required|max:255",
             "content" => "required",
             "categories" => "required|min:1",
-            "premium" => "required|min:1|max:2"
+            "isPremium" => "required|min:0|max:1",
+            "image" => "|mimes:jpeg,png|max:16512"
         ];
     }
 }

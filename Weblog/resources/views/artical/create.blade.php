@@ -1,7 +1,7 @@
 @extends("layout/base")
 <link rel = "stylesheet" href = "/css/artical/create.css">
 @section("content")
-<form action = "/articalStore" method = "post" enctype = "multipart/form-data">
+<form action = "/artical" method = "post" enctype = "multipart/form-data">
     @csrf
     <div>
         <label for = "title">TITLE</label>
@@ -11,7 +11,7 @@
     <div>
     </div>
         <label for = "image">IMAGE</label>
-        <input type = "file" name = "image"> {{-- add reloader to image when  new category is added --}}
+        <input type = "file" name = "image"> {{-- RELOAD FOR THIS WOULD NEED JS AND AJEX TO WORK PROPERLY SO DONT ADD IT --}}
     <div>
         <label for = "content">CONTENT</label>
         <textarea name = "content" required>@isset($content){{$content}}@endisset</textarea>
@@ -33,12 +33,13 @@
     </div>
     <div>
         <label for = "premium">IS PREMIUM</label>
-        <input type = "hidden" name = "premium" value = 0>
-        <input type = "checkbox" name = "premium" value = 1 @if(isset($isPremium)) @if($isPremium == 1) checked @endif @endif> 
+        <input type = "hidden" name = "isPremium" value = 0>
+        <input type = "checkbox" name = "isPremium" value = 1 @if(isset($isPremium)) @if($isPremium == 1) checked @endif @endif>
     </div>
     <input type = "submit">
 </form>
-<form action = "/categoryStore" method = "get" onsubmit = "getArticalData()" id = "addCategory">
+<form action = "/category" method = "post" onsubmit = "getArticalData()" id = "addCategory">
+    @csrf
     <label for = "name">ADD NEW CATEGORY</label>
     <input type = "text" name = "name" required>
     <input type = "submit">

@@ -2,14 +2,11 @@
 <link rel = "stylesheet" href = "/css/artical/show.css">
 @section("content")
 <div>
-    <div id = "category">
-        @foreach($artical -> categories as $category)
-            @if($loop -> last)
-                {{$category -> name}}
-            @else
-                {{$category -> name}},
-            @endif
-        @endforeach
+    <div class = "category">
+        @php
+            $artical -> categories = $artical -> categories -> implode("name", ", ", "");
+        @endphp
+        {{$artical -> categories}}
     </div>
     <div id = "author">
         BY {{$artical -> author -> name}}
@@ -18,38 +15,42 @@
 <div id = "title">
     {{$artical -> title}}
 </div>
-<div>
-    <img src = "data:image/png;base64,{{$artical -> image}}" id = "image">
-</div>
+@if($artical -> image)
+    <div>
+        <img src = "data:image/png;base64,{{$artical -> image}}" id = "image">
+    </div>
+@endif
 <div id = "content">
     {{$artical -> content}}
 </div>
-
-
-{{-- BELOW HERE CANNOT BE WORKED ON UNTIL A USER SYSTEM HAS BEEN IMPLOMENTED --}}
 <div id = "write">
     <p>Add your comment here</p>
-    <form action = "/storeComment" method = "get">
-        <textarea name = "content"></textarea>
+    <form action = "/comment" method = "post">
+        @csrf
+        <textarea name = "content" required></textarea>
         <input type = "submit">
+        <input type = "hidden" name = "artical_id" value = {{$artical -> id}}>
     </form>
 </div>
 <div id = "comments">
-    <div class = "comment">
-        <div class = "comment_author">
-            by TEST2  TEST2
+    @foreach($artical -> comments as $comment)
+        <div class = "comment" @if($loop -> last) style = "padding-bottom: 10px" @endif id = "comment_{{$comment -> id}}">
+            <div class = "comment_author">
+                by {{$comment -> author -> name}}
+                @if($comment -> created_at != $comment -> updated_at)
+                    |edited|
+                @endif
+            </div>
+            <div class = "comment_content">
+                {{$comment -> content}}
+            </div>
+            @can("update", $comment)
+                @if($comment -> author_id == auth() -> user() -> id)
+                    <button onclick = "editComment({{$comment -> id}})">EDIT</button>
+                @endif
+            @endcan
         </div>
-        <div class = "comment_content">
-            Yeah I do agree food is a great thing
-        </div>
-    </div>
-    <div class = "comment">
-        <div class = "comment_author">
-            by TEST3  TEST3
-        </div>
-        <div class = "comment_content">
-            Food is terrible and I hate everyone who likes it
-        </div>
-    </div>
+    @endforeach
 </div>
 @endsection
+<script src = "/js/artical/show.js"></script>

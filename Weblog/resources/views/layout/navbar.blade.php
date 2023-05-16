@@ -1,10 +1,10 @@
 <div style = "margin-bottom: 10px">
-    <a href = "/articalIndex" style = "text-decoration: none; margin-right: 10px">HOME</a>
+    <a href = "/artical" style = "text-decoration: none; margin-right: 10px">HOME</a>
     @guest
-        <a href = "/userIndex" style = "text-decoration: none">LOGIN</a>
+        <a href = "/user" style = "text-decoration: none">LOGIN</a>
     @else
-        <a href = "/profileIndex" style = "text-decoration: none; margin-right: 10px">PROFILE</a>
-        <a href = "/userDestroy" style = "text-decoration: none">LOGOUT</a>
+        <a href = "/profile" style = "text-decoration: none; margin-right: 10px">PROFILE</a>
+        <a href = "/user/destroy" style = "text-decoration: none">LOGOUT</a>
     @endguest
     @yield("categorySort")
 </div>

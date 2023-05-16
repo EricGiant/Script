@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Artical;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
@@ -19,7 +17,7 @@ class ProfileController extends Controller
     public function edit()
     {
         //get writen articals by user 
-        $articals = Artical::where("author_id", "=", auth() -> user() -> id) -> get();
+        $articals = auth() -> user() -> articals;
 
         //sort on upload date aka inverse collection since most recent ID is the most recent post
         $articals = $articals -> reverse();
@@ -32,14 +30,14 @@ class ProfileController extends Controller
     public function update()
     {
         //get user
-        $user = User::find(auth() -> user() -> id);
+        $user = auth() -> user();
 
         //update user
         $user -> isPremium = true;
         $user -> save();
 
         //redirect to manage articals page
-        return redirect("/profileIndex");
+        return redirect("/profile");
 
     }
 }
