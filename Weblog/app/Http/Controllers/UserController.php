@@ -63,6 +63,7 @@ class UserController extends Controller
     }
 
     //log user out
+    // TODO: deze detroy functie moet een user verwijderen, de sessie destroy (logout) moet via een aparte AuthController
     public function destroy()
     {
         //log user out

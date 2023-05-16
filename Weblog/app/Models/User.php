@@ -53,4 +53,3 @@ class User extends Authenticatable
     {
         return $this -> hasMany(Artical::class, "author_id");
     }
-}

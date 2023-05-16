@@ -11,6 +11,7 @@ class CategoryController extends Controller
     //save new category to DB
     public function store(Request $request)
     {
+        // TODO: validation in aparte Form Validator class zetten
         //validate entry
         $attributes = $request -> validate([
             "name" => "required|max:255|unique:categories,name"
