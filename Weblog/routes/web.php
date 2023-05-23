@@ -23,6 +23,8 @@ use App\Http\Controllers\MailController;
 
 Route::redirect("/", "artical");
 
+// TODO: resource names in meervoud in URL, dus: /articals ipv /artical, etc.
+
 //ARTICAL ROUTES
 Route::get("/artical", [ArticalController::class, "index"]);
 Route::get("/artical/create", [ArticalController::class, "create"]) -> middleware("isLoggedIn");

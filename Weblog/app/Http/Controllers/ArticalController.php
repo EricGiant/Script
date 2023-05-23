@@ -51,8 +51,11 @@ class ArticalController extends Controller
         $categories = Category::all();
 
         //build data query
+        // TODO: zet data niet in $data variable, maar geef data als volgt mee aan template:
+        // return view("artical/create", compact($categories));
         $data["categories"] = $categories;
         
+        // TODO: waarom stop je data in sessie? Is niet nodig, kan weg
         //get session data if any exists
         $sessionData = session() -> get("data");
 
@@ -87,6 +90,7 @@ class ArticalController extends Controller
         //add image if needed
         if(isset($validated["image"]))
         {
+            // TODO: wat doet get() functie? kan weg
             //add image to DB entry
             $artical -> image = $validated["image"] -> get();
         }
@@ -175,6 +179,7 @@ class ArticalController extends Controller
         $this -> authorize("destroy", $artical);
 
         //via SQL
+        // TODO: onderstaande kun je voor cascade delete vervangen
         Comment::where('artical_id', $artical -> id) -> delete(); 
 
         //remove junction entries

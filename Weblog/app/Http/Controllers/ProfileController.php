@@ -19,6 +19,7 @@ class ProfileController extends Controller
         //get writen articals by user 
         $articals = auth() -> user() -> articals;
 
+        // TODO: chain reverse op voorgaande regel zodat je 1 regel code uitspaart
         //sort on upload date aka inverse collection since most recent ID is the most recent post
         $articals = $articals -> reverse();
 

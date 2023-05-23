@@ -41,6 +41,7 @@ class UserController extends Controller
     }
 
     //login user
+    // TODO: maak AuthController waar de store functie een user inlogt. De UserController/store kan dan een nieuwe user opslaan. Dit is een logischere indeling.
     public function show(Request $request)
     {
         //check if data exists in DB
@@ -63,6 +64,7 @@ class UserController extends Controller
     }
 
     //log user out
+    // TODO: deze method kan naar de te maken AuthController/destroy method
     public function destroy()
     {
         //log user out

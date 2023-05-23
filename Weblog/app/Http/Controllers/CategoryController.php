@@ -11,6 +11,7 @@ class CategoryController extends Controller
     //save new category to DB
     public function store(Request $request)
     {
+        // TOOD: stop onderstaande validatie rules in aparte form validation class en noem "attributes" "validated" (is duidelijkere naamgeving)
         //validate entry
         $attributes = $request -> validate([
             "name" => "required|max:255|unique:categories,name"
@@ -23,12 +24,15 @@ class CategoryController extends Controller
         $category -> save();
         
         //get back location route name
+        // TODO: dit moet op een makkelijkere manier kunnen, Laravel heeft hier vast iets voor, uitzoeken (localhost is statisch gecode en kan daarom mis
+        // gaan als je op ander domein draait)
         $cameFrom = str_replace("http://localhost:8000", "", back() -> getTargetUrl());
 
         //get data
         $requestData = $request -> toArray();
         $keyWords = array_keys($requestData);
         $data = [];
+        // TODO: onderstaande code is te ingewikkeld, herschrijven met duidelijkere code
         for($i = 0; $i < count($requestData); $i++)
         {
             if(str_contains($keyWords[$i], "data_"))
