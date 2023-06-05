@@ -11,8 +11,7 @@ class Comment extends Model
 
     public function author(): BelongsTo
     {
-        // TODO: wees consistent met naamgeving, BelongsTo moet zijn: belongsTo
-        return $this -> BelongsTo(User::class);
+        return $this -> belongsTo(User::class);
     }
 
     public function artical(): BelongsTo

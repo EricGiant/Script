@@ -16,12 +16,8 @@ class ProfileController extends Controller
     //show articals 
     public function edit()
     {
-        //get writen articals by user 
-        $articals = auth() -> user() -> articals;
-
-        // TODO: chain reverse op voorgaande regel zodat je 1 regel code uitspaart
-        //sort on upload date aka inverse collection since most recent ID is the most recent post
-        $articals = $articals -> reverse();
+        //get writen articals by user sorted on upload data (aka the last one in the list is the first one) 
+        $articals = auth() -> user() -> articals -> reverse();
 
         //load page
         return view("profile/edit", ["articals" => $articals]);
@@ -34,8 +30,7 @@ class ProfileController extends Controller
         $user = auth() -> user();
 
         //update user
-        $user -> isPremium = true;
-        $user -> save();
+        $user -> update(["isPremium" => true]);
 
         //redirect to manage articals page
         return redirect("/profile");

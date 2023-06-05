@@ -1,0 +1,26 @@
+.post
+{
+    text-align: center;
+}
+.post form
+{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    display: inline-block;
+}
+.update input
+{
+    font-size: 20px;
+    margin-bottom: 5px !important;
+}
+.destroy input
+{
+    font-size: 20px;
+    margin-top: 5px !important;
+}
+.name
+{
+    font-size: 25px;
+    font-weight: bold;
+    display: inline-block;
+}

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -9,30 +10,26 @@ class CategoryController extends Controller
 {
     //this can keep page data when the values are given via request when following the naming scheme: data_[name of the key]
     //save new category to DB
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $request)
     {
-        // TOOD: stop onderstaande validatie rules in aparte form validation class en noem "attributes" "validated" (is duidelijkere naamgeving)
-        //validate entry
-        $attributes = $request -> validate([
-            "name" => "required|max:255|unique:categories,name"
-        ]);
+        //get validated data
+        $validated = $request -> validated();
 
         //make DB entry
-        $category = new Category($attributes);
+        $category = new Category($validated);
 
         //save DB entry
         $category -> save();
         
         //get back location route name
-        // TODO: dit moet op een makkelijkere manier kunnen, Laravel heeft hier vast iets voor, uitzoeken (localhost is statisch gecode en kan daarom mis
-        // gaan als je op ander domein draait)
-        $cameFrom = str_replace("http://localhost:8000", "", back() -> getTargetUrl());
+        $cameFrom = str_replace($request -> root(), "", back() -> getTargetUrl());
 
         //get data
         $requestData = $request -> toArray();
         $keyWords = array_keys($requestData);
         $data = [];
-        // TODO: onderstaande code is te ingewikkeld, herschrijven met duidelijkere code
+        // TODO: onderstaande code is te ingewikkeld, herschrijven met duidelijkere code:
+        //wat is hier ingewikkeld aan? het enige wat het doet is het pakt data uit de request, haalt "data_" uit de key en plaats het in een nieuwe array
         for($i = 0; $i < count($requestData); $i++)
         {
             if(str_contains($keyWords[$i], "data_"))

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArticalController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
@@ -22,8 +23,6 @@ use App\Http\Controllers\MailController;
 */
 
 Route::redirect("/", "artical");
-
-// TODO: resource names in meervoud in URL, dus: /articals ipv /artical, etc.
 
 //ARTICAL ROUTES
 Route::get("/artical", [ArticalController::class, "index"]);
@@ -52,5 +51,7 @@ Route::get("/profile/update", [ProfileController::class, "update"]);
 Route::get("/user", [UserController::class, "index"]);
 Route::get("/user/create", [UserController::class, "create"]);
 Route::post("/user", [UserController::class, "store"]);
-Route::post("/user/show", [UserController::class, "show"]);
-Route::get("/user/destroy", [UserController::class, "destroy"]);
+
+//AUTH ROUTES
+Route::post("/auth/store", [AuthController::class, "store"]);
+Route::get("/auth/destroy", [AuthController::class, "destroy"]);

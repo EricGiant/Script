@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
             $table -> unsignedBigInteger("author_id");
-            $table -> foreign('author_id')->references('id')->on('users');
+            $table -> foreign('author_id') -> references('id') -> on('users');
             $table -> string("content", 1000);
             $table -> unsignedBigInteger("artical_id");
-            $table -> foreign('artical_id')->references('id')->on('articals');
+            $table -> foreign('artical_id') -> references('id') -> on('articals') -> cascadeOnDelete();
             $table->timestamps();
         });
     }

@@ -1,0 +1,11 @@
+.chat
+{
+    text-align: center;
+    margin-top: 10px;
+}
+.chat a
+{
+    text-decoration: none;
+    color: black;
+    font-size: 25px;
+}

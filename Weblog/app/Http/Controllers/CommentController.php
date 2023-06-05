@@ -20,7 +20,8 @@ class CommentController extends Controller
         //make DB entry data
         $attributes["author_id"] = auth() -> user() -> id;
 
-        // TODO: onderstaand combi van new + save kun je vervangen voor 1 store command
+        // TODO: onderstaand combi van new + save kun je vervangen voor 1 store command:
+        //store command? kan hier niks over finden online
         //make DB entry
         $comment = new Comment($attributes);
 
@@ -43,9 +44,7 @@ class CommentController extends Controller
         ]);
 
         //update comment entry
-        // TODO: save overbodig kan weg?
         $comment -> update($attributes);
-        $comment -> save();
 
         //return back to artical
         return back();

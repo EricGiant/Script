@@ -49,29 +49,28 @@ class ArticalController extends Controller
     {
         //get categories
         $categories = Category::all();
-
-        //build data query
-        // TODO: zet data niet in $data variable, maar geef data als volgt mee aan template:
-        // return view("artical/create", compact($categories));
-        $data["categories"] = $categories;
         
-        // TODO: waarom stop je data in sessie? Is niet nodig, kan weg
+        // TODO: waarom stop je data in sessie? Is niet nodig, kan weg:
+        //als je een category toevoegt word de data op de pagina onthouden en dan weer terug gestuurd via een session,
+        //dit stuck code checked of er een session is en als de session er is pakt die de data
+
         //get session data if any exists
         $sessionData = session() -> get("data");
 
         //check if there is session data
+        $sessionValues = null;
         if($sessionData != null)
         {
-            //add to data array
+            //add to new array
             $keys = array_keys($sessionData);
             for($i = 0; $i < count($sessionData); $i++)
             {
-                $data[$keys[$i]] = $sessionData[$keys[$i]];
+                $sessionValues[$keys[$i]] = $sessionData[$keys[$i]];
             }
         }
 
         //load page
-        return view("artical/create", $data);
+        return view("artical/create", compact("categories", "sessionValues"));
     }
 
     //stores new artical in DB
@@ -90,7 +89,8 @@ class ArticalController extends Controller
         //add image if needed
         if(isset($validated["image"]))
         {
-            // TODO: wat doet get() functie? kan weg
+            // TODO: wat doet get() functie? kan weg:
+            //get() zorgt er voor dat de image word gepakt, als je dit niet doet dan slaat die het img niet op maar de .tmp file
             //add image to DB entry
             $artical -> image = $validated["image"] -> get();
         }
@@ -178,9 +178,7 @@ class ArticalController extends Controller
         //check if selected artical is an artical the user has writen
         $this -> authorize("destroy", $artical);
 
-        //via SQL
-        // TODO: onderstaande kun je voor cascade delete vervangen
-        Comment::where('artical_id', $artical -> id) -> delete(); 
+        //moet ik op alle dingen cascades toepassen?
 
         //remove junction entries
         $artical -> categories() -> sync([]);

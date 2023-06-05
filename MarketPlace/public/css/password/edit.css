@@ -1,0 +1,13 @@
+form
+{
+    margin-top: 10px;
+    text-align: center;
+}
+form label
+{
+    display: block;
+}
+form div
+{
+    margin-bottom: 15px;
+}

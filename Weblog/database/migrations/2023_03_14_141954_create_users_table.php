@@ -18,7 +18,7 @@ return new class extends Migration
             $table -> string("name") -> unique();
             $table -> string("password");
             $table -> string("email") -> unique();
-            $table -> boolean("isPremium") -> default(false);   // TODO: gebruik snake-case voor database veldnamen, dus: is_premium
+            $table -> boolean("isPremium") -> default(false);
             $table->timestamps();
         });
     }

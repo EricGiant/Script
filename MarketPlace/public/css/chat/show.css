@@ -1,0 +1,67 @@
+#box
+{
+    text-align: center;
+    height: 90%;
+    width: 60%;
+    margin: auto;
+    background-color: aliceblue;
+    border: 1px solid black;
+    border-radius: 30px;
+}
+#messages
+{
+    height: 90%;
+    overflow: auto;
+}
+.message
+{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.sender
+{
+    display: inline-block;
+    font-size: 20px;
+    font-weight: bold;
+}
+.content
+{
+    font-size: 20;
+    margin: auto;
+}
+.created_at
+{
+    display: inline-block;
+    font-size: 12px;
+}
+#send
+{
+    position: relative;
+    margin: auto;
+    width: 80%;
+    height: 8%;
+    background-color: rgb(97, 121, 144);
+    border: 1px solid black;
+    border-radius: 30px;
+}
+#send form
+{
+    width: 90%;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+#send form input[type=text]
+{
+    outline: none;
+    width: 80%;
+    font-size: 20px;
+}
+#send form input[type=submit]
+{
+    width: 15%;
+    font-size: 20px;
+}

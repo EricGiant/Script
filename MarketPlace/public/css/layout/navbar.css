@@ -1,0 +1,11 @@
+#bar a
+{
+    text-decoration: none;
+    margin-right: 10px;
+    color: black;
+    font-weight: bold;
+}
+#bar a:last-child
+{
+    margin-right: 0px;
+}

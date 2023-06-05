@@ -6,7 +6,7 @@
     <div>
         <label for = "title">TITLE</label>
         <input type = "text" name = "title" style = "width: 50%" required 
-        @isset($title) value = "{{$title}}" @endisset>
+        @isset($sessionValues["title"]) value = "{{$sessionValues['title']}}" @endisset>
     </div>
     <div>
     </div>
@@ -14,16 +14,16 @@
         <input type = "file" name = "image"> {{-- RELOAD FOR THIS WOULD NEED JS AND AJEX TO WORK PROPERLY SO DONT ADD IT --}}
     <div>
         <label for = "content">CONTENT</label>
-        <textarea name = "content" required>@isset($content){{$content}}@endisset</textarea>
+        <textarea name = "content" required>@isset($sessionValues["content"]){{$sessionValues["content"]}}@endisset</textarea>
     </div>
     <div>
         <label for = "categories" style = "margin-bottom: 5px">CATEGORIES</label>
         <div id = "categories">
             @foreach($categories as $category)
                 <input type = "checkbox" value = "{{$category -> id}}" name = "categories[]"
-                @isset($selectedCategories)
-                    @for($i = 0; $i < count($selectedCategories); $i++)
-                        @if($selectedCategories[$i] == $category -> id)
+                @isset($sessionValues["selectedCategories"])
+                    @for($i = 0; $i < count($sessionValues["selectedCategories"]); $i++)
+                        @if($sessionValues["selectedCategories"][$i] == $category -> id)
                             {{"checked"}}
                         @endif
                     @endfor
@@ -34,7 +34,7 @@
     <div>
         <label for = "premium">IS PREMIUM</label>
         <input type = "hidden" name = "isPremium" value = 0>
-        <input type = "checkbox" name = "isPremium" value = 1 @if(isset($isPremium)) @if($isPremium == 1) checked @endif @endif>
+        <input type = "checkbox" name = "isPremium" value = 1 @if(isset($sessionValues["isPremium"])) @if($sessionValues["isPremium"] == 1) checked @endif @endif>
     </div>
     <input type = "submit">
 </form>

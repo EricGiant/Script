@@ -13,9 +13,6 @@ return new class extends Migration
      */
     public function up()
     {
-        // TODO: probeer je code zo netjes mogelijk op te maken, dus onnodige spaties er uit:
-        // $table -> string("name"); moet worden: $table->string("name");
-        // (gebruik evt. een code formatter zoals prettier voor vscode)
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table -> string("name");
