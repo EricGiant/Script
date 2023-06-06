@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCommentRequest;
+use App\Http\Requests\UpdateCommentRequest;
 use App\Models\Comment;
 use COM;
 use Illuminate\Http\Request;
@@ -9,42 +11,32 @@ use Illuminate\Http\Request;
 class CommentController extends Controller
 {
     //store comment in DB
-    public function store(Request $request)
+    public function store(StoreCommentRequest $request)
     {
-        //validate request
-        $attributes = $request -> validate([
-            "content" => "required|max:1000",
-            "artical_id" => "required|exists:articals,id"
-        ]);
+        //get validated data
+        $validated = $request -> validatde();
 
         //make DB entry data
-        $attributes["author_id"] = auth() -> user() -> id;
+        $validated["author_id"] = auth() -> user() -> id;
 
-        // TODO: onderstaand combi van new + save kun je vervangen voor 1 store command:
-        //store command? kan hier niks over finden online
         //make DB entry
-        $comment = new Comment($attributes);
-
-        //save DB entry
-        $comment -> save();
+        Comment::Create($validated);
 
         //go back to artical
         return back();
     }
 
     //update selected comment in DB
-    public function update(Request $request, Comment $comment)
+    public function update(UpdateCommentRequest $request, Comment $comment)
     {
         //check if user made this comment
         $this -> authorize("update", $comment);
         
-        //validate request
-        $attributes = $request -> validate([
-            "content" => "required|max:1000",
-        ]);
+        //get validated data
+        $validated = $request -> validated();
 
         //update comment entry
-        $comment -> update($attributes);
+        $comment -> update($validated);
 
         //return back to artical
         return back();

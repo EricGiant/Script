@@ -16,10 +16,7 @@ class CategoryController extends Controller
         $validated = $request -> validated();
 
         //make DB entry
-        $category = new Category($validated);
-
-        //save DB entry
-        $category -> save();
+        Category::create($validated);
         
         //get back location route name
         $cameFrom = str_replace($request -> root(), "", back() -> getTargetUrl());
@@ -28,8 +25,6 @@ class CategoryController extends Controller
         $requestData = $request -> toArray();
         $keyWords = array_keys($requestData);
         $data = [];
-        // TODO: onderstaande code is te ingewikkeld, herschrijven met duidelijkere code:
-        //wat is hier ingewikkeld aan? het enige wat het doet is het pakt data uit de request, haalt "data_" uit de key en plaats het in een nieuwe array
         for($i = 0; $i < count($requestData); $i++)
         {
             if(str_contains($keyWords[$i], "data_"))

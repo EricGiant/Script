@@ -178,8 +178,6 @@ class ArticalController extends Controller
         //check if selected artical is an artical the user has writen
         $this -> authorize("destroy", $artical);
 
-        //moet ik op alle dingen cascades toepassen?
-
         //remove junction entries
         $artical -> categories() -> sync([]);
 

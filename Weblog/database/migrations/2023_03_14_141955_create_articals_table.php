@@ -17,7 +17,7 @@ return new class extends Migration
         Schema::create('articals', function (Blueprint $table) {
             $table->id();
             $table -> unsignedBigInteger("author_id");
-            $table -> foreign('author_id')->references('id')->on('users');
+            $table -> foreign('author_id') -> references('id') -> on('users');
             $table -> string("title");
             $table -> binary("content");
             $table -> boolean("isPremium");
