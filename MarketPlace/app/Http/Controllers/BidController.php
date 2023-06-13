@@ -16,8 +16,7 @@ class BidController extends Controller
         $validated["user_id"] = auth() -> user() -> id;
 
         //make bid
-        $bid = new Bid($validated);
-        $bid -> save();
+        $bid = Bid::create($validated);
 
         //return to page
         return back();

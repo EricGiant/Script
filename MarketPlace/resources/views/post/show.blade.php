@@ -25,8 +25,16 @@
     <div id = "title">
         {{$post -> name}}
     </div>
+    <div id = "categories">
+        @php
+            $post -> categories = $post -> categories -> implode("name", ", ", "");
+        @endphp
+        {{$post -> categories}}
+    </div>
     <div id = "image">
-        <img src = "{{asset($post -> image_path)}}">
+        @if($post -> image_path != null)
+            <img src = "{{asset($post -> image_path)}}">
+        @endif
     <div id = "content">
         {{$post -> content}}
     </div>
@@ -54,7 +62,7 @@
             <label for = "editBid">YOUR BID: {{auth() -> user() -> bid -> amount}}</label>
             <a href = "/bid/edit">EDIT BID</a>
         @endisset
-    @else
+    @elseif(!$post -> user -> id == auth() -> user() -> id)
         <form action = "/bid/store" method = "post" id = "placeBid">
             @csrf
             <label for = "value">PLACE BID HERE</label>

@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BidController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\LoginController;
@@ -25,12 +27,10 @@ Route::redirect("/", "/post");
 
 //LOGIN ROUTES
 Route::get("/login", [LoginController::class, "index"]);
-Route::post("/login/show", [LoginController::class, "show"]);
 Route::get("/login/create", [LoginController::class, "create"]);
 Route::get("/login/edit", [LoginController::class, "edit"]);
 Route::post("/login/update", [LoginController::class, "update"]);
 Route::post("/login/store", [LoginController::class, "store"]);
-Route::get("/login/destroy", [LoginController::class, "destroy"]);
 
 //PASSWORD ROUTES
 Route::get("/password/edit/{token}", [PasswordController::class, "edit"]);
@@ -45,6 +45,7 @@ Route::get("/post/edit/{post}", [PostController::class, "edit"]);
 Route::post("/post/update/{post}", [PostController::class, "update"]);
 Route::post("/post/store", [PostController::class, "store"]);
 Route::get("/post/{post}", [PostController::class, "show"]);
+Route::post("/post/advertise/{post}", [PostController::class, "advertise"]);
 
 //BID ROUTES
 Route::post("/bid/store", [BidController::class, "store"]);
@@ -61,7 +62,9 @@ Route::post("/chat/{chat}", [ChatController::class, "show"]);
 //MESSAGE ROUTES
 Route::post("/message/store", [MessageController::class, "store"]);
 
-//BUG: if the poster of a post checks there own page they can bid on there own post
+//AUTH ROUTES
+Route::post("/auth/store", [AuthController::class, "store"]);
+Route::get("/auth/destroy", [AuthController::class, "destroy"]);
 
-
-// zoek naar: "laravel paginator" en bestudeer de uitleg en voorbeelden op de officiele laravel documentatie website
+//CATEGORY ROUTES
+Route::post("/category/store", [CategoryController::class, "store"]);

@@ -3,8 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Validation\Rules\Exists;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Post>
@@ -22,7 +22,8 @@ class PostFactory extends Factory
             "user_id" => rand(1, User::count()),
             "name" => fake() -> sentence(),
             "content" => fake() -> text(),
-            "image_path" => "storage/images/default.png"
+            "image_path" => "storage/images/default.png",
+            "advertised_at" => Carbon::now()
         ];
     }
 }

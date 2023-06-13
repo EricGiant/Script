@@ -21,4 +21,10 @@ class PostPolicy
     {
         return $user -> id == $post -> user -> id;
     }
+
+    //check if user is advertising there own post
+    public function advertise(User $user, Post $post)
+    {
+        return $user -> id == $post -> user -> id;
+    }
 }

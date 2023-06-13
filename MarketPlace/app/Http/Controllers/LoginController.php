@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ShowLoginRequest;
 use App\Http\Requests\StoreLoginRequest;
 use App\Http\Requests\UpdateLoginRequest;
 use App\Mail\ResetPassword;
@@ -36,33 +35,13 @@ class LoginController extends Controller
         $validated["password"] = bcrypt($validated["password"]);
 
         //make new user entry
-        $user = new User($validated);
-        $user -> save();
+        $user = User::create($validated);
 
         //log user in
         auth() -> login($user);
 
         //return to home page
         return redirect("/post");
-    }
-
-    //log user in
-    public function show(ShowLoginRequest $request)
-    {
-        //get validated data
-        $validated = $request -> validated();
-
-        //try log user in
-        if(auth() -> attempt($validated))
-        {
-            //redirect to home page
-            return redirect("/post");
-        }
-        else
-        {
-            //redirect back to login page
-            return back() -> withErrors(["password" => "password is invalid"]) -> withInput($validated);
-        }
     }
     
     //show reset password page
@@ -94,15 +73,5 @@ class LoginController extends Controller
         Mail::to($validated["email"]) -> send(new ResetPassword($token));
 
         return redirect("/login");
-    }
-
-    //log user out
-    public function destroy()
-    {
-        //log user out
-        auth() -> logout();
-
-        //return to home page
-        return redirect("/post");
     }
 }

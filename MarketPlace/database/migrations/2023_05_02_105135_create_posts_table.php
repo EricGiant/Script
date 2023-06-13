@@ -19,7 +19,7 @@ return new class extends Migration
             $table -> string("name", 255);
             $table -> string("image_path", 255) -> nullable();
             $table -> string("content", 1000);
-            $table -> timestamp("premium_order");
+            $table -> timestamp("advertised_at");
             $table->timestamps();
         });
     }

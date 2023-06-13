@@ -7,6 +7,6 @@
         <a href = "/chat">CHATS</a>
         <a href = "/post/create">CREATE POST</a>
         <a href = "/post/editPage">EDIT POSTS</a>
-        <a href = "/login/destroy">LOGOUT</a>
+        <a href = "/auth/destroy">LOGOUT</a>
     @endguest
 </div>

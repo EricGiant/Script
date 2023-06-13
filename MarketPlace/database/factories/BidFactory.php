@@ -2,12 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\Bid;
 use App\Models\Post;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use PhpParser\Node\Stmt\Global_;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Bid>

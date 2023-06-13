@@ -1,7 +1,7 @@
 @extends("layout/base")
 <link rel = "stylesheet" href = "/css/login/index.css">
 @section("content")
-<form action = "/login/show" method = "post">
+<form action = "/auth/store" method = "post">
     @csrf
     <div>
         <label for = "name">NAME</label>

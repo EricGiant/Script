@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreChatRequest;
 use App\Models\Chat;
-use Illuminate\Http\Request;
 
 class ChatController extends Controller
 {
@@ -27,8 +26,7 @@ class ChatController extends Controller
         $chatData = ["user1_id" => auth() -> user() -> id, "user2_id" => $validated["seller_id"]];
 
         //make new chat
-        $chat = new Chat($chatData);
-        $chat -> save();
+        $chat = Chat::create($chatData);
 
         //load chat
         return redirect("/chat/" . $chat -> id);

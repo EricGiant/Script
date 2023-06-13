@@ -2,6 +2,11 @@
 {
     font-size: 25px;
     font-weight: bold;
+}
+#categories
+{
+    font-size: 12px;
+    font-weight: bold;
     margin-bottom: 5px;
 }
 #seller

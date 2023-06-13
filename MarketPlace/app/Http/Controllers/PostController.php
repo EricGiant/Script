@@ -5,24 +5,62 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Models\Category;
 use App\Models\Chat;
+use Carbon\Carbon;
+use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
     //show all posts
-    public function index()
+    public function index(Request $request)
     {
-        //get all posts
-        $posts = Post::paginate(10);
+        //make query builder
+        $posts = Post::query();
 
-        return view("post/index", ["posts" => $posts]);
+        //get all categories
+        $categories = Category::all();
+
+        //get search data
+        $searchData = $request -> collect() -> filter();
+
+        //check for searchData
+        if(!$searchData -> isEmpty())
+        {
+            //check for categories
+            if(isset($searchData["categories"]))
+            {
+                $posts =$posts -> whereHas("categories", function(Builder $query) use ($searchData)
+                {
+                    $query -> whereIn("category_id", $searchData["categories"]);
+                });
+            }
+
+            //check for search
+            if(isset($searchData["search"]))
+            {
+                $posts = $posts -> where("name", "LIKE", "%" . $searchData["search"] . "%");
+            }
+        }
+
+        // sort posts on most recently advertised
+        $posts = $posts -> orderBy("advertised_at", "desc");
+
+        //get posts
+        $posts = $posts -> paginate(10);
+
+        return view("post/index", ["posts" => $posts, "categories" => $categories]);
     }
 
     //show create post form
     public function create()
     {
-        return view("post/create");
+        //get all categories
+        $categories = Category::all();
+    
+        return view("post/create", ["categories" => $categories]);
     }
 
     //store new post
@@ -40,9 +78,11 @@ class PostController extends Controller
         
         //make new post
         $validated["user_id"] = Auth() -> user() -> id;
-        $post = new Post($validated);
-        $post -> save();
+        $validated["advertised_at"] = Carbon::now();
+        $post = Post::create($validated);
 
+        //make junction
+        $post -> categories() -> sync($validated["categories"]);
 
         //go back to editPage
         return redirect("/post/editPage");
@@ -96,7 +136,10 @@ class PostController extends Controller
     //show edit form for selected post
     public function edit(Post $post)
     {
-        return view("post/edit", ["post" => $post]);
+        //get all categories
+        $categories = Category::all();
+        
+        return view("post/edit", ["post" => $post, "categories" => $categories]);
     }
 
     //update selected post
@@ -112,7 +155,10 @@ class PostController extends Controller
         if(isset($validated["image"]))
         {
             //delete old image
-            Storage::delete($post -> image_path);
+            if($post -> image_path != null)
+            {
+                Storage::delete($post -> image_path);
+            }
 
             //upload new image
             $path = $validated["image"] -> store("public/images");
@@ -121,6 +167,9 @@ class PostController extends Controller
 
         //update post
         $post -> update($validated);
+
+        //update junction
+        $post -> categories() -> sync($validated["categories"]);
 
         //go back to edit page
         return redirect("/post/editPage");
@@ -140,6 +189,19 @@ class PostController extends Controller
 
         //delete post
         $post -> delete();
+
+        //go back to old page
+        return back();
+    }
+
+    //advertise post
+    public function advertise(Post $post)
+    {
+        //check if user made this post
+        $this -> authorize("advertise", $post);
+
+        //update time
+        $post -> update(["advertised_at" => Carbon::now() -> toDateTimeString()]);
 
         //go back to old page
         return back();

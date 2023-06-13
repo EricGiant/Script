@@ -15,6 +15,25 @@
     @error("content")
         <p>{{$message}}</p>
     @enderror
+    <div id = "categories">
+        @foreach($categories as $category)
+            @php
+                //check if box was checked
+                $checked = "";
+                if(old("categories") != null)
+                {
+                    if(in_array($category -> id, old("categories")))
+                    {
+                        $checked = "checked";
+                    }
+                }
+            @endphp
+            <input type = "checkbox" value = "{{$category -> id}}" name = "categories[]" {{$checked}}>{{$category -> name}}<br>
+        @endforeach
+    </div>
+    @error("categories")
+        <p>{{$message}}</p>
+    @enderror
     <input type = "submit">
 </form>
 @endsection

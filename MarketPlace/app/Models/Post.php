@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Post extends Model
@@ -14,7 +15,7 @@ class Post extends Model
         "name",
         "image_path",
         "content",
-        "premium_order",
+        "advertised_at"
     ];
 
     public function bids(): HasMany
@@ -25,6 +26,11 @@ class Post extends Model
     public function user(): BelongsTo
     {
         return $this -> belongsTo(User::class);
+    }
+
+    public function categories(): BelongsToMany
+    {
+        return $this -> belongsToMany(Category::class);
     }
 
     use HasFactory;
