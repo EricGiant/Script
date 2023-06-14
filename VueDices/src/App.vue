@@ -14,7 +14,6 @@ function throwDice()
 }
 
 </script>
-
 <template>
     <button @click = "throwDice()">THROW</button>
     <table v-if = "diceValues.length != 0">
@@ -22,11 +21,9 @@ function throwDice()
             <th>Dice</th>
             <th>Value</th>
         </tr>
-        <div v-for = "(item, index) in diceValues">
-            <tr>
-                <th>{{index}}</th>
-                <th>{{item}}</th>
-            </tr>
-        </div>
+        <tr v-for = "(item, index) in diceValues">
+            <th>{{index}}</th>
+            <th>{{item}}</th>
+        </tr>
     </table>
 </template>
