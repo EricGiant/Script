@@ -41,6 +41,8 @@ class ChatController extends Controller
         //set user stuff in chat veriable for easier frontend work
         //user1 is always the current application
         $chat["user1"] = auth() -> user();
+
+        // TODO: onderstaande code moet eenvoudiger, voeg bij voorkeur niet zelf properties toe aan model instance
         if($chat["user1"] -> id == $chat["user1_id"])
         {
             $chat["user2"] = $chat -> user2;    

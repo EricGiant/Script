@@ -23,6 +23,8 @@ class PostController extends Controller
         //get all categories
         $categories = Category::all();
 
+        // TODO: searchData kan weg en je kunt controleren op $request->get("categories")
+        // en $request->get("search")
         //get search data
         $searchData = $request -> collect() -> filter();
 
