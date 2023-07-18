@@ -25,7 +25,7 @@ class LoginController extends Controller
         return view("login/create");
     }
 
-    // user store in authcontroller onder register naam
+    //create new user
     public function store(StoreLoginRequest $request)
     {
         //get validated data

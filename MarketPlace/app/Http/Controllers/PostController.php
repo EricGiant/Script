@@ -22,29 +22,21 @@ class PostController extends Controller
 
         //get all categories
         $categories = Category::all();
-
-        // TODO: searchData kan weg en je kunt controleren op $request->get("categories")
-        // en $request->get("search")
+        
         //get search data
-        $searchData = $request -> collect() -> filter();
-
-        //check for searchData
-        if(!$searchData -> isEmpty())
+        //check for categories
+        if($request -> get("categories"))
         {
-            //check for categories
-            if(isset($searchData["categories"]))
+            $posts =$posts -> whereHas("categories", function(Builder $query) use ($request)
             {
-                $posts =$posts -> whereHas("categories", function(Builder $query) use ($searchData)
-                {
-                    $query -> whereIn("category_id", $searchData["categories"]);
-                });
-            }
+                $query -> whereIn("category_id", $request -> get("categories"));
+            });
+        }
 
-            //check for search
-            if(isset($searchData["search"]))
-            {
-                $posts = $posts -> where("name", "LIKE", "%" . $searchData["search"] . "%");
-            }
+        //check for search
+        if($request -> get("search"))
+        {
+            $posts = $posts -> where("name", "LIKE", "%" . $request -> get("search") . "%");
         }
 
         // sort posts on most recently advertised

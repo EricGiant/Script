@@ -37,21 +37,19 @@ class ChatController extends Controller
     {
         //check if user can see this chat
         $this -> authorize("view", $chat);
-
-        //set user stuff in chat veriable for easier frontend work
-        //user1 is always the current application
-        $chat["user1"] = auth() -> user();
-
-        // TODO: onderstaande code moet eenvoudiger, voeg bij voorkeur niet zelf properties toe aan model instance
-        if($chat["user1"] -> id == $chat["user1_id"])
+        
+        //set user1 to be the current user and user2 to be the other user
+        //this is so frontend can easily work with the users
+        $users["user1"] = auth() -> user();
+        if(auth() -> user() -> id == $chat["user1_id"])
         {
-            $chat["user2"] = $chat -> user2;    
+           $users["user2"] = $chat -> user2;    
         }
         else
         {
-            $chat["user2"] = $chat -> user1;
+            $users["user2"] = $chat -> user1;
         }
 
-        return view("/chat/show", ["chat" => $chat]);
+        return view("/chat/show", ["chat" => $chat, "users" => $users]);
     }
 }

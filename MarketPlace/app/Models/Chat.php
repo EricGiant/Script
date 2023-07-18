@@ -19,15 +19,5 @@ class Chat extends Model
         return $this -> hasMany(Message::class);
     }
 
-    public function user1(): BelongsTo
-    {
-        return $this -> belongsTo(User::class);
-    }
-
-    public function user2(): BelongsTo
-    {
-        return $this -> belongsTo(User::class);
-    }
-
     use HasFactory;
 }

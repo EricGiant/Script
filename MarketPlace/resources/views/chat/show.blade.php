@@ -20,7 +20,7 @@
     <div id = "send">
         <form action = "/message/store" method = "post">
             @csrf
-            <input type = "text" name = "content" placeholder = "MESSAGE {{$chat -> user2 -> name}}">
+            <input type = "text" name = "content" placeholder = "MESSAGE {{$users["user2"] -> name}}">
             <input type = "submit" value = "SEND">
         </form>
     </div>
