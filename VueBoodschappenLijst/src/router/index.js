@@ -7,15 +7,13 @@ import Create from "../view/groceries/Create.vue";
 
 //URLS
 const routes = [
-    {path: "/", component: Overview},
-    {path: "/edit", component: Edit},
-    {path: "/create", component: Create}
+    {path: "/", component: Overview, name: 'home'},
+    {path: "/edit/:productId", component: Edit, name: "edit"},
+    {path: "/create", component: Create, name: "create"}
 ];
 
 //router creation
-const router = createRouter({
+export const router = createRouter({
     history: createWebHistory(),
     routes: routes
 });
-
-export default router;
