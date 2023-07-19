@@ -26,14 +26,12 @@ export const addProduct = (product) => {
     product.id = id; 
     products.value.push({...product});
     id++;
-    console.log("product added");
     router.push("/");
 }
 
 export const editProduct = (product) => {
     const index = products.value.findIndex((item) => item.id == product.id);
     products.value[index] = product;
-    console.log("product edited");
     router.push("/");
 }
 
