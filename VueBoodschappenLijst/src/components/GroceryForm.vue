@@ -24,11 +24,6 @@
 </template>
 
 <style scoped>
-table
-{
-    margin: auto;
-    text-align: center;
-}
 form
 {
     text-align: center;
