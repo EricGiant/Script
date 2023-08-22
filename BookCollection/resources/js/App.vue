@@ -1,6 +1,6 @@
 <script setup>
 import Navbar from './views/navbar/Navbar.vue';
-import { getAllAuthors } from './store/author';
+import { getAllAuthors } from './store/authors';
 import { getAllBooks } from './store/books';
 import { getAllReviews } from './store/reviews';
 

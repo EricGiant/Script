@@ -1,65 +1,106 @@
 <script setup lang = "ts">
-import Search from '../search/Search.vue';
-import { addAuthor, getAuthors } from '../../store/author';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { Book } from '../../types/book';
+import { getAuthors, addAuthor } from '../../store/authors';
+import AuthorForm from '../author/AuthorForm.vue';
+import { Author } from '../../types/author';
 
 const props = defineProps<{
-    bookData: Book
+    book: Book
 }>();
 
+const emit = defineEmits(["submitForm"]);
+
+const bookData = {...props.book};
+const search = ref();
 const authors = getAuthors();
-const newAuthor = ref("");
-
-const submitAuthor = async () => {
-    await addAuthor(newAuthor.value);
-    newAuthor.value = "";
+const searchAuthors = computed(() => {
+    if(!search.value) return authors.value;
+    return authors.value.filter((author) => author.name.toLowerCase().includes(search.value.toLowerCase()));
+})
+const emptyAuthor = <Author>{
+    id: NaN,
+    name: "",
+    created_at: "",
+    updated_at: ""
 }
+const authorData = ref<Author>(Object.assign({}, emptyAuthor));
 
-const onSearchChange = (value: number) => props.bookData.author_id = value;
-// @ts-ignore comment this works fine but typescript is just being odd about it
-const onFileChange = (event: Event) => props.bookData.img = event.target.files[0];
+const onFileChange = (event: any) => bookData.img = event.target.files[0];
+const onSearchChange = (value: number) => bookData.author_id = value;
+const submitAuthor = async (data: Author) => {
+    await addAuthor(data);
+    authorData.value = Object.assign({}, emptyAuthor);
+}
 </script>
 
 <template>
     <form id = "bookForm">
-        <Search :input = "authors" @searchValue = "onSearchChange">
-            <form id = "addAuthor">
-                <input type ="text" placeholder = "ADD AUTHOR" v-model = "newAuthor">
-                <input type = "submit" value = "ADD" @click.prevent = "submitAuthor">
-            </form>
-        </Search>
-        <div id = "bookInputs">
-            <label for = "bookName">BOOK NAME</label><br>
-            <input type = "text" name = "bookName" v-model = "props.bookData.name"><br>
-            <label for = "bookImage">BOOK IMAGE</label><br>
-            <input type = "file" name = "bookImage" @change = "onFileChange"><br>
+        <div id = "searchBox">
+            <input type = "text" placeholder = "SEARCH" v-model = "search">
+            <div id = "searchContent">
+                <div v-for = "author in searchAuthors">
+                    <input type = "radio" :id = "author.id.toString()" name = "search" @click = "onSearchChange(author.id)">
+                    <label :for = "author.id.toString()">{{ author.name }}</label>
+                </div>
+            </div>
+            <AuthorForm :author = "authorData" @submit-form = "submitAuthor" id = "addAuthor"/>
         </div>
-        <div id = "bookSlot"><slot></slot></div>
+        <div id = "formSection">
+            <label for = "bookName">BOOK NAME</label><br>
+            <input type = "text" id = "bookName" v-model = "bookData.name"><br>
+            <label for = "bookImg">BOOK IMAGE</label><br>
+            <input type = "file" id = "bookImg" @change = "onFileChange"><br>
+            <input type = "submit" value = "SUBMIT" @click.prevent = "$emit('submitForm', bookData)">
+            <slot></slot>
+        </div>
     </form>
 </template>
 
 <style scoped>
-#addAuthor{
-    margin-bottom: 0px;
+#bookForm{
+    margin-top: 10px;
+    text-align: center;
 }
-#addAuthor input[type=text]{
+#searchBox{
+    width: fit-content;
+    height: fit-content;
+    border: 2px solid black;
+    margin: auto;
+}
+#searchBox input[type = text]{
+    width: 100%;
     border-radius: 0px;
     outline: 0px;
 }
-#addAuthor input[type=submit]{
-    border-radius: 0px;
+#searchContent{
+    height: fit-content;
+    overflow-y: scroll;
+    text-align: left;
+    max-height: 100px;
 }
-#bookForm{
-    text-align: center; width: 80%; margin: auto; margin-top: 20px;
+#searchContent div{
+    padding: 2px;
+    padding-right: 4px;
 }
-#bookInputs{
+#formSection{
     margin-top: 10px;
 }
-#bookInputs input[type=text]{
+#formSection input{
     margin: 5px 10px 10px 10px;
 }
-#bookSlot{
-    margin-top: 15px;
+</style>
+
+<style>
+#addAuthor{
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+#addAuthor input{
+    border-radius: 0px;
+    outline: 0px;
+    width: max-content;
+    display: inline;
+    margin: auto;
 }
 </style>

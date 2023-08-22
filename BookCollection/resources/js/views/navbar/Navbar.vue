@@ -1,12 +1,11 @@
-<script setup>
+<script setup lang = "ts">
 </script>
 
 <template>
     <nav>
         <router-link :to = "{name: 'home'}">HOME</router-link>
         <router-link :to = "{name: 'bookCreate'}">ADD BOOK</router-link>
-        <router-link :to = "{name: 'reviewCreate'}">ADD REVIEW</router-link>
-        <router-link :to = "{name: 'authorCreate'}">ADD AUTHOR</router-link>
+        <router-link :to = "{name: 'authorOverview'}">SEE AUTHORS</router-link>
     </nav>
 </template>
 

@@ -42,6 +42,7 @@ class BookController extends Controller
         if(isset($validated["img"]))
         {
             //delete old img
+            $book -> image_path = str_replace("/storage", "public", $book -> image_path);
             Storage::delete($book -> image_path);
 
             //upload new img
@@ -61,6 +62,7 @@ class BookController extends Controller
     public function deleteBook(Book $book)
     {
         //delete img
+        $book -> image_path = str_replace("/storage", "public", $book -> image_path);
         Storage::delete($book -> image_path);
 
         //delete DB entry

@@ -15,6 +15,11 @@ class BookSeeder extends Seeder
      */
     public function run()
     {
-        Book::factory(5) -> create();
+        for($i = 0; $i < 5; $i++)
+        {
+            Book::factory() -> create([
+                "image_path" => "/storage/images/default" . $i + 1 . ".jpg"
+            ]);
+        }
     }
 }

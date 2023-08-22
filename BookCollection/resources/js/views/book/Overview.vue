@@ -1,14 +1,14 @@
-<script setup>
+<script setup lang = "ts">
 import { getBooks } from "../../store/books";
-import { getAuthorById } from "../../store/author";
+import { getAuthorById } from "../../store/authors";
 
-let books =  getBooks();
+const books = getBooks();
 </script>
 
 <template>
-    <div id = "contentBox">
+    <div id = "contentBox" v-if = "books">
         <router-link :to = "{name: 'bookView', params: {bookID: book.id}}" v-for = "book in books">
-            <p>{{ `${book.name} BY ${getAuthorById(book.author_id)?.name}` }}</p>
+            <p>{{ `${book.name} BY ${getAuthorById(book.author_id).value?.name}` }}</p>
             <img :src = "book['image_path']"><br>
             <router-link :to = "{name: 'bookEdit', params: {bookID: book.id}}">EDIT</router-link>
         </router-link>

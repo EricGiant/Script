@@ -5,9 +5,9 @@ import { router } from '../../router';
 import { ref } from 'vue';
 import { Book } from '../../types/book';
 
-const submitBook = async () => {
-    await addBook(bookData.value);
-    router.push("/");
+const submitBook = async (data: Book) => {
+    await addBook(data);
+    router.push({name: "home"});
 }
 
 const bookData = ref<Book>({
@@ -19,11 +19,8 @@ const bookData = ref<Book>({
     updated_at: "",
     img: new File([], "")
 });
-
 </script>
 
 <template>
-    <BookForm :book-data = "bookData">
-        <input type = "submit" value = "ADD" @click.prevent = "submitBook">
-    </BookForm>
+    <BookForm :book = "bookData" @submit-form = "submitBook"/>
 </template>

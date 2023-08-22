@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Author;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class AuthorSeeder extends Seeder
 {
@@ -15,6 +16,7 @@ class AuthorSeeder extends Seeder
      */
     public function run()
     {
+        DB::table("authors") -> insert(["name" => "NO AUTHOR"]);
         Author::factory(5) -> create();
     }
 }

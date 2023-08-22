@@ -1,4 +1,4 @@
-import { computed, ref } from "vue";
+import { ComputedRef, computed, ref } from "vue";
 import axios from "axios";
 import { Book } from "../types/book";
 
@@ -12,7 +12,7 @@ export const getAllBooks = async () => {
 
 export const getBooks = () => computed(() => books.value);
 
-export const getBookById = (id: number) => books.value.find((book) => book.id == id);
+export const getBookById = (id: number): ComputedRef => computed(() => books.value.find((book) => book.id == id));
 
 export const addBook = async (book: Book) => {
     let formData = new FormData();
@@ -32,7 +32,9 @@ export const updateBook = async (book: Book) => {
     }
     formData.append("name", book.name);
     formData.append("author_id", book.author_id.toString());
-    const {data} = await axios.patch("/api/updateBook/" + book.id, formData)
+    formData.append("_method", "PATCH");
+    const {data} = await axios.post("/api/updateBook/" + book.id, formData);
+
     if(!data) return
     books.value = data;
 }

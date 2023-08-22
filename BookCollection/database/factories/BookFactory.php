@@ -19,7 +19,6 @@ class BookFactory extends Factory
         return [
             "author_id" => rand(1, 5),
             "name" => fake() -> text(30),
-            "image_path" => "/storage/images/default.jpg"
         ];
     }
 }
