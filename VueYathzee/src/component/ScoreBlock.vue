@@ -1,84 +1,94 @@
 <script setup>
-import { defineProps, computed, ref, watch } from 'vue';
+// TODO: installeer Prettier VSCode plugin voor automatische code opmaak voor consitentie
+import { defineProps, computed, ref, watch } from "vue";
 
 const props = defineProps({
-    dices: Array
+  dices: Array,
 });
 
 const countedDice = computed(() => {
-    let count = {
-        1: 0,
-        2: 0,
-        3: 0,
-        4: 0,
-        5: 0,
-        6: 0,
-    }
+  // TODO: gebruik const ipv let, want count betreft de verwijzing in het geheugen (reference) naar het object,
+  // en niet het object zelf. Deze reference blijft hetzelfde als de inhoud van het object wijzigt. Daarom
+  // kun je hier beter const gebruiken om expliciet aan te geven dat het om een niet veranderende variable gaat.
+  let count = {
+    1: 0,
+    2: 0,
+    3: 0,
+    4: 0,
+    5: 0,
+    6: 0,
+  };
 
-    for(const key in count)
-    {
-        count[key] = props.dices.filter(dice => dice == key).length;
-    }
-    return count
-})
+  for (const key in count) {
+    count[key] = props.dices.filter((dice) => dice == key).length;
+  }
+  return count;
+});
 const threeOfAKind = computed(() => sameKind(3));
 const fourOfAKind = computed(() => sameKind(4));
 const fullHouse = computed(() => {
-    const found = duplicationAmountFinder(3, 0);
-    if(found[0])
-    {
-        const found2 = duplicationAmountFinder(2, found[1]);
-        if(found2[0])
-        {
-            return 25;
-        }
+  const found = duplicationAmountFinder(3, 0);
+  if (found[0]) {
+    const found2 = duplicationAmountFinder(2, found[1]);
+    if (found2[0]) {
+      return 25;
     }
-    return 0;
+  }
+  return 0;
 });
 const smallStraight = computed(() => straight(4));
 const largeStraight = computed(() => straight(5));
 const yathzee = computed(() => {
-    const found = duplicationAmountFinder(5);
-    if(found[0])
-    {
-        return 50;
-    }
-    return 0;
+  const found = duplicationAmountFinder(5);
+  if (found[0]) {
+    return 50;
+  }
+  return 0;
 });
-const chance = computed(() => props.dices.reduce((acc, current) => acc += current, 0));
+const chance = computed(() =>
+  props.dices.reduce((acc, current) => (acc += current), 0)
+);
 
 const part1Total = computed(() => {
-    let total = Object.keys(countedDice.value).reduce((acc, current) => acc += countedDice.value[current] * current, 0);
-    if(total >= 63)
-    {
-        total += 35;
-    }
-    return total;
+  let total = Object.keys(countedDice.value).reduce(
+    (acc, current) => (acc += countedDice.value[current] * current),
+    0
+  );
+  if (total >= 63) {
+    total += 35;
+  }
+  return total;
 });
-const part2Total = computed(() => threeOfAKind.value + fourOfAKind.value + fullHouse.value + smallStraight.value + largeStraight.value + yathzee.value + chance.value);
+const part2Total = computed(
+  () =>
+    threeOfAKind.value +
+    fourOfAKind.value +
+    fullHouse.value +
+    smallStraight.value +
+    largeStraight.value +
+    yathzee.value +
+    chance.value
+);
 
 const sameKind = (amount) => {
-    const found = duplicationAmountFinder(amount, 0);
-    if(found[0])
-    {
-        return props.dices.reduce((acc, current) => acc += current, 0);
-    }
-    return 0;
-}
+  const found = duplicationAmountFinder(amount, 0);
+  if (found[0]) {
+    return props.dices.reduce((acc, current) => (acc += current), 0);
+  }
+  return 0;
+};
 
 const straight = (length) => {
-    const found = orderChecker(length);
-    if(found && length == 4)
-    {
-        return 30;
-    }
-    else if(found && length == 5)
-    {
-        return 40;
-    }
-    return 0
-}
+  const found = orderChecker(length);
+  if (found && length == 4) {
+    return 30;
+  } else if (found && length == 5) {
+    return 40;
+  }
+  return 0;
+};
 
+// TODO: te ingewikkelde code, kun je dit eenvoudiger maken?
 function duplicationAmountFinder(amount, skipValue) {
   for (let i = 0; i < 6; i++) {
     let valueChecker = i + 1;
@@ -127,59 +137,59 @@ function orderChecker(length) {
 }
 </script>
 
-
 <template>
-    <table id="scoreBlock">
-      <tr>
-        <th>PART 1</th>
-        <th>POINTS</th>
-      </tr>
-      <tr v-for="(dice, index) in countedDice" :key="index" >
-        <th>{{ index }}</th>
-        <th>{{ countedDice[index] * index }}</th>
-      </tr>
-      
-      <tr>
-        <th>Total Points</th>
-        <th>{{ part1Total }}</th>
-      </tr>
-      <tr>
-        <th>PART 2</th>
-        <th>POINTS</th>
-      </tr>
-      <tr>
-        <th>Three Of A Kind</th>
-        <th>{{ threeOfAKind }}</th>
-      </tr>
-      <tr>
-        <th>Four Of A Kind</th>
-        <th>{{ fourOfAKind }}</th>
-      </tr>
-      <tr>
-        <th>Full House</th>
-        <th>{{ fullHouse }}</th>
-      </tr>
-      <tr>
-        <th>Small Straight</th>
-        <th>{{ smallStraight }}</th>
-      </tr>
-      <tr>
-        <th>Large Straight</th>
-        <th>{{ largeStraight }}</th>
-      </tr>
-      <tr>
-        <th>Yathzee</th>
-        <th>{{ yathzee }}</th>
-      </tr>
-      <tr>
-        <th>Chance</th>
-        <th>{{ chance }}</th>
-      </tr>
-      <tr>
-        <th>Total Points</th>
-        <th>{{ part2Total }}</th>
-      </tr>
-    </table>
+  <table id="scoreBlock">
+    <tr>
+      <th>PART 1</th>
+      <th>POINTS</th>
+    </tr>
+    <tr v-for="(dice, index) in countedDice" :key="index">
+      <th>{{ index }}</th>
+      <!-- TODO: countedDice[index] kun je voor dice vervangen, is leesbaarder -->
+      <th>{{ countedDice[index] * index }}</th>
+    </tr>
+
+    <tr>
+      <th>Total Points</th>
+      <th>{{ part1Total }}</th>
+    </tr>
+    <tr>
+      <th>PART 2</th>
+      <th>POINTS</th>
+    </tr>
+    <tr>
+      <th>Three Of A Kind</th>
+      <th>{{ threeOfAKind }}</th>
+    </tr>
+    <tr>
+      <th>Four Of A Kind</th>
+      <th>{{ fourOfAKind }}</th>
+    </tr>
+    <tr>
+      <th>Full House</th>
+      <th>{{ fullHouse }}</th>
+    </tr>
+    <tr>
+      <th>Small Straight</th>
+      <th>{{ smallStraight }}</th>
+    </tr>
+    <tr>
+      <th>Large Straight</th>
+      <th>{{ largeStraight }}</th>
+    </tr>
+    <tr>
+      <th>Yathzee</th>
+      <th>{{ yathzee }}</th>
+    </tr>
+    <tr>
+      <th>Chance</th>
+      <th>{{ chance }}</th>
+    </tr>
+    <tr>
+      <th>Total Points</th>
+      <th>{{ part2Total }}</th>
+    </tr>
+  </table>
 </template>
 
 <style scoped>
