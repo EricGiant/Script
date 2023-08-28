@@ -12,4 +12,6 @@ class Author extends Model
     ];
 
     use HasFactory;
+
+    // TODO: books relation toevoegen
 }

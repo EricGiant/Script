@@ -13,4 +13,6 @@ class Review extends Model
     ];
 
     use HasFactory;
+
+    // TODO: book / author relation(s) toevoegen
 }

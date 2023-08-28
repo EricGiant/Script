@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
             $table -> integer("book_id");
+            // TODO: foreign key ontbreekt? nog toevoegen
             $table -> text("content");
             $table->timestamps();
         });

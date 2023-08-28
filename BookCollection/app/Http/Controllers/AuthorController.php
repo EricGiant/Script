@@ -9,6 +9,8 @@ use App\Models\Book;
 
 class AuthorController extends Controller
 {
+    // TODO: gebruik liefst standaard resource controller method names
+
     //get all authors
     public function getAuthors()
     {
@@ -25,6 +27,9 @@ class AuthorController extends Controller
         Author::create($validated);
 
         //load new data in
+        // TODO: return nieuw toegevoegde author ipv alle authors. Als je alle
+        // authors nodig hebt in de front-end, haal deze dan via aparte request op.
+        // zo kun je deze addAuthor functie beter testen in de toekomst
         $authors = Author::all();
         return response() -> json($authors);
     }
@@ -46,6 +51,7 @@ class AuthorController extends Controller
     public function deleteAuthor(Author $author)
     {
         //find all book entries with this author
+        // TODO: gebruik relaties, dus $author->books
         $books = Book::where("author_id", $author["id"]);
 
         //change all book entries to NO AUTHOR aka ID 1

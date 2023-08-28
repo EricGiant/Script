@@ -14,4 +14,6 @@ class Book extends Model
     ];
 
     use HasFactory;
+
+    // TODO: autor relation toevoegen
 }
