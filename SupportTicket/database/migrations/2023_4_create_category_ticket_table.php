@@ -13,10 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tickets_category', function (Blueprint $table) {
+        Schema::create('category_ticket', function (Blueprint $table) {
             $table->id();
-            $table->integer("ticket_id");
-            $table->integer("category_id");
+            $table -> unsignedBigInteger("category_id");
+            $table -> foreign("category_id") -> references("id") -> on("categories");
+            $table -> unsignedBigInteger("ticket_id");
+            $table -> foreign("ticket_id") -> references("id") -> on("tickets");
             $table->timestamps();
         });
     }

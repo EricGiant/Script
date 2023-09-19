@@ -2,7 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
+use App\Models\Response;
 use App\Models\Ticket;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -15,6 +18,10 @@ class TicketSeeder extends Seeder
      */
     public function run()
     {
-        Ticket::factory(5) -> create();
+        return User::where("id", "!=", "1") -> each(function($user)
+        {
+            $ticket = Ticket::factory() -> for($user) -> has(Category::factory()) -> create();
+            Response::factory() -> create(["ticket_id" => $ticket["id"]]);
+        });
     }
 }

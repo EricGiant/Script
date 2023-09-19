@@ -18,7 +18,6 @@ class ResponseFactory extends Factory
     {
         return [
             "content" => fake() -> text(),
-            "ticket_id" => rand(1,5)
         ];
     }
 }

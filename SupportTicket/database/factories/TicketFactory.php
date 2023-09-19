@@ -19,7 +19,8 @@ class TicketFactory extends Factory
         return [
             "title" => fake() -> jobTitle(),
             "content" => fake() -> text(),
-            "user_id" => rand(1,5)
+            "appointed_to_id" => rand(2, 6),
+            "status_id" => rand(1 ,3),
         ];
     }
 }
