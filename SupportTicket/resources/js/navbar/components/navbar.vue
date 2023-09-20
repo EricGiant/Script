@@ -1,6 +1,6 @@
 <script setup>
 import LogoutButton from '../../login/components/LogoutButton.vue';
-import { getUser } from '../user/store/user';
+import { getUser } from '../../user/store/user';
 
 const user = getUser();
 </script>

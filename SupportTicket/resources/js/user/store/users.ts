@@ -5,7 +5,7 @@ import axios from "../../api";
 const users = ref<User[]>();
 
 export const getAllUsers = async () => {
-    const {data} = await axios.get("/api/getUsers");
+    const {data} = await axios.get("/api/users/index");
     if(!data) return
     users.value = data;
 }

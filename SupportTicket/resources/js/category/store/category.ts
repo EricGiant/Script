@@ -6,7 +6,7 @@ import { getAllTickets } from "../../ticket/store/ticket";
 const categories = ref<Category[]>();
 
 export const getAllCategories = async () => {
-    const {data} = await axios.get("/api/getCategories");
+    const {data} = await axios.get("/api/categories/index");
     if(!data) return
     categories.value = data;
 }
@@ -29,20 +29,20 @@ export const printCategoriesByID = (ids: Array<number>) => {
 }
 
 export const deleteCategory = async (id: number) => {
-    const {data} = await axios.delete("/api/deleteCategory/" + id);
+    const {data} = await axios.delete("/api/categories/delete/" + id);
     if(!data) return
     categories.value = data;
     getAllTickets();
 }
 
 export const updateCategory = async (category: Category) => {
-    const {data} = await axios.patch("/api/updateCategory/" + category.id, {title: category.title});
+    const {data} = await axios.patch("/api/categories/update/" + category.id, {title: category.title});
     if(!data) return
     categories.value = data;
 }
 
 export const storeCategory = async (category: Category) => {
-    const {data} = await axios.post("/api/storeCategory", {title: category.title});
+    const {data} = await axios.post("/api/categories/store", {title: category.title});
     if(!data) return
     categories.value = data;
 }

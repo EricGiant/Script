@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\AuthenticateController;
-use App\Http\Controllers\TicketController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,16 +12,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-//normal route
-Route::get('/', function () {
-    return view('app');
-});
-
-//API
-Route::post("/api/authenticateUser", [AuthenticateController::class, "authenticateUser"]);
-Route::post("/api/logout", [AuthenticateController::class, "logout"]);
-Route::get("/api/getTickets", [TicketController::class, "getTickets"]);
 
 //capture route
 Route::get('{any}', function () {

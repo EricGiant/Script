@@ -5,7 +5,7 @@ import { Status } from "../types/status";
 const statuses = ref<Status[]>();
 
 export const getAllStatuses = async () => {
-    const {data} = await axios.get("/api/getStatuses");
+    const {data} = await axios.get("/api/statuses/index");
     if(!data) return
     statuses.value = data;
 }

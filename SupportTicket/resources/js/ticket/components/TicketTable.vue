@@ -1,42 +1,26 @@
 <script setup lang = "ts">
-import { computed } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import { getStatusByID } from '../../status/store/status';
 import { getUser } from '../../user/store/user';
 import { getUserByID } from '../../user/store/users';
 import { getTickets } from '../store/ticket';
 import { printCategoriesByID } from '../../category/store/category';
 
-const allTickets = getTickets();
 const user = getUser();
+const ticketData = ref([]);
+const allTickets = getTickets();
 
-//manually build ticket list since it wont deep copy and otherwise it get live edited
-const allTickets_NEWCOPY = computed(() => {
-    if(allTickets.value)
+
+const tickets = computed(() => { //for some reason this is live editing the store....... temporarily make a deep copy because this is bad
+    if(user.value?.is_admin && ticketData)
     {
-        const array = [];
-        for(let i = 0; i < allTickets.value?.length; i++)
-        {
-            
-            array.push(allTickets.value[i]);
-        }
-        return array.reverse();
+        return allTickets.value.reverse();
     }
-    return;
+    else
+    {
+        return allTickets.value.reverse(); //.filter((ticket) => ticket.user_id == user.value?.id).reverse();
+    }
 });
-// const tickets = computed(() => { //for some reason this is live editing the store....... temporarily make a deep copy because this is bad
-//     if(user.value?.is_admin)
-//     {
-//         const temp = {...allTickets}; //deep copy wont work
-//         return temp.value?.reverse();
-//         // return allTickets.value?.reverse();
-//     }
-//     else
-//     {
-//         const temp = {...allTickets};
-//         return temp.value?.reverse();
-//         // return allTickets.value?.filter((ticket) => ticket.user_id == user.value?.id).reverse();
-//     }
-// });
 
 const appointedUserCheck = (id: number) => {
     if(id == null)
@@ -63,7 +47,7 @@ const appointedUserCheck = (id: number) => {
             <th>LAATSE UPDATE OP</th>
             <th>TOEGEWEZEN AAN</th>
         </tr>
-        <tr v-for = "ticket in allTickets_NEWCOPY">
+        <tr v-for = "ticket in tickets">
             <td>{{ ticket.id }}</td>
             <td>{{ ticket.title }}</td>
             <td>{{ printCategoriesByID(ticket.category_ids) }}</td>

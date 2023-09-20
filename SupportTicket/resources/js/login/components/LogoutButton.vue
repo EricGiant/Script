@@ -6,7 +6,7 @@ import { removeUserStore } from "../../user/store/user";
 const onLogout = () =>{
     logout();
     removeUserStore();
-    router.push({name: "login"})
+    router.push({name: "login"});
 }
 </script>
 

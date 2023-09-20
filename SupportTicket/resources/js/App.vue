@@ -5,13 +5,16 @@ import { getAllUsers } from './user/store/users';
 import { getAllCategories } from './category/store/category';
 import { getAllResponses } from './responses/store/response';
 import { getLoggedInUser } from './user/store/user';
+import { onMounted } from 'vue';
 
-getAllTickets();
-getAllStatuses();
-getAllUsers();
-getAllCategories();
-getAllResponses();
-getLoggedInUser();
+onMounted(async () => {
+    await getAllTickets();
+    await getAllStatuses();
+    await getAllUsers();
+    await getAllCategories();
+    await getAllResponses();
+    await getLoggedInUser();
+});
 </script>
 
 <template>

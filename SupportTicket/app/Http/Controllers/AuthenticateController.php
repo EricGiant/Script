@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthenticateUserRequest;
+use App\Http\Requests\UpdateAuthenticatePasswordRequest;
+use App\Http\Resources\UserResource;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class AuthenticateController extends Controller
 {
@@ -10,18 +15,36 @@ class AuthenticateController extends Controller
     {
         $validated = $request -> validated();
 
-        //try to log user in
-        $user = null;
         if(auth() -> attempt($validated))
         {
-            $user = auth() -> user();
+            return response(new UserResource(auth() -> user()));
         }
-        return response() -> json($user);
+        else
+        {
+            return "login failed";
+        }
     }
 
     public function logout()
     {
         //log user out
         auth() -> logout();
+    }
+
+    public function getLoggedInUser()
+    {
+        return response(UserResource::collection(auth() -> user()));
+    }
+
+    public function sendResetPasswordEmail()
+    {
+        dd("NOT IMPLOMENTED");
+    }
+
+    public function updatePassword(UpdateAuthenticatePasswordRequest $request)
+    {
+        $validated = $request -> validated();
+
+        User::where("email", DB::table("password_resets") -> where("token", $validated["token"]) -> pluck("email")) -> update(["password" => Hash::make($validated["password"])]);
     }
 }

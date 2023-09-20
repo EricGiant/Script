@@ -10,7 +10,7 @@ import AppointedToMenu from '../components/AppointedToMenu.vue';
 import StatusMenu from '../../status/components/StatusMenu.vue';
 import { getStatusByID } from '../../status/store/status';
 import Navbar from '../../navbar/components/navbar.vue';
-import ResponseForm from '../../responses/component/ResponseForm.vue';
+import ResponseForm from '../../responses/components/ResponseForm.vue';
 import { Response } from '../../responses/types/response';
 
 const ticketID = +useRoute().params.ticketID;

@@ -17,9 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string("title");
             $table->text("content");
-            $table -> unsignedBigInteger("appointed_to_id");
+            $table -> unsignedBigInteger("appointed_to_id") -> nullable() -> default(null);
             $table -> foreign("appointed_to_id") -> references("id") -> on("users");
-            $table -> unsignedBigInteger("status_id");
+            $table -> unsignedBigInteger("status_id") -> default(1);
             $table -> foreign("status_id") -> references("id") -> on("statuses");
             $table -> unsignedBigInteger("user_id");
             $table -> foreign("user_id") -> references("id") -> on("users");
