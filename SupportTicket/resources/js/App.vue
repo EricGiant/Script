@@ -4,7 +4,7 @@ import { getAllStatuses } from './status/store/status';
 import { getAllUsers } from './user/store/users';
 import { getAllCategories } from './category/store/category';
 import { getAllResponses } from './responses/store/response';
-import { getLoggedInUser } from './user/store/user';
+// import { getLoggedInUser } from './user/store/user';
 import { onMounted } from 'vue';
 
 onMounted(async () => {
@@ -13,7 +13,7 @@ onMounted(async () => {
     await getAllUsers();
     await getAllCategories();
     await getAllResponses();
-    await getLoggedInUser();
+    // await getLoggedInUser();
 });
 </script>
 

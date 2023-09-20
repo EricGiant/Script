@@ -7,16 +7,6 @@ use Illuminate\Foundation\Http\FormRequest;
 class UpdateAuthenticatePasswordRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return false;
-    }
-
-    /**
      * Get the validation rules that apply to the request.
      *
      * @return array<string, mixed>
@@ -24,7 +14,8 @@ class UpdateAuthenticatePasswordRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "password" => "required",
+            "token" => "required|exists:password_resets,token"
         ];
     }
 }

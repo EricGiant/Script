@@ -17,7 +17,7 @@ class CategoryResource extends JsonResource
     {
         return [
             "id" => $this -> id,
-            "title" => $this -> name,
+            "title" => $this -> title,
             "created_at" => Carbon::createFromFormat("Y-m-d H:i:s", $this -> created_at) -> toDateTimeString(),
             "updated_at" => Carbon::createFromFormat("Y-m-d H:i:s", $this -> updated_at) -> toDateTimeString()
         ];

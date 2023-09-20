@@ -6,8 +6,10 @@ use App\Http\Requests\AuthenticateUserRequest;
 use App\Http\Requests\UpdateAuthenticatePasswordRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+
 
 class AuthenticateController extends Controller
 {
@@ -31,10 +33,16 @@ class AuthenticateController extends Controller
         auth() -> logout();
     }
 
-    public function getLoggedInUser()
-    {
-        return response(UserResource::collection(auth() -> user()));
-    }
+    
+    // public function getLoggedInUser(Request $request)
+    // {
+    //  return $request->user();
+    // }
+
+    // public function getLoggedInUser()
+    // {
+    //     return response(new UserResource(auth() -> user()));
+    // }
 
     public function sendResetPasswordEmail()
     {

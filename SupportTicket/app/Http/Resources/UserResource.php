@@ -21,6 +21,7 @@ class UserResource extends JsonResource
             "last_name" => $this -> last_name,
             "full_name" => $this -> first_name . " " . $this -> last_name,
             "email" => $this -> email,
+            "is_admin" => $this -> is_admin,
             "created_at" => Carbon::createFromFormat("Y-m-d H:i:s", $this -> created_at) -> toDateTimeString(),
             "updated_at" => Carbon::createFromFormat("Y-m-d H:i:s", $this -> updated_at) -> toDateTimeString()
         ];

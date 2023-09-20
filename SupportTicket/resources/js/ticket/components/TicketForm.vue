@@ -2,7 +2,6 @@
 import { getCategories } from '../../category/store/category';
 import { computed, ref } from 'vue';
 import { Ticket } from '../types/ticket';
-import { getUser } from '../../user/store/user';
 
 const props = defineProps<{
     ticket: Ticket,
@@ -10,7 +9,6 @@ const props = defineProps<{
 
 const emits = defineEmits(["submitForm"]);
 
-const user = getUser();
 const allCategories = getCategories();
 const ticket = {...props.ticket};
 const categorySearch = ref();

@@ -21,7 +21,10 @@ class TicketController extends Controller
     {
         $validated = $request -> validated();
 
-        $this -> authorize("create", Ticket::class);
+        // $this -> authorize("create", Ticket::class); wont work because policies broke
+
+        dd(auth() -> user()); //THE AUTH WONT EVEN SAVE BETWEEN PAGES
+
 
         $validated["user_id"] = auth() -> user() -> id;
         Ticket::create($validated);

@@ -18,7 +18,10 @@ class TicketPolicy
      */
     public function create(User $user)
     {
-        return $user != null;
+        dd('test');
+        return true;
+        // dd($user);
+        // return ($user != null) == true;
     }
 
     /**
