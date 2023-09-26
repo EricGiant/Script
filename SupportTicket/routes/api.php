@@ -8,10 +8,6 @@ use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use Database\Factories\TicketFactory;
 use Illuminate\Support\Facades\Route;
-use PharIo\Manifest\AuthorCollection;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Middleware\Authenticate;
-use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +28,7 @@ Route::post("/api/authenticate/authenticateUser", [AuthenticateController::class
 Route::post("/api/authenticate/logout", [AuthenticateController::class, "logout"]);
 // Route::get("/api/authenticate/getLoggedInUser", [AuthenticateController::class, "getLoggedInUser"])->middleware('auth:sanctum');
 Route::post("/api/authenticate/sendResetPasswordEmail", [AuthenticateController::class, "sendResetPasswordEmail"]);
-Route::patch("/api/authenticate/updatePassword", [AuthorCollection::class, "updatePassword"]);
+Route::patch("/api/authenticate/updatePassword", [AuthenticateController::class, "updatePassword"]);
 Route::get("/api/tickets/index", [TicketController::class, "index"]);
 Route::post("/api/tickets/store", [TicketController::class, "store"]);
 Route::patch("/api/tickets/update/{ticket}", [TicketController::class, "update"]);

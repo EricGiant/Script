@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthenticateUserRequest;
+use App\Http\Requests\SendResetPasswordEmailRequest;
 use App\Http\Requests\UpdateAuthenticatePasswordRequest;
 use App\Http\Resources\UserResource;
+use App\Mail\ResetPassword;
 use App\Models\User;
-use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class AuthenticateController extends Controller
 {
@@ -23,13 +26,12 @@ class AuthenticateController extends Controller
         }
         else
         {
-            return "login failed";
+            return response() -> json(["message" => "Password is invalid"], 401);
         }
     }
 
     public function logout()
     {
-        //log user out
         auth() -> logout();
     }
 
@@ -44,9 +46,21 @@ class AuthenticateController extends Controller
     //     return response(new UserResource(auth() -> user()));
     // }
 
-    public function sendResetPasswordEmail()
+    public function sendResetPasswordEmail(SendResetPasswordEmailRequest $request)
     {
-        dd("NOT IMPLOMENTED");
+        $validated = $request -> validated();
+
+        $token = Str::random(50);
+        while(DB::table("password_resets") -> where("token", $token) -> exists())
+        {
+            $token = Str::random(50);
+        }
+
+        $validated["token"] = $token;
+        $validated["created_at"] = Carbon::now() -> toDateTimeString();
+        DB::table("password_resets") -> insert($validated);
+
+        Mail::to($validated["email"]) -> send(new ResetPassword($token));
     }
 
     public function updatePassword(UpdateAuthenticatePasswordRequest $request)

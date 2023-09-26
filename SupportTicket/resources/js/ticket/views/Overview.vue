@@ -5,5 +5,5 @@ import TicketTable from "../components/TicketTable.vue";
 
 <template>
     <Navbar />
-    <!-- <TicketTable /> --> <!-- DISABLED BECAUSE BEYOND BROKEN RN-->
+    <TicketTable />
 </template>

@@ -17,8 +17,7 @@ class StatusResource extends JsonResource
     {
         return [
             "id" => $this -> id,
-            "content" => $this -> content,
-            "ticket_id" => $this -> ticket_id,
+            "title" => $this -> title,
             "created_at" => Carbon::createFromFormat("Y-m-d H:i:s", $this -> created_at) -> toDateTimeString(),
             "updated_at" => Carbon::createFromFormat("Y-m-d H:i:s", $this -> updated_at) -> toDateTimeString()
         ];

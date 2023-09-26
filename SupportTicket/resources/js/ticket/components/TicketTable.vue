@@ -1,5 +1,5 @@
 <script setup lang = "ts">
-import { computed, ref, onMounted } from 'vue';
+import { computed, ref } from 'vue';
 import { getStatusByID } from '../../status/store/status';
 import { getUser } from '../../user/store/user';
 import { getUserByID } from '../../user/store/users';
@@ -7,19 +7,15 @@ import { getTickets } from '../store/ticket';
 import { printCategoriesByID } from '../../category/store/category';
 
 const user = getUser();
-const ticketData = ref([]);
 const allTickets = getTickets();
 
-
-const tickets = computed(() => { //for some reason this is live editing the store....... temporarily make a deep copy because this is bad
-    if(user.value?.is_admin && ticketData)
+const tickets = computed(() => {
+    if(!allTickets.value) return
+    if(user.value?.is_admin)
     {
-        return allTickets.value.reverse();
+        return [...allTickets.value].reverse();
     }
-    else
-    {
-        return allTickets.value.reverse(); //.filter((ticket) => ticket.user_id == user.value?.id).reverse();
-    }
+    return allTickets.value?.filter((ticket) => ticket.user_id == user.value?.id).reverse();
 });
 
 const appointedUserCheck = (id: number) => {

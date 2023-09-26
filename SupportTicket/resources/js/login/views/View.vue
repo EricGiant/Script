@@ -5,29 +5,30 @@ import LoginForm from '../components/LoginForm.vue';
 import { authenticateUser } from '../store/authentication';
 import { Login } from '../types/login';
 import { setUser } from '../../user/store/user';
-
+import { getError } from '../../error/store/error';
 
 const password_error = ref("");
 const email_error = ref("");
 
-//REWORK THIS BECAUSE THIS IS NOT MAINTABLEBLE.
-//use axios handlign that WILL NOT WORK FOR SOME REASON.
-//jeroen said hed check it but he hasn't yet
 const submitForm = async (data: Login) => {
     const response = await authenticateUser(data);
     password_error.value = "";
     email_error.value = "";
-    if(response.data == "LOGIN FAILED")
+    if(response == undefined)
     {
-        password_error.value = "INVALID PASSWORD";
+        const error = getError().value;
+        if(error?.code == 422)
+        {
+            email_error.value = error.message;
+        }
+        else if(error?.code == 401)
+        {
+            password_error.value = error.message;
+        }
     }
-    else if(response == 422)
+    else if(typeof response == "object")
     {
-        email_error.value = "INVALID EMAIL";
-    }
-    else if(typeof response.data == "object")
-    {
-        setUser(response.data);
+        setUser(response);
         router.push({name: "ticketOverview"});
     }
 }

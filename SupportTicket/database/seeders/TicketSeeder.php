@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\Note;
 use App\Models\Response;
 use App\Models\Ticket;
 use App\Models\User;
@@ -18,10 +19,11 @@ class TicketSeeder extends Seeder
      */
     public function run()
     {
-        return User::where("id", "!=", "1") -> each(function($user)
+        User::where("id", "!=", "1") -> each(function($user)
         {
             $ticket = Ticket::factory() -> for($user) -> has(Category::factory()) -> create();
             Response::factory() -> create(["ticket_id" => $ticket["id"]]);
+            Note::factory() -> create(["ticket_id" => $ticket["id"], "user_id" => $user -> id]);
         });
     }
 }

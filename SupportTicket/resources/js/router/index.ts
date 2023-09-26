@@ -24,7 +24,7 @@ const routes = [
     {path: "/category/create", component: CategoryCreate, name: "categoryCreate"},
     {path: "/category/edit/:categoryID", component: CategoryEdit, name: "categoryEdit"},
     {path: "/login/forgotPassword", component: ForgotPassword, name: "forgotPassword"},
-    {path: "/login/edit/:token", component: LoginEdit, name: "loginEdit"},
+    {path: "/login/editPassword/:token", component: LoginEdit, name: "loginEdit"},
     {path: "/response/edit/:responseID", component: ResponseEdit, name: "responseEdit"}
 ];
 
