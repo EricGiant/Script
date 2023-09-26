@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post("/api/authenticate/authenticateUser", [AuthenticateController::class, "authenticateUser"]);
 Route::post("/api/authenticate/logout", [AuthenticateController::class, "logout"]);
-// Route::get("/api/authenticate/getLoggedInUser", [AuthenticateController::class, "getLoggedInUser"])->middleware('auth:sanctum');
+Route::get("/api/authenticate/getLoggedInUser", [AuthenticateController::class, "getLoggedInUser"])->middleware('auth:sanctum');
 Route::post("/api/authenticate/sendResetPasswordEmail", [AuthenticateController::class, "sendResetPasswordEmail"]);
 Route::patch("/api/authenticate/updatePassword", [AuthenticateController::class, "updatePassword"]);
 

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 
 class AuthenticateController extends Controller
 {
@@ -36,10 +37,10 @@ class AuthenticateController extends Controller
     }
 
     
-    // public function getLoggedInUser(Request $request)
-    // {
-    //  return $request->user();
-    // }
+    public function getLoggedInUser(Request $request)
+    {
+     return $request->user();
+    }
 
     // public function getLoggedInUser()
     // {
