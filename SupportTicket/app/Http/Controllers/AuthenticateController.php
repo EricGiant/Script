@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 
 class AuthenticateController extends Controller
 {
@@ -36,16 +35,17 @@ class AuthenticateController extends Controller
         auth() -> logout();
     }
 
-    
-    public function getLoggedInUser(Request $request)
+    public function getLoggedInUser()
     {
-     return $request->user();
+        if(auth() -> user() != null)
+        {
+            return response(new UserResource(auth() -> user()));
+        }
+        else
+        {
+            return response("noLogin");
+        }
     }
-
-    // public function getLoggedInUser()
-    // {
-    //     return response(new UserResource(auth() -> user()));
-    // }
 
     public function sendResetPasswordEmail(SendResetPasswordEmailRequest $request)
     {

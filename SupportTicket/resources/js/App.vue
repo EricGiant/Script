@@ -8,12 +8,12 @@ import { getLoggedInUser } from "./user/store/user";
 import { onMounted } from "vue";
 
 onMounted(async () => {
+    await getLoggedInUser();
     await getAllTickets();
     await getAllStatuses();
     await getAllUsers();
     await getAllCategories();
     await getAllResponses();
-    await getLoggedInUser();
 });
 </script>
 

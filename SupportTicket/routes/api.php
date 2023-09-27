@@ -19,19 +19,11 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-// Route::middleware('auth:sanctum')->get('/api/user', function (Request $request) {
-//     return $request->user();
-// });
-
 Route::post("/api/authenticate/authenticateUser", [AuthenticateController::class, "authenticateUser"]);
 Route::post("/api/authenticate/logout", [AuthenticateController::class, "logout"]);
-Route::get("/api/authenticate/getLoggedInUser", [AuthenticateController::class, "getLoggedInUser"])->middleware('auth:sanctum');
+Route::get("/api/authenticate/getLoggedInUser", [AuthenticateController::class, "getLoggedInUser"]);
 Route::post("/api/authenticate/sendResetPasswordEmail", [AuthenticateController::class, "sendResetPasswordEmail"]);
 Route::patch("/api/authenticate/updatePassword", [AuthenticateController::class, "updatePassword"]);
-
-// TODO: voeg middelware op de routes toe zodat je bijv. niet alle tickets kunt inladen
-// op het moment dat je nog niet ingelogd bent!
 Route::get("/api/tickets/index", [TicketController::class, "index"]);
 Route::post("/api/tickets/store", [TicketController::class, "store"]);
 Route::patch("/api/tickets/update/{ticket}", [TicketController::class, "update"]);

@@ -13,7 +13,6 @@ class TicketController extends Controller
 {
     public function index()
     {
-        // dd(Ticket::all());
         return TicketResource::collection(Ticket::all());
     }
 
@@ -21,10 +20,9 @@ class TicketController extends Controller
     {
         $validated = $request -> validated();
 
-        // $this -> authorize("create", Ticket::class); wont work because policies broke
+        dd(auth() -> user());
 
-        dd(auth() -> user()); //THE AUTH WONT EVEN SAVE BETWEEN PAGES
-
+        $this -> authorize("create", Ticket::class);
 
         $validated["user_id"] = auth() -> user() -> id;
         Ticket::create($validated);
