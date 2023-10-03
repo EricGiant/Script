@@ -18,10 +18,7 @@ class TicketPolicy
      */
     public function create(User $user)
     {
-        dd('test');
-        return true;
-        // dd($user);
-        // return ($user != null) == true;
+        return ($user != null) == true;
     }
 
     /**
@@ -33,7 +30,7 @@ class TicketPolicy
      */
     public function update(User $user, Ticket $ticket)
     {
-        return $ticket -> user_id == $user || $user -> is_admin == true;
+        return $ticket -> user_id == $user -> id || $user -> is_admin == true;
     }
 
     //determine if user can update the appointed user

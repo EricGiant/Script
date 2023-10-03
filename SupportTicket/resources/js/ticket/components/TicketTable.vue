@@ -1,5 +1,5 @@
 <script setup lang = "ts">
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { getStatusByID } from '../../status/store/status';
 import { getUser } from '../../user/store/user';
 import { getUserByID } from '../../user/store/users';
@@ -31,7 +31,6 @@ const appointedUserCheck = (id: number) => {
 </script>
 
 <template>
-    SHOULD THIS REALLY BE A COMPONENT?
     <table>
         <tr>
             <th>ID</th>

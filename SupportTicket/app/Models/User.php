@@ -21,6 +21,7 @@ class User extends Authenticatable
     protected $fillable = [
         "first_name",
         "last_name",
+        "password",
         "email",
         "is_admin",
         "telephone_number"
@@ -38,5 +39,10 @@ class User extends Authenticatable
     public function tickets():HasMany
     {
         return $this -> hasMany(Ticket::class);
+    }
+
+    public function appointed_to_tickets():HasMany
+    {
+        return $this -> hasMany(Ticket::class, "appointed_to_id");
     }
 }

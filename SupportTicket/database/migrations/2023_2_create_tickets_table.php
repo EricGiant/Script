@@ -22,7 +22,7 @@ return new class extends Migration
             $table -> unsignedBigInteger("status_id") -> default(1);
             $table -> foreign("status_id") -> references("id") -> on("statuses");
             $table -> unsignedBigInteger("user_id");
-            $table -> foreign("user_id") -> references("id") -> on("users");
+            $table -> foreign("user_id") -> references("id") -> on("users") -> cascadeOnDelete();
             $table->timestamps();
         });
     }

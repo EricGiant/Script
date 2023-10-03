@@ -1,13 +1,14 @@
 import { computed, ref } from "vue";
-import { User } from "../types/user";
+import { IUser, User } from "../types/user";
 import axios from "../../api";
 import { router } from "../../router";
+import { getAllNotes } from "../../note/store/note";
 
-const user = ref<User>();
+const user = ref<IUser>();
 
 export const getUser = () => computed(() => user.value);
-export const setUser = (info: User) => (user.value = info);
-export const removeUserStore = () =>(user.value = {id: NaN, first_name: "", last_name: "", full_name: "", email: "", is_admin: false, telephone_number: "", created_at: "", updated_at: ""});
+export const setUser = (info: IUser) => (user.value = info);
+export const removeUserStore = () => user.value = new User();
 export const getLoggedInUser = async () => {
     const {data} = await axios.get("/api/authenticate/getLoggedInUser");
     if(data == "noLogin")
@@ -17,5 +18,11 @@ export const getLoggedInUser = async () => {
     else
     {
         user.value = data;
+
+        //only load in notes if user that is logging in is an admin
+        if(data.is_admin)
+        {
+            await getAllNotes();
+        }
     }
 };

@@ -9,14 +9,19 @@ import { getUser } from '../../user/store/user';
 import AppointedToMenu from '../components/AppointedToMenu.vue';
 import StatusMenu from '../../status/components/StatusMenu.vue';
 import { getStatusByID } from '../../status/store/status';
-import Navbar from '../../navbar/components/navbar.vue';
+import Navbar from '../../navbar/components/Navbar.vue';
 import ResponseForm from '../../responses/components/ResponseForm.vue';
 import { Response } from '../../responses/types/response';
+import NoteForm from '../../note/components/NoteForm.vue';
+import { Note } from '../../note/types/notes';
+import { storeNote, getNotes } from '../../note/store/note';
 
 const ticketID = +useRoute().params.ticketID;
 const ticket = getTicketByID(ticketID);
 const allResponses = getResponses();
 const responses = computed(() => allResponses.value?.filter((response) => response.ticket_id == ticket.value?.id));
+const allNotes = getNotes();
+const notes = computed(() => allNotes.value?.filter((note) => note.ticket_id == ticket.value?.id));
 const user = getUser();
 const emptyResponse = {
     id: NaN,
@@ -25,7 +30,17 @@ const emptyResponse = {
     created_at: "",
     updated_at: ""
 };
+const emptyNote = {
+    id: NaN,
+    content: "",
+    ticket_id: ticketID,
+    user_id: NaN,
+    created_at: "",
+    updated_at: ""
+}
+
 const response = ref(Object.assign({}, emptyResponse));
+const note = ref(Object.assign({}, emptyNote));
 
 
 const addResponse = async (response: Response) => {
@@ -39,6 +54,11 @@ const addResponse = async (response: Response) => {
     document.getElementById("content").value = "";
     response.content = "";
 };
+
+const addNote = async (note: Note) => {
+    await storeNote(note);
+}
+
 </script>
 
 <template>
@@ -47,9 +67,15 @@ const addResponse = async (response: Response) => {
     <p id = "ticketContent">{{ ticket?.content }}</p>
     <AppointedToMenu :ticket = ticket v-if = "user?.is_admin && ticket"/>
     <StatusMenu :ticket = ticket v-if = "user?.is_admin && ticket" />
-    <p id = "responseHeader" v-if = "user?.is_admin">ADD RESPONSE HERE</p>
+    <p class = "header" v-if = "user?.is_admin">ADD NOTE HERE</p>
+    <NoteForm :note = note v-if = "user?.is_admin" @submit-form = "addNote"/>
+    <p class = "header">NOTES</p>
+    <div id = "notes" v-for = "note in notes">
+        <p>NOTE MADE BY: {{ getUserByID(note.user_id).value?.full_name }}<br>{{ note.content }}</p>
+    </div>
+    <p class = "header" v-if = "user?.is_admin">ADD RESPONSE HERE</p>
     <ResponseForm v-if = "user?.is_admin" :response = "response" @submit-form = "addResponse"/>
-    <p id = "ticketResponseHeader">RESPONSES</p>
+    <p class = "header">RESPONSES</p>
     <div id = "ticketResponses" v-for = "response in responses">
     <p>{{ response.content }}</p>
     <router-link :to = "{name: 'responseEdit', params: {responseID: response.id} }">EDIT RESPONSE</router-link>
@@ -67,22 +93,22 @@ const addResponse = async (response: Response) => {
     margin: auto;
     text-align: center;
 }
-#ticketResponseHeader{
-    text-align: center;
-    font-size: 22px;
-    font-weight: bolder;
-
-}
 #ticketResponses{
     width: 60%;
     margin: auto;
     text-align: center;
-    margin-top: 30px;
+    margin-top: 10px;
 }
-#responseHeader{
+.header{
     text-align: center;
     font-size: 22px;
     font-weight: bolder;
     margin-bottom: 0px;
+}
+#notes{
+    text-align: center;
+    width: 60%;
+    margin: auto;
+    margin-top: 10px;
 }
 </style>

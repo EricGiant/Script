@@ -17,9 +17,9 @@ return new class extends Migration
             $table -> id();
             $table -> text("content");
             $table -> unsignedBigInteger("ticket_id");
-            $table -> foreign("ticket_id") -> references("id") -> on("tickets");
+            $table -> foreign("ticket_id") -> references("id") -> on("tickets")  -> cascadeOnDelete();
             $table -> unsignedBigInteger("user_id");
-            $table -> foreign("user_id") -> references("id") -> on("users");
+            $table -> foreign("user_id") -> references("id") -> on("users") -> cascadeOnDelete();
             $table -> timestamps();
         });
     }

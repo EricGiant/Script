@@ -9,7 +9,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Note extends Model
 {
     protected $fillable = [
-        "content"
+        "content",
+        "ticket_id",
+        "user_id"
     ];
 
     public function user():BelongsTo

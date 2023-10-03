@@ -12,6 +12,9 @@ import CategoryEdit from "../category/views/Edit.vue";
 import ForgotPassword from "../login/views/ForgetPassword.vue";
 import LoginEdit from "../login/views/ResetPassword.vue";
 import ResponseEdit from "../responses/views/Edit.vue";
+import UserOverview from "../user/view/Overview.vue";
+import UserEdit from "../user/view/Edit.vue";
+import UserCreate from "../user/view/Create.vue";
 
 //URLS
 const routes = [
@@ -25,7 +28,10 @@ const routes = [
     {path: "/category/edit/:categoryID", component: CategoryEdit, name: "categoryEdit"},
     {path: "/login/forgotPassword", component: ForgotPassword, name: "forgotPassword"},
     {path: "/login/editPassword/:token", component: LoginEdit, name: "loginEdit"},
-    {path: "/response/edit/:responseID", component: ResponseEdit, name: "responseEdit"}
+    {path: "/response/edit/:responseID", component: ResponseEdit, name: "responseEdit"},
+    {path: "/user/overview", component: UserOverview, name: "userOverview"},
+    {path: "/user/edit/:userID", component: UserEdit, name: "userEdit"},
+    {path: "/user/create", component: UserCreate, name: "userCreate"}
 ];
 
 //router creation

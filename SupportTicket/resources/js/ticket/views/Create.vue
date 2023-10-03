@@ -1,5 +1,5 @@
 <script setup lang = "ts">
-import Navbar from '../../navbar/components/navbar.vue';
+import Navbar from '../../navbar/components/Navbar.vue';
 import { router } from '../../router';
 import TicketForm from '../components/TicketForm.vue';
 import { storeTicket } from '../store/ticket';

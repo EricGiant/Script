@@ -20,8 +20,6 @@ class TicketController extends Controller
     {
         $validated = $request -> validated();
 
-        dd(auth() -> user());
-
         $this -> authorize("create", Ticket::class);
 
         $validated["user_id"] = auth() -> user() -> id;

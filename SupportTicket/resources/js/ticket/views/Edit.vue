@@ -7,7 +7,7 @@ import { Ticket } from '../types/ticket';
 import AppointedToMenu from '../components/AppointedToMenu.vue';
 import { getUser } from '../../user/store/user';
 import StatusMenu from '../../status/components/StatusMenu.vue';
-import Navbar from '../../navbar/components/navbar.vue';
+import Navbar from '../../navbar/components/Navbar.vue';
 
 const ticket = getTicketByID(+useRoute().params.ticketID);
 const user = getUser();

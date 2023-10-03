@@ -11,6 +11,7 @@ const user = getUser();
         <router-link :to = "{name: 'ticketCreate'}">CREATE TICKET</router-link>
         <router-link :to = "{name: 'categoryOverview'}" v-if = "user?.is_admin">CATEGORY OVERVIEW</router-link>
         <router-link :to = "{name: 'categoryCreate'}" v-if = "user?.is_admin">CREATE CATEGORY</router-link>
+        <router-link :to = "{name: 'userOverview'}" v-if = "user?.is_admin">USER OVERVIEW</router-link>
         <logout-button />
     </nav>
 </template>
