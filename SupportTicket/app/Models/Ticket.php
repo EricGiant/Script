@@ -14,7 +14,9 @@ class Ticket extends Model
     protected $fillable = [
         "title",
         "content",
-        "user_id"
+        "user_id",
+        "appointed_to_id",
+        "status_id"
     ];
 
     public function user():BelongsTo
@@ -32,9 +34,14 @@ class Ticket extends Model
         return $this -> hasMany(Response::class);
     }
 
-    public function status():HasOne
+    public function status():belongsTo
     {
-        return $this -> hasOne(Status::class);
+        return $this -> belongsTo(Status::class);
+    }
+
+    public function appointed_to_user():BelongsTo
+    {
+        return $this -> belongsTo(User::class, "appointed_to_id");
     }
 
     use HasFactory;

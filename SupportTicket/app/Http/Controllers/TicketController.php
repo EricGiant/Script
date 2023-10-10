@@ -13,7 +13,14 @@ class TicketController extends Controller
 {
     public function index()
     {
-        return TicketResource::collection(Ticket::all());
+        if(auth() -> user() -> is_admin)
+        {
+            return TicketResource::collection(Ticket::all());
+        }
+        else
+        {
+            return TicketResource::collection(auth() -> user() -> tickets);
+        }
     }
 
     public function store(StoreTicketRequest $request)
@@ -23,9 +30,11 @@ class TicketController extends Controller
         $this -> authorize("create", Ticket::class);
 
         $validated["user_id"] = auth() -> user() -> id;
-        Ticket::create($validated);
+        $ticket = Ticket::create($validated);
+        $ticket -> categories() -> sync($validated["category_ids"]);
 
-        return(response(TicketResource::collection(Ticket::all())));
+        // return(response(TicketResource::collection(Ticket::all())));
+        return response(TicketController::class, "index");
     }
 
     public function update(UpdateTicketRequest $request, Ticket $ticket)

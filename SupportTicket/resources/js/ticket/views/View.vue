@@ -11,9 +11,9 @@ import StatusMenu from '../../status/components/StatusMenu.vue';
 import { getStatusByID } from '../../status/store/status';
 import Navbar from '../../navbar/components/Navbar.vue';
 import ResponseForm from '../../responses/components/ResponseForm.vue';
-import { Response } from '../../responses/types/response';
+import { IResponse, Response } from '../../responses/types/response';
 import NoteForm from '../../note/components/NoteForm.vue';
-import { Note } from '../../note/types/notes';
+import { INote, Note } from '../../note/types/note';
 import { storeNote, getNotes } from '../../note/store/note';
 
 const ticketID = +useRoute().params.ticketID;
@@ -21,42 +21,22 @@ const ticket = getTicketByID(ticketID);
 const allResponses = getResponses();
 const responses = computed(() => allResponses.value?.filter((response) => response.ticket_id == ticket.value?.id));
 const allNotes = getNotes();
-const notes = computed(() => allNotes.value?.filter((note) => note.ticket_id == ticket.value?.id));
+const notes = computed(() => allNotes.value?.filter((note) => note.ticket_id == ticket.value?.id).reverse());
 const user = getUser();
-const emptyResponse = {
-    id: NaN,
-    content: "",
-    ticket_id: ticketID,
-    created_at: "",
-    updated_at: ""
-};
-const emptyNote = {
-    id: NaN,
-    content: "",
-    ticket_id: ticketID,
-    user_id: NaN,
-    created_at: "",
-    updated_at: ""
-}
+const note = ref(new Note);
+const response = ref(new Response);
 
-const response = ref(Object.assign({}, emptyResponse));
-const note = ref(Object.assign({}, emptyNote));
-
-
-const addResponse = async (response: Response) => {
-    //@ts-ignore it will exist so fck off typescript
-    await storeResponse(response, ticket.value?.user_id);
-    // response = Object.assign({}, emptyResponse); this wont even change anything in the form. this is the EXACT IMPLOMENTATION USED IN BOOK COLLECTION WHICH WORKED
-    //response.content = "12345";//this will update the form but not visually even do it's a computed inside the form
-
-    //force update it in the most dum way possible REWORK THIS WITH JEROERN LATER
-    //@ts-ignore this shit works just TS sucks donkey dick with vanila JS for shit like that
-    document.getElementById("content").value = "";
-    response.content = "";
+const addResponse = async (formResponse: IResponse) => {
+    if(!ticket.value?.user_id) return;
+    formResponse.ticket_id = ticketID;
+    await storeResponse(formResponse, ticket.value?.user_id);
+    response.value = new Response;
 };
 
-const addNote = async (note: Note) => {
-    await storeNote(note);
+const addNote = async (noteForm: INote) => {
+    noteForm.ticket_id = ticketID;
+    await storeNote(noteForm);
+    note.value = new Note;
 }
 
 </script>
@@ -69,7 +49,7 @@ const addNote = async (note: Note) => {
     <StatusMenu :ticket = ticket v-if = "user?.is_admin && ticket" />
     <p class = "header" v-if = "user?.is_admin">ADD NOTE HERE</p>
     <NoteForm :note = note v-if = "user?.is_admin" @submit-form = "addNote"/>
-    <p class = "header">NOTES</p>
+    <p class = "header" v-if = "user?.is_admin">NOTES</p>
     <div id = "notes" v-for = "note in notes">
         <p>NOTE MADE BY: {{ getUserByID(note.user_id).value?.full_name }}<br>{{ note.content }}</p>
     </div>
@@ -77,8 +57,8 @@ const addNote = async (note: Note) => {
     <ResponseForm v-if = "user?.is_admin" :response = "response" @submit-form = "addResponse"/>
     <p class = "header">RESPONSES</p>
     <div id = "ticketResponses" v-for = "response in responses">
-    <p>{{ response.content }}</p>
-    <router-link :to = "{name: 'responseEdit', params: {responseID: response.id} }">EDIT RESPONSE</router-link>
+        <p>{{ response.content }}</p>
+        <router-link :to = "{name: 'responseEdit', params: {responseID: response.id} }" v-if = "user?.is_admin">EDIT RESPONSE</router-link>
     </div>
 </template>
 

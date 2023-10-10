@@ -31,12 +31,13 @@ export const printCategoriesByID = (ids: Array<number>) => {
 export const deleteCategory = async (id: number) => {
     const {data} = await axios.delete("/api/categories/delete/" + id);
     if(!data) return
+    else if(data == "ticketFound") return alert("THIS CATEGORY HAS TICKETS THEREFOR DELETION IS NOT POSSIBLE");
     categories.value = data;
     getAllTickets();
 }
 
 export const updateCategory = async (category: Category) => {
-    const {data} = await axios.patch("/api/categories/update/" + category.id, {title: category.title});
+    const {data} = await axios.patch("/api/categories/update/" + category.id, {title: category.title, id: category.id});
     if(!data) return
     categories.value = data;
 }

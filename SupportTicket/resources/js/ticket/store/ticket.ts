@@ -27,7 +27,7 @@ export const updateTicket = async (ticket: Ticket) => {
 }
 
 export const updateAppointedTo = async (userID: number, ticketID: number) => {
-    const {data} = await axios.patch("/api/tickets/updateAppointedTo/" + ticketID, {userID: userID});
+    const {data} = await axios.patch("/api/tickets/updateAppointedTo/" + ticketID, {appointed_to_id: userID});
     if(!data) return
     tickets.value = data;
 }

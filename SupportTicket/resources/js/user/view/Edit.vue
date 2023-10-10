@@ -5,11 +5,16 @@ import UserForm from '../components/UserForm.vue';
 import { getUserByID, updateUser } from '../store/users';
 import { IUser } from '../types/user';
 import { router } from '../../router';
+import { getUser, setUser } from '../store/user';
 
 const user = getUserByID(+useRoute().params.userID);
 
 const updateUserFunc = async (user: IUser) => {
     await updateUser(user);
+    if(user.id == getUser().value?.id)
+    {
+        await setUser(user);
+    }
     router.push({name: "userOverview"});
 };
 </script>

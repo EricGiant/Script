@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
+use App\Mail\NewUser;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -31,11 +33,14 @@ class UserController extends Controller
         $this -> authorize("delete", User::class);
 
         //check if user has any non afgehandelde tickets
-        if($user -> tickets -> doesntContain("status_id", 3))
+        if($user -> tickets -> contains(function ($ticket)
+        {
+            return $ticket["status_id"] == 1 || $ticket["status_id"] == 2;
+        }))
         {
             return response("ticketFound");
         }
-
+        
         //get all the users appointed_to tickets and set the appointed_to_id to null so it doesn't cause a constraight key vialotion
         $user -> appointed_to_tickets() -> update(["appointed_to_id" => null]);
 
@@ -48,8 +53,13 @@ class UserController extends Controller
     {
         $validated = $request -> validated();
 
-        $validated["password"] = Hash::make($validated["password"]);
-        User::create($validated);
+        // $validated["password"] = Hash::make($validated["password"]); //i did my old way in every project so far with 0 critism on it
+        $user = new User();
+        $user -> fill($validated);
+        $user -> password = Hash::make($validated["password"]);
+        $user -> save();
+
+        Mail::to($user -> email) -> send(new NewUser);
 
         return response(UserResource::collection(User::all()));
     }

@@ -1,5 +1,6 @@
 <script setup lang = "ts">
 import Navbar from '../../navbar/components/Navbar.vue';
+import { getUser } from '../store/user';
 import { getUsers, getRollByBool, deleteUser } from '../store/users';
 
 const users = getUsers();
@@ -15,6 +16,7 @@ const deleteUserFunc = async (id: number) => {
 <template>
     <Navbar />
     <table>
+        {{ getUser().value }}
         <tr>
             <th>VOORNAAM</th>
             <th>ACHTERNAAAM</th>

@@ -2,13 +2,13 @@
 import { useRoute } from 'vue-router';
 import ResponseForm from '../components/ResponseForm.vue';
 import { getResponseByID, updateResponse as updateResponseFunc } from '../store/response';
-import { Response } from '../types/response';
+import { IResponse } from '../types/response';
 import { router } from '../../router';
-import Navbar from '../../navbar/components/navbar.vue';
+import Navbar from '../../navbar/components/Navbar.vue';
 
 const response = getResponseByID(+useRoute().params.responseID);
 
-const updateResponse = async (response: Response) => {
+const updateResponse = async (response: IResponse) => {
     await updateResponseFunc(response);
     router.push({name: "ticketView", params: {ticketID: response.ticket_id}});
 }

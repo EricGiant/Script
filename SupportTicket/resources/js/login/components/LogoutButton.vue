@@ -4,10 +4,10 @@ import { logout } from "../store/authentication";
 import { removeUserStore } from "../../user/store/user";
 import { removeNoteStore } from "../../note/store/note";
 
-const onLogout = () =>{
-    logout();
+const onLogout = async () =>{
     removeUserStore();
     removeNoteStore();
+    await logout();
     router.push({name: "login"});
 };
 </script>

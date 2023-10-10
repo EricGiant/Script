@@ -3,8 +3,12 @@ import Navbar from '../../navbar/components/Navbar.vue';
 import { getCategories, deleteCategory } from '../store/category';
 import { computed } from 'vue';
 
-//for some reason directly editing the getCategories without a function/computed will cause it to lose reactivity. to fix this just make it a computed.
-const allCategoriesFiltered = computed(() => getCategories().value?.sort((a, b) => a.title.localeCompare(b.title)));
+//for some reason directly editing the getCategories without a function/computed will cause it to lose reactivity. to fix this just make it a computed. also make a copy of it because otherwise it causes a store edit
+const allCategoriesFiltered = computed(() => {
+    const categories = getCategories().value;
+    if(categories == undefined) return
+    return [...categories].sort((a, b) => a.title.localeCompare(b.title));
+});
 
 const deleteCategoryCheck = async (id: number) => {
     if(confirm("ARE U SURE U WANT TO DELETE THIS CATEGORY?"))

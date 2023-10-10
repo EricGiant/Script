@@ -40,6 +40,11 @@ class CategoryController extends Controller
     {
         $this -> authorize("delete", Category::class);
 
+        if(count($category -> tickets) > 0)
+        {
+            return response("ticketFound");
+        }
+
         $category -> delete();
 
         return(response(CategoryResource::collection(Category::all())));

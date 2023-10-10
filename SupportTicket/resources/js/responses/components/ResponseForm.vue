@@ -1,9 +1,9 @@
 <script setup lang = "ts">
 import { computed } from 'vue';
-import { Response } from '../types/response';
+import { IResponse } from '../types/response';
 
 const props = defineProps<{
-    response: Response
+    response: IResponse
 }>()
 
 const emits = defineEmits(["submitForm"]);

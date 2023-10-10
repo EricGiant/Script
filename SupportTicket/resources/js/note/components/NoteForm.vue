@@ -1,9 +1,9 @@
 <script setup lang = "ts">
-import { Note } from '../types/notes';
+import { INote } from '../types/note';
 import { computed } from 'vue';
 
 const props = defineProps<{
-    note: Note
+    note: INote
 }>();
 
 const emits = defineEmits(["submitForm"]);

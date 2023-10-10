@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class TicketResponse extends Mailable
+class NewUser extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -18,9 +18,10 @@ class TicketResponse extends Mailable
      *
      * @return void
      */
-    public function __construct(
-        public $id
-    ){}
+    public function __construct()
+    {
+        //
+    }
 
     /**
      * Get the message envelope.
@@ -30,7 +31,7 @@ class TicketResponse extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Ticket Response',
+            subject: 'New User',
         );
     }
 
@@ -42,7 +43,7 @@ class TicketResponse extends Mailable
     public function content()
     {
         return new Content(
-            view: 'mails.ticketresponse',
+            view: 'mails.newuser',
         );
     }
 

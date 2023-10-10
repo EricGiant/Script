@@ -11,11 +11,11 @@ const allTickets = getTickets();
 
 const tickets = computed(() => {
     if(!allTickets.value) return
-    if(user.value?.is_admin)
-    {
+    // if(user.value?.is_admin)
+    // {
         return [...allTickets.value].reverse();
-    }
-    return allTickets.value?.filter((ticket) => ticket.user_id == user.value?.id).reverse();
+    // }
+    // return allTickets.value?.filter((ticket) => ticket.user_id == user.value?.id).reverse();
 });
 
 const appointedUserCheck = (id: number) => {
@@ -46,11 +46,14 @@ const appointedUserCheck = (id: number) => {
             <td>{{ ticket.id }}</td>
             <td>{{ ticket.title }}</td>
             <td>{{ printCategoriesByID(ticket.category_ids) }}</td>
-            <td>{{ getStatusByID(ticket.status_id).value?.title }}</td>
-            <td>{{ getUserByID(ticket.user_id).value?.full_name }}</td>
+            <!-- <td>{{ getStatusByID(ticket.status_id).value?.title }}</td> -->
+            <td>{{ ticket.status }}</td>
+            <!-- <td>{{ getUserByID(ticket.user_id).value?.full_name }}</td> -->
+            <td>{{ ticket.user }}</td>
             <td>{{ ticket.created_at }}</td>
             <td>{{ ticket.updated_at }}</td>
-            <td>{{ appointedUserCheck(ticket.appointed_to_id) }}</td>
+            <!-- <td>{{ appointedUserCheck(ticket.appointed_to_id) }}</td> -->
+            <td>{{ ticket.appointed_to_user }}</td>
             <td><router-link :to = "{name: 'ticketView', params: {ticketID: ticket.id}}">VIEW TICKET</router-link></td>
             <td><router-link :to = "{name: 'ticketEdit', params: {ticketID: ticket.id}}">EDIT TICKET</router-link></td>
         </tr>

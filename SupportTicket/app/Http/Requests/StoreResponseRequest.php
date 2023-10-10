@@ -14,8 +14,8 @@ class StoreResponseRequest extends FormRequest
     public function rules()
     {
         return [
-            "content" => "required|min:1|max:4000"
-            //user_id has to exist on this ticket and not just in the table, this was hard AF to do and i couldn't figure out last time
+            "content" => "required|min:1|max:4000",
+            "ticket_user_id" => "required|exists:users,id"
         ];
     }
 }

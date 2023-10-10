@@ -14,7 +14,6 @@ export const forgotPassword = async (email: string) => {
     await axios.post("/api/authenticate/sendResetPasswordEmail", {email: email});
 };
 
-//use interceptor to make catch errors and show them this is currently not implomented yet
 export const updatePassword = async (password: string, token: string) => {
     await axios.patch("/api/authenticate/updatePassword", {password: password, token: token});
 };

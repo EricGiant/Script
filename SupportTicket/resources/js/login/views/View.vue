@@ -4,20 +4,37 @@ import { router } from '../../router';
 import LoginForm from '../components/LoginForm.vue';
 import { authenticateUser } from '../store/authentication';
 import { Login } from '../types/login';
-import { setUser } from '../../user/store/user';
+import { loadAssets, setUser } from '../../user/store/user';
 import { getError } from '../../error/store/error';
 import { getAllNotes } from '../../note/store/note';
+import { getAllTickets } from "../../ticket/store/ticket";
+import { getAllUsers } from "../../user/store/users";
 
 const password_error = ref("");
 const email_error = ref("");
 
 const submitForm = async (data: Login) => {
-    const response = await authenticateUser(data);
-    password_error.value = "";
-    email_error.value = "";
-    if(response == undefined)
-    {
+    try {
+        const response = await authenticateUser(data);
+        if(typeof response == "object")
+        {
+            // await getAllTickets();
+            loadAssets(response);
+            setUser(response);
+            
+            // //only load in notes if user that is logging in is an admin
+            // if(response.is_admin)
+            // {
+            //     await getAllNotes();
+            //     await getAllUsers();
+            // }
+            
+            router.push({name: "ticketOverview"});
+        }
+    } catch(e) {
         const error = getError().value;
+        password_error.value = "";
+        email_error.value = "";
         if(error?.code == 422)
         {
             email_error.value = error.message;
@@ -27,19 +44,8 @@ const submitForm = async (data: Login) => {
             password_error.value = error.message;
         }
     }
-    else if(typeof response == "object")
-    {
-        setUser(response);
-        
-        //only load in notes if user that is logging in is an admin
-        if(response.is_admin)
-        {
-            await getAllNotes();
-        }
-        
-        router.push({name: "ticketOverview"});
-    }
 }
+
 </script>
 
 <template>

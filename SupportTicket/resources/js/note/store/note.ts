@@ -1,8 +1,8 @@
 import { computed, ref } from "vue";
-import { Note } from "../types/notes";
+import { INote } from "../types/note";
 import axios from "../../api";
 
-const notes = ref<Note[]>()
+const notes = ref<INote[]>()
 
 export const getAllNotes = async () => {
     const {data} = await axios.get("/api/notes/index")
@@ -12,7 +12,7 @@ export const getAllNotes = async () => {
 
 export const getNotes = () => computed(() => notes.value);
 
-export const storeNote = async (note: Note) => {
+export const storeNote = async (note: INote) => {
     const {data} = await axios.post("/api/notes/store", {content: note.content, ticket_id: note.ticket_id});
     if(!data) return
     notes.value = data;
