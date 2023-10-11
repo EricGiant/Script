@@ -18,6 +18,7 @@ class NotePolicy
      */
     public function viewAny(User $user)
     {
+        // TODO: probeer zoveel mogelijk === te gebruiken
         return $user -> is_admin == true;
     }
 

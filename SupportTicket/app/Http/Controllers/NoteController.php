@@ -24,6 +24,8 @@ class NoteController extends Controller
         $validated["user_id"] = auth() -> user() -> id;
         Note::create($validated);
 
+        // TODO: het is beter voor de modulariteit om de opgeslagen resource te returnen en aan de front-end kant een tweede request
+        // te doen om de index data op te vragen. Zo kun je uiteindelijk meer doen met je code.
         return($this -> index());
     }
 }
