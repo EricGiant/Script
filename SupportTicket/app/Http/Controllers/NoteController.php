@@ -24,6 +24,6 @@ class NoteController extends Controller
         $validated["user_id"] = auth() -> user() -> id;
         Note::create($validated);
 
-        return(response(NoteResource::collection(Note::all())));
+        return($this -> index());
     }
 }

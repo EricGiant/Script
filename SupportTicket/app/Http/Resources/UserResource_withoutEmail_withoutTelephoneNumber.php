@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TicketResource extends JsonResource
+class UserResource_withoutEmail_withoutTelephoneNumber extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,14 +15,12 @@ class TicketResource extends JsonResource
      */
     public function toArray($request)
     {
-        return[
+        return [
             "id" => $this -> id,
-            "title" => $this -> title,
-            "content" => $this -> content,
-            "appointed_to_id" => $this -> appointed_to_id,
-            "status_id" => $this -> status_id,
-            "user_id" => $this -> user_id,
-            "category_ids" => $this -> categories -> pluck("id"),
+            "first_name" => $this -> first_name,
+            "last_name" => $this -> last_name,
+            "full_name" => $this -> first_name . " " . $this -> last_name,
+            "is_admin" => $this -> is_admin,
             "created_at" => Carbon::createFromFormat("Y-m-d H:i:s", $this -> created_at) -> toDateTimeString(),
             "updated_at" => Carbon::createFromFormat("Y-m-d H:i:s", $this -> updated_at) -> toDateTimeString()
         ];

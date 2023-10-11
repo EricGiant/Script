@@ -1,12 +1,9 @@
 <script setup lang = "ts">
 import { router } from "../../router";
-import { logout } from "../store/authentication";
-import { removeUserStore } from "../../user/store/user";
-import { removeNoteStore } from "../../note/store/note";
+import { logout, unloadAssets } from "../store/authentication";
 
 const onLogout = async () =>{
-    removeUserStore();
-    removeNoteStore();
+    await unloadAssets();
     await logout();
     router.push({name: "login"});
 };

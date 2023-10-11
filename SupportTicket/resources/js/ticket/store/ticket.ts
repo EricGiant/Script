@@ -37,3 +37,5 @@ export const updateStatus = async (statusID: number, ticketID: number) => {
     if(!data) return
     tickets.value = data;
 }
+
+export const removeTicketStore = async () => tickets.value = [];

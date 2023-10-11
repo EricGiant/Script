@@ -22,7 +22,7 @@ class CategoryController extends Controller
 
         Category::create($validated);
 
-        return(response(CategoryResource::collection(Category::all())));
+        return($this -> index());
     }
 
     public function update(UpdateCategoryRequest $request, Category $category)
@@ -33,7 +33,7 @@ class CategoryController extends Controller
 
         $category -> update($validated);
         
-        return(response(CategoryResource::collection(Category::all())));
+        return($this -> index());
     }
 
     public function delete(Category $category)
@@ -47,6 +47,6 @@ class CategoryController extends Controller
 
         $category -> delete();
 
-        return(response(CategoryResource::collection(Category::all())));
+        return($this -> index());
     }
 }

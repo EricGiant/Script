@@ -5,7 +5,7 @@ import axios from "../../api";
 const notes = ref<INote[]>()
 
 export const getAllNotes = async () => {
-    const {data} = await axios.get("/api/notes/index")
+    const {data} = await axios.get("/api/notes/index");
     if(!data) return
     notes.value = data;
 }

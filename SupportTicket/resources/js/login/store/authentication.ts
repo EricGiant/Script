@@ -1,4 +1,12 @@
 import axios from "../../api";
+import { getAllCategories } from "../../category/store/category";
+import { getAllNotes, removeNoteStore } from "../../note/store/note";
+import { getAllResponses, removeResponseStore } from "../../responses/store/response";
+import { getAllStatuses } from "../../status/store/status";
+import { getAllTickets, getTickets, removeTicketStore } from "../../ticket/store/ticket";
+import { removeUserStore } from "../../user/store/user";
+import { getAllUsers, removeUsersStore } from "../../user/store/users";
+import { IUser } from "../../user/types/user";
 import { Login } from "../types/login";
 
 export const authenticateUser = async (formData: Login) => {
@@ -17,3 +25,24 @@ export const forgotPassword = async (email: string) => {
 export const updatePassword = async (password: string, token: string) => {
     await axios.patch("/api/authenticate/updatePassword", {password: password, token: token});
 };
+
+export const loadAssets = async (user: IUser) => {
+    await getAllCategories();
+    await getAllStatuses();
+    await getAllTickets();
+    await getAllResponses();
+    await getAllUsers();
+    if(user.is_admin)
+    {
+        await getAllNotes();
+        await getAllUsers();
+    }
+}
+
+export const unloadAssets = async () => {
+    await removeTicketStore();
+    await removeNoteStore();
+    await removeUsersStore();
+    await removeUserStore();
+    await removeResponseStore();
+}

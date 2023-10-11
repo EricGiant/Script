@@ -13,9 +13,23 @@ use Illuminate\Support\Facades\Mail;
 
 class ResponseController extends Controller
 {
-    public function index(Ticket $tickets)
+    public function index()
     {
-        return response(ResponseResource::collection(Response::all()));
+        $this -> authorize("viewAny", Response::class);
+
+        if(auth() -> user() -> is_admin)
+        {
+            return response(ResponseResource::collection(Response::all()));
+        }
+        $responses = [];
+        foreach(auth() -> user() -> tickets as $ticket)
+        {
+            foreach($ticket -> responses as $response)
+            {
+                array_push($responses, $response);
+            }
+        }
+        return response(ResponseResource::collection($responses));
     }
 
     public function store(StoreResponseRequest $request, Ticket $ticket)
@@ -34,7 +48,7 @@ class ResponseController extends Controller
 
         Mail::to(User::find($ticket -> user_id) -> email) -> send(new TicketResponse($ticket -> id));
 
-        return response(ResponseResource::collection(Response::all()));
+        return response($this -> index());
     }
 
     public function update(UpdateResponseRequest $request, Response $response)
@@ -45,6 +59,6 @@ class ResponseController extends Controller
 
         $response -> update($validated);
 
-        return response(ResponseResource::collection(Response::all()));
+        return response($this -> index());
     }
 }

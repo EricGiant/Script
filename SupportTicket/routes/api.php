@@ -7,7 +7,9 @@ use App\Http\Controllers\ResponseController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
+use App\Models\Ticket;
 use Illuminate\Support\Facades\Route;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,8 +39,7 @@ Route::get("/api/users/index", [UserController::class, "index"]);
 Route::patch("/api/users/update/{user}", [UserController::class, "update"]);
 Route::delete("/api/users/delete/{user}", [UserController::class, "delete"]);
 Route::post("/api/users/create", [UserController::class, "store"]);
-// Route::get("/api/responses/index", [ResponseController::class, "index"]);
-Route::get("/api/responses/index/{tickets}", [ResponseController::class, "index"]);
+Route::get("/api/responses/index", [ResponseController::class, "index"]);
 Route::post("/api/responses/store/{ticket}", [ResponseController::class, "store"]);
 Route::patch("/api/responses/update/{response}", [ResponseController::class, "update"]);
 Route::get("/api/statuses/index", [StatusController::class, "index"]);

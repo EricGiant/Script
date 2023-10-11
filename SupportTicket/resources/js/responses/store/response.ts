@@ -1,7 +1,6 @@
 import { computed, ref } from "vue";
 import { IResponse } from "../types/response";
 import axios from "../../api";
-import { getTickets } from "../../ticket/store/ticket";
 
 const responses = ref<IResponse[]>();
 
@@ -26,3 +25,5 @@ export const updateResponse = async (response: IResponse) => {
     if(!data) return
     responses.value = data;
 }
+
+export const removeResponseStore = async () => responses.value = [];

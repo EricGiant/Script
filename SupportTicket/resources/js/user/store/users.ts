@@ -55,3 +55,5 @@ export const createUser = async (user: IUser) => {
     if(!data) return
     users.value = data;
 }
+
+export const removeUsersStore = async () => users.value = [];

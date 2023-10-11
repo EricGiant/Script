@@ -4,7 +4,7 @@ import { getAdminUsers, getUserByID } from '../../user/store/users';
 import { updateAppointedTo } from '../store/ticket';
 import { Ticket } from '../types/ticket';
 
-const props = defineProps<{
+defineProps<{
     ticket: Ticket
 }>();
 

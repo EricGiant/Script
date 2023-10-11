@@ -13,6 +13,8 @@ class TicketController extends Controller
 {
     public function index()
     {
+        $this -> authorize("viewAny", Ticket::class);
+
         if(auth() -> user() -> is_admin)
         {
             return TicketResource::collection(Ticket::all());
@@ -33,8 +35,7 @@ class TicketController extends Controller
         $ticket = Ticket::create($validated);
         $ticket -> categories() -> sync($validated["category_ids"]);
 
-        // return(response(TicketResource::collection(Ticket::all())));
-        return response(TicketController::class, "index");
+        return response($this -> index());
     }
 
     public function update(UpdateTicketRequest $request, Ticket $ticket)
@@ -44,8 +45,9 @@ class TicketController extends Controller
         $this -> authorize("update", $ticket);
 
         $ticket -> update($validated);
+        $ticket -> categories() -> sync($validated["category_ids"]);
 
-        return(response(TicketResource::collection(Ticket::all())));
+        return response($this -> index());
     }
 
     public function updateAppointedTo(UpdateTicketAppointedToRequest $request, Ticket $ticket)
@@ -56,7 +58,7 @@ class TicketController extends Controller
 
         $ticket -> update(["appointed_to_id" => $validated["appointed_to_id"]]);
 
-        return(response(TicketResource::collection(Ticket::all())));
+        return response($this -> index());
     }
 
     public function updateStatus(UpdateTicketStatusRequest $request, Ticket $ticket)
@@ -67,6 +69,6 @@ class TicketController extends Controller
 
         $ticket -> update(["status_id" => $validated["status_id"]]);
 
-        return(response(TicketResource::collection(Ticket::all())));
+        return response($this -> index());
     }
 }
