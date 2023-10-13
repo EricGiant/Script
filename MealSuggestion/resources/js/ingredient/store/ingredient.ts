@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { Ingredient } from "../types/ingredient";
 import axios from "axios";
 
@@ -12,6 +12,18 @@ export const getAllIngredients = async () => {
 
 export const storeIngredient = async (ingredient: Ingredient) => {
     const { data } = await axios.post("/api/storeIngredient", ingredient);
-    if (!data) return;
-    getAllIngredients();
+    await getAllIngredients();
 };
+
+export const getIngredients = () => computed(() => ingredients.value);
+
+export const searchIngredients = (search: string) => {
+    if (!ingredients.value) return;
+    if (!search) return ingredients.value;
+    return [...ingredients.value].filter((ingredients) =>
+        ingredients.name.toLowerCase().includes(search.toLowerCase())
+    );
+};
+
+export const getIngredientById = (id: number) =>
+    ingredients.value?.find((ingredient) => ingredient.id === id);

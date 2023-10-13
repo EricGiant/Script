@@ -6,10 +6,14 @@
         <router-link :to="{ name: 'ingredientCreate' }"
             >CREATE INGREDIENT</router-link
         >
+        <router-link :to="{ name: 'recipeCreate' }">CREATE RECIPE</router-link>
     </nav>
 </template>
 
 <style scoped>
+nav {
+    text-align: center;
+}
 a {
     padding-left: 5px;
     padding-right: 5px;

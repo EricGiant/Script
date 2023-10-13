@@ -23,7 +23,7 @@ class RecipeSeeder extends Seeder
                 array_push($ingredients, rand(1, Count(Ingredient::all())));
             }
 
-            $syncData = array_fill_keys($ingredients, ["amount" => rand(1, 4)]);
+            $syncData = array_fill_keys($ingredients, ["amount" => rand(1, 4)]); //this will generate only 1 type of amount value, if time/energy is there make this also random
 
             $recipe -> ingredients() -> sync($syncData);
         });

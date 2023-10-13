@@ -15,7 +15,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        // $this -> authorize("viewAny", Category::all());
+        // $this->authorize('viewAny', Category::all());
         
         return response(CategoryResource::collection(Category::all()));
     }

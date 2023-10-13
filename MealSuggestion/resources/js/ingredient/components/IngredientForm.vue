@@ -20,6 +20,7 @@ const categorySelect = (category: Category) => {
 <template>
     <Navbar />
     <form>
+        <label id="categoryLabel">CATEGORY</label>
         <CategorySelecterBox @press-category="categorySelect" />
         <label for="name">NAME</label><br />
         <input type="text" id="name" v-model="ingredient.name" /><br />
@@ -29,11 +30,11 @@ const categorySelect = (category: Category) => {
 
 <style scoped>
 form {
+    margin-top: 5px;
     text-align: center;
 }
 #box {
-    margin-top: 20px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 label {
     display: inline-block;

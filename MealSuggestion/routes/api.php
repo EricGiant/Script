@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\IngredientController;
+use App\Http\Controllers\RecipeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,4 +18,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/getIngredients', [IngredientController::class, 'index']);
 Route::post('/storeIngredient', [IngredientController::class, 'store']);
-Route::get("/getCategories", [CategoryController::class, "index"]);
+Route::get('/getCategories', [CategoryController::class, 'index']);
+Route::get('/getRecipes', [RecipeController::class, 'index']);
+Route::post('/storeRecipe', [RecipeController::class, 'store']);
