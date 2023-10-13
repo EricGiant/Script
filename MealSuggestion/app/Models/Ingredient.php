@@ -9,6 +9,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Ingredient extends Model
 {
+    protected $fillable = [
+        'name',
+        'category_id'
+    ];
+
     public function Category(): BelongsTo
     {
         return $this -> belongsTo(Category::class);
