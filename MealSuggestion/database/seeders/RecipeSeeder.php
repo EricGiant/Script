@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Ingredient;
 use App\Models\Recipe;
 use Illuminate\Database\Seeder;
+use PHPUnit\Framework\Constraint\Count;
 
 class RecipeSeeder extends Seeder
 {
@@ -17,13 +18,20 @@ class RecipeSeeder extends Seeder
     {
         Recipe::factory(10) -> create() -> each(function ($recipe)
         {
-            $ingredients = [];
-            for($i = 0; $i < rand(2, 4); $i++)
+            $loopValue = rand(2, 4);
+            $ingredientIds = [];
+            for($i = 0; $i < $loopValue; $i++)
             {
-                array_push($ingredients, rand(1, Count(Ingredient::all())));
+                array_push($ingredientIds, rand(1, Count(Ingredient::all())));
             }
 
-            $syncData = array_fill_keys($ingredients, ["amount" => rand(1, 4)]); //this will generate only 1 type of amount value, if time/energy is there make this also random
+            $amountValues = [];
+            for($i = 0; $i < $loopValue; $i++)
+            {
+                array_push($amountValues, ['amount' => rand(1, 4)]);
+            }
+
+            $syncData = array_combine($ingredientIds, $amountValues);
 
             $recipe -> ingredients() -> sync($syncData);
         });

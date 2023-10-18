@@ -23,9 +23,12 @@ const ingredientSelect = (incommingIngredient: Ingredient) =>
 const addIngredient = () => {
     if (!ingredient.value) return;
     if (amount.value === 0 || !amount.value) return;
-    //prettier-ignore
-    //@ts-ignore for some reason it still says ingredient.value can be undefined even do the code can't get here when it's undefined, also prettier breaks this comment so prettier ignore it
-    if (recipe.value.ingredients.find((recipeIngredient) => recipeIngredient.id === ingredient.value.id)) return;
+    if (
+        recipe.value.ingredients.find(
+            (recipeIngredient) => recipeIngredient.id === ingredient.value?.id
+        )
+    )
+        return;
     recipe.value.ingredients.push({
         id: ingredient.value.id,
         amount: amount.value,
@@ -35,7 +38,7 @@ const addIngredient = () => {
 
 const removeIngredient = (id: number) => {
     const index = recipe.value.ingredients.findIndex(
-        (recipeIngredient) => recipeIngredient.id === id
+        (ingredient) => ingredient.id === id
     );
     recipe.value.ingredients.splice(index, 1);
 };
@@ -51,7 +54,7 @@ const removeIngredient = (id: number) => {
         <label id="ingredientLabel">INGREDIENTS</label>
         <IngredientSelecterBox @press-ingredient="ingredientSelect" />
         <label for="amount">AMOUNT</label><br />
-        <input type="number" v-model="amount" /><br />
+        <input type="number" v-model="amount" id="amount" /><br />
         <input type="submit" @click.prevent="addIngredient" /><br />
         <label>SELECTED INGREDIENTS</label>
         <div id="selectedIngredients">

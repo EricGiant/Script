@@ -16,17 +16,18 @@ class RecipeResource extends JsonResource
      */
     public function toArray($request)
     {
+
         $ingredients = [];
         foreach($this->ingredients as $ingredient )
         {
-            array_push($ingredients, ['id' => $ingredient->id, 'amount' => DB::table('ingredient_recipe')->where('recipe_id', $this -> id)->where('ingredient_id', $ingredient->id)->pluck('amount')]);
+            array_push($ingredients, ['id' => $ingredient->id, 'amount' => $ingredient->pivot->amount]);
         }
 
         return [
             'id' => $this->id,
             'name' => $this->name,
             'content' => $this->content,
-            'ingredients' => $ingredients, //TEMPORARILY JUST MAKE IT WORK ASK JASPER FOR HELP ON THIS
+            'ingredients' => $ingredients,
             'created_at' => Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at)->toDateTimeString(),
             'updated_at' => Carbon::createFromFormat('Y-m-d H:i:s', $this->updated_at)->toDateTimeString(),
         ];
