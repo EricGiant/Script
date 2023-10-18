@@ -17,7 +17,6 @@ class DatabaseSeeder extends Seeder
         $this -> call([
             CategorySeeder::class,
             IngredientSeeder::class,
-            IngredientStockListSeeder::class, //how this will work is a problem for future me, ask jasper for help on this
             RecipeSeeder::class,
             UserSeeder::class,
         ]);

@@ -3,6 +3,8 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\RecipeController;
+use App\Http\Controllers\StockListController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,3 +23,6 @@ Route::post('/storeIngredient', [IngredientController::class, 'store']);
 Route::get('/getCategories', [CategoryController::class, 'index']);
 Route::get('/getRecipes', [RecipeController::class, 'index']);
 Route::post('/storeRecipe', [RecipeController::class, 'store']);
+Route::get('/getStockList', [StockListController::class, 'index']);
+Route::post('/addIngredients', [UserController::class, 'addIngredients']);
+Route::get('/getUsers', [UserController::class, 'index']);

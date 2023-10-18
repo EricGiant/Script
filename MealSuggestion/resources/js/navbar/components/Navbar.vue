@@ -7,6 +7,9 @@
             >CREATE INGREDIENT</router-link
         >
         <router-link :to="{ name: 'recipeCreate' }">CREATE RECIPE</router-link>
+        <router-link :to="{ name: 'ingredient_userCreate' }"
+            >ADD TO STOCKLIST</router-link
+        >
     </nav>
 </template>
 

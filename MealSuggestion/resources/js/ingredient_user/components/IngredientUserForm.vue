@@ -1,19 +1,17 @@
 <script setup lang="ts">
-import IngredientSelecterBox from "../../ingredient/components/IngredientSelecterBox.vue";
-import { Ingredient } from "../../ingredient/types/ingredient";
-import { Recipe } from "../types/recipe";
-import { getIngredientById } from "../../ingredient/store/ingredient";
 import { ref } from "vue";
-import { Input } from "postcss";
-import Navbar from "../../navbar/components/Navbar.vue";
+import IngredientSelecterBox from "../../ingredient/components/IngredientSelecterBox.vue";
+import { getIngredientById } from "../../ingredient/store/ingredient";
+import { IngredientUser } from "../types/ingredientUser";
+import { Ingredient } from "../../ingredient/types/ingredient";
 
 const props = defineProps<{
-    recipe: Recipe;
+    ingredients: IngredientUser[];
 }>();
 
 defineEmits(["submitForm"]);
 
-const recipe = ref({ ...props.recipe });
+const ingredients = ref([...props.ingredients]);
 const amount = ref<number>();
 const ingredient = ref<Ingredient>();
 
@@ -24,33 +22,27 @@ const addIngredient = () => {
     if (!ingredient.value) return;
     if (!amount.value || amount.value <= 0) return;
     if (
-        recipe.value.ingredients.find(
-            (recipeIngredient) => recipeIngredient.id === ingredient.value?.id
+        ingredients.value.find(
+            (entry) => entry.ingredient_id === ingredient.value?.id
         )
     )
         return;
-    recipe.value.ingredients.push({
-        id: ingredient.value.id,
-        amount: amount.value,
-    });
+    ingredients.value.push(
+        new IngredientUser(ingredient.value.id, amount.value)
+    );
     amount.value = 0;
 };
 
 const removeIngredient = (id: number) => {
-    const index = recipe.value.ingredients.findIndex(
-        (ingredient) => ingredient.id === id
+    const index = ingredients.value.findIndex(
+        (ingredient) => ingredient.ingredient_id === id
     );
-    recipe.value.ingredients.splice(index, 1);
+    ingredients.value.splice(index, 1);
 };
 </script>
 
 <template>
-    <Navbar />
     <form>
-        <label for="name">NAME</label><br />
-        <input type="text" v-model="recipe.name" id="name" /><br />
-        <label for="content">CONTENT</label><br />
-        <textarea id="content" v-model="recipe.content"></textarea><br />
         <label id="ingredientLabel">INGREDIENTS</label>
         <IngredientSelecterBox @press-ingredient="ingredientSelect" />
         <label for="amount">AMOUNT</label><br />
@@ -58,18 +50,23 @@ const removeIngredient = (id: number) => {
         <input type="submit" @click.prevent="addIngredient" /><br />
         <label>SELECTED INGREDIENTS</label>
         <div id="selectedIngredients">
-            <p v-for="ingredient in recipe.ingredients">
+            <p v-for="ingredient in ingredients">
                 {{
-                    getIngredientById(ingredient.id)?.name +
+                    getIngredientById(ingredient.ingredient_id)?.name +
                     " " +
                     ingredient.amount
                 }}
-                <button @click.prevent="removeIngredient(ingredient.id)">
+                <button
+                    @click.prevent="removeIngredient(ingredient.ingredient_id)"
+                >
                     REMOVE
                 </button>
             </p>
         </div>
-        <input type="submit" @click.prevent="$emit('submitForm', recipe)" />
+        <input
+            type="submit"
+            @click.prevent="$emit('submitForm', ingredients)"
+        />
     </form>
 </template>
 
@@ -84,13 +81,6 @@ label {
 }
 input {
     margin-bottom: 5px;
-}
-
-textarea {
-    margin-bottom: 5px;
-    resize: none;
-    width: 400px;
-    height: 200px;
 }
 
 #box {
