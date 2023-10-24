@@ -1,42 +1,34 @@
 import { computed, ref } from "vue";
-import { router } from "../router/index";
 
-export let id = 3; // TODO: kan weg, sowieso als export, maar ook als variable
 export const products = ref([
   {
     id: 0,
-    name: "test", // TODO: kies echte productnamen...
+    name: "potatoe",
     price: 5,
     amount: 5,
   },
   {
     id: 1,
-    name: "test2",
+    name: "steak",
     price: 4,
     amount: 10,
   },
   {
     id: 2,
-    name: "test3",
+    name: "milk",
     price: 50,
     amount: 1,
   },
 ]);
 
 export const addProduct = (product) => {
-  // TODO: Je kunt de id automatisch bepalen door products.value.length te gebruiken
-  product.id = id;
-  // TODO: het is niet nodig een deep copy te maken zoals hier onder, je kunt het product rechtstreeks toevoegen
-  products.value.push({ ...product });
-  id++;
-  // TODO: routing doe je liever vanuit de page ipv store zodat je meer controle hebt
-  router.push("/");
+  product.id = products.value.length;
+  console.log(products);
 };
 
 export const editProduct = (product) => {
   const index = products.value.findIndex((item) => item.id == product.id);
   products.value[index] = product;
-  router.push("/");
 };
 
 export const deleteProduct = (product) => {

@@ -1,10 +1,14 @@
 <script setup>
 import GroceryForm from "../../components/GroceryForm.vue";
-import { addProduct, all } from "../../store/Groceries";
+import { addProduct } from "../../store/groceries";
+import { router } from "../../router/index"
+
+const addProductFunc = (product) => {
+    addProduct(product);
+    router.push("/");
+}
 </script>
 
-<!-- TODO: product property voor GroceryForm component ontbreekt! -->
-
 <template>
-  <GroceryForm @addProduct="addProduct" />
+  <GroceryForm :product="{}"  @addProduct="addProductFunc" />
 </template>

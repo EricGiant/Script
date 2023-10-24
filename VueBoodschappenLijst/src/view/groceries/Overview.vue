@@ -1,5 +1,5 @@
 <script setup>
-import { products, deleteProduct } from "../../store/Groceries";
+import { products, deleteProduct } from "../../store/groceries";
 import GroceriesTable from "../../components/GroceriesTable.vue";
 </script>
 

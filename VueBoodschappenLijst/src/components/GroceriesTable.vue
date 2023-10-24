@@ -1,6 +1,6 @@
 <script setup>
 import { defineProps, defineEmits } from 'vue';
-import { totalPrice } from '../store/Groceries';
+import { totalPrice } from '../store/groceries';
 
 const props = defineProps({
     products: Array
@@ -31,6 +31,7 @@ const emits = defineEmits(["deleteProduct"]);
             <td></td>
             <td></td>
             <td v-if = "totalPrice != 0">{{totalPrice}}</td>
+            <td v-else>0</td>
         </tr>
     </table>
 </template>
