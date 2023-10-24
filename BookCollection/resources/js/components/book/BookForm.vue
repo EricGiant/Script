@@ -17,8 +17,6 @@ const authors = getAuthors();
 
 const searchAuthors = computed(() => {
     if (!search.value) return authors.value;
-    // TODO: onderstaande filter functie zou ik in de store als getter plaatsen (zodat je hem
-    // makkelijk kunt hergebruiken)
     return authors.value.filter((author) =>
         author.name.toLowerCase().includes(search.value.toLowerCase())
     );

@@ -1,13 +1,11 @@
 import axios from "axios";
 import { ComputedRef, computed, ref } from "vue";
 import { Author } from "../types/author";
-import { getAllBooks } from "./books";
+import { setBooks } from "./books";
 
 const authors = ref<Author[]>([]);
 
-// TODO: om duidelijk onderscheid tussen getters en actions te maken zou ik de
-// actions zoals hier onder set<action name> noemen, dus setAuthors
-export const getAllAuthors = async () => {
+export const setAuthors = async () => {
     const { data } = await axios.get("/api/getAuthors");
     if (!data) return;
     authors.value = data;
@@ -20,24 +18,18 @@ export const getAuthorById = (id: number): ComputedRef =>
 
 export const addAuthor = async (author: Author) => {
     const { data } = await axios.post("/api/addAuthor", { name: author.name });
-    if (!data) return;
-    authors.value = data;
+    await setAuthors();
 };
 
 export const updateAuthor = async (author: Author) => {
-    // TODO: gebruik evt. object destructuring in de functie parameter om id en name
-    // als lokale variabelen beschikbaar te maken, levert leesbaardere code op
     const { data } = await axios.patch("/api/updateAuthor/" + author.id, {
         name: author.name,
     });
-    if (!data) return;
-    authors.value = data;
+    await setAuthors();
 };
 
 export const deleteAuthor = async (id: number) => {
     const { data } = await axios.delete("/api/deleteAuthor/" + id);
-    if (!data) return;
-    authors.value = data;
-    getAllBooks(); // TODO: deze method zou ik vanuit de pagina aanroepen zodat
-    // je store methods modulair blijven (minder dependencies)
+    await setAuthors();
+    await setBooks();
 };

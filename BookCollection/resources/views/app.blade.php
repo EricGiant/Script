@@ -1,4 +1,13 @@
-<!-- TODO: voeg geldige HTML structuur toe, want dit is een incompeleet HTML document -->
-@vite(['resources/css/app.css', 'resources/js/app.ts'])
-<div id = "app">
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOOK COLLECTION</title>
+</head>
+<body>
+    @vite(['resources/css/app.css', 'resources/js/app.ts'])
+    <div id = "app">
+    </div>
+</body>
+</html>

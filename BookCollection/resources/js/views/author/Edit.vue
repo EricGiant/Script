@@ -5,7 +5,6 @@ import AuthorForm from "../../components/author/AuthorForm.vue";
 import { Author } from "../../types/author";
 import { router } from "../../router";
 
-// TODO route param in aparte ref zetten en hergebruiken
 const authorData = getAuthorById(+useRoute().params.authorID);
 
 const submitAuthor = async (data: Author) => {

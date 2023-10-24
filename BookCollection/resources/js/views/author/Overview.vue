@@ -1,9 +1,5 @@
-<!-- TODO: map "views" zou ik "pages" noemen -->
 <script setup lang="ts">
 import { getAuthors } from "../../store/authors";
-
-// TODO: het filter op regel 13 zou ik in de store inbouwen en een aparte getter voor
-// schrijven
 const authors = getAuthors();
 </script>
 

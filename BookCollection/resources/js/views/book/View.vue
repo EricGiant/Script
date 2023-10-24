@@ -7,8 +7,6 @@ import { getReviewsByBookId, addReview } from "../../store/reviews";
 import ReviewForm from "../../components/review/ReviewForm.vue";
 import { Review } from "../../types/review";
 
-// TODO: deze pagina zou ik Show.vue noemen
-
 const bookID = +useRoute().params.bookID;
 const reviews = getReviewsByBookId(bookID);
 //empty review is used to trigger vue to trigger the reviewData to trigger the computed in the reviewForm so it will reset the textfield (same idea is used in bookform)

@@ -27,10 +27,6 @@ class BookController extends Controller
 
         //make DB entry
         Book::create($validated);
-
-        //load new data in
-        $books = Book::all();
-        return response() -> json($books);
     }
 
     //update book in DB
@@ -52,10 +48,6 @@ class BookController extends Controller
 
         //update DB entry
         $book -> update($validated);
-        
-        //load new data in
-        $books = Book::all();
-        return response() -> json($books);
     }
 
     //delete book in DB
@@ -67,9 +59,5 @@ class BookController extends Controller
 
         //delete DB entry
         $book -> delete();
-
-        //load new data in
-        $books = Book::all();
-        return response() -> json($books);
     }
 }

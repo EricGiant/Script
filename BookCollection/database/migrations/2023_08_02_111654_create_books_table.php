@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('books', function (Blueprint $table) {
             $table->id();
-            // TODO: spaties tussen arrow verwijderen
-            $table -> integer("author_id");
+            $table -> unsignedBigInteger("author_id");
+            $table -> foreign("author_id") -> references("id") -> on("authors");
             $table -> string("name", 100);
             $table -> string("image_path", 255);
             $table->timestamps();

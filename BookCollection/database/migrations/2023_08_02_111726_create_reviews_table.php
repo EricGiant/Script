@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
-            $table -> integer("book_id");
-            // TODO: foreign key ontbreekt? nog toevoegen
+            $table -> unsignedBigInteger("book_id");
+            $table -> foreign("book_id") -> references("id") -> on("books");
             $table -> text("content");
             $table->timestamps();
         });
