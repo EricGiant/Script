@@ -25,4 +25,4 @@ Route::get('/getRecipes', [RecipeController::class, 'index']);
 Route::post('/storeRecipe', [RecipeController::class, 'store']);
 Route::get('/getStockList', [StockListController::class, 'index']);
 Route::post('/addIngredients', [UserController::class, 'addIngredients']);
-Route::get('/getUsers', [UserController::class, 'index']);
+Route::get('/getUsers', [UserController::class, 'index']); //should this be user or users since it's index? but index only loads 1 user which is the active user

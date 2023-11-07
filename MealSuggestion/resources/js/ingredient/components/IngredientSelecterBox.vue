@@ -32,11 +32,16 @@ const search = ref("");
     margin: auto;
     border: 2px solid black;
     text-align: left;
+    font-size: 0; /* this is to fix the random whitespace that now appears between the box and the input search because of a recent chrome update this started to happen */
 }
 input[type="text"] {
     overflow: hidden;
     outline: none;
     border: 1px solid black;
+    font-size: 14px;
+}
+label {
+    font-size: 16px;
 }
 #content {
     overflow-y: scroll;

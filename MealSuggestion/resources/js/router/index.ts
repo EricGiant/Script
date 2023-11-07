@@ -2,10 +2,10 @@ import { createWebHistory } from "vue-router";
 
 //view imports
 import { createRouter } from "vue-router";
-import HomeOverview from "../home/views/Overview.vue";
-import IngredientCreate from "../ingredient/views/Create.vue";
-import RecipeCreate from "../recipe/views/Create.vue";
-import StockListCreate from "../ingredient_user/views/Create.vue";
+import HomeOverview from "../home/pages/Overview.vue";
+import IngredientCreate from "../ingredient/pages/Create.vue";
+import RecipeCreate from "../recipe/pages/Create.vue";
+import StockListCreate from "../ingredient_user/pages/Create.vue";
 
 //URLS
 const routes = [

@@ -4,7 +4,7 @@ import axios from "axios";
 
 const categories = ref<Category[]>();
 
-export const getAllCategories = async () => {
+export const setCategories = async () => {
     const { data } = await axios.get("/api/getCategories");
     if (!data) return;
     categories.value = data;

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
-    public function Ingredients():HasMany
+    public function ingredients():HasMany
     {
         return $this -> hasMany(Ingredient::class);
     }

@@ -13,7 +13,7 @@ class Recipe extends Model
         'content'
     ];
 
-    public function Ingredients():BelongsToMany
+    public function ingredients():BelongsToMany
     {
         return $this->belongsToMany(Ingredient::class)->withPivot('amount');
     }

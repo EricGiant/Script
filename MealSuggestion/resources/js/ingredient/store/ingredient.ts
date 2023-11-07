@@ -4,7 +4,7 @@ import axios from "axios";
 
 const ingredients = ref<Ingredient[]>();
 
-export const getAllIngredients = async () => {
+export const setIngredients = async () => {
     const { data } = await axios.get("/api/getIngredients");
     if (!data) return;
     ingredients.value = data;
@@ -12,7 +12,7 @@ export const getAllIngredients = async () => {
 
 export const storeIngredient = async (ingredient: Ingredient) => {
     const { data } = await axios.post("/api/storeIngredient", ingredient);
-    await getAllIngredients();
+    await setIngredients();
 };
 
 export const getIngredients = () => computed(() => ingredients.value);

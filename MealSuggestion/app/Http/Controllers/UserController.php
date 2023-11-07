@@ -16,6 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
+        //should this be show or index since it will only load in the active user
         // $this->authorize('viewAny', User::class);
 
         // return response(new UserResource(auth() -> user()));

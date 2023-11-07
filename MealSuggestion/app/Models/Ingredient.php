@@ -14,12 +14,12 @@ class Ingredient extends Model
         'category_id'
     ];
 
-    public function Category(): BelongsTo
+    public function category(): BelongsTo
     {
         return $this -> belongsTo(Category::class);
     }
 
-    public function Recipes(): BelongsToMany
+    public function recipes(): BelongsToMany
     {
         return $this -> belongsToMany(Recipe::class);
     }
