@@ -10,6 +10,8 @@ export const setIngredients = async () => {
     ingredients.value = data;
 };
 
+export const unloadIngredients = () => (ingredients.value = []);
+
 export const storeIngredient = async (ingredient: Ingredient) => {
     const { data } = await axios.post("/api/storeIngredient", ingredient);
     await setIngredients();

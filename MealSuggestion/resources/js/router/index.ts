@@ -6,6 +6,7 @@ import HomeOverview from "../home/pages/Overview.vue";
 import IngredientCreate from "../ingredient/pages/Create.vue";
 import RecipeCreate from "../recipe/pages/Create.vue";
 import StockListCreate from "../ingredient_user/pages/Create.vue";
+import LoginView from "../login/pages/View.vue";
 
 //URLS
 const routes = [
@@ -21,6 +22,7 @@ const routes = [
         component: StockListCreate,
         name: "ingredient_userCreate",
     },
+    { path: "/login", component: LoginView, name: "loginView" },
 ];
 
 //router creation

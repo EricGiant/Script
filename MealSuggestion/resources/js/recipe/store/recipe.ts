@@ -10,6 +10,8 @@ export const setRecipes = async () => {
     recipes.value = data;
 };
 
+export const unloadRecipes = () => (recipes.value = []);
+
 export const createRecipe = async (recipe: Recipe) => {
     const { data } = await axios.post("/api/storeRecipe", recipe);
     await setRecipes();

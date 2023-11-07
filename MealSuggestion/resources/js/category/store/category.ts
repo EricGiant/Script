@@ -10,4 +10,6 @@ export const setCategories = async () => {
     categories.value = data;
 };
 
+export const unloadCategories = () => (categories.value = []);
+
 export const getCategories = () => computed(() => categories.value);

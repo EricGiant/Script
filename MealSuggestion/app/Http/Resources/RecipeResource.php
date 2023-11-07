@@ -16,7 +16,6 @@ class RecipeResource extends JsonResource
      */
     public function toArray($request)
     {
-
         $ingredients = [];
         foreach($this->ingredients as $ingredient )
         {

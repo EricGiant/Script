@@ -22,7 +22,6 @@ class UserResource extends JsonResource
             array_push($ingredients, ['id' => $ingredient->id, 'amount' => $ingredient->pivot->amount]);
         }
 
-
         return [
             'id' => $this->id,
             'name' => $this->name,

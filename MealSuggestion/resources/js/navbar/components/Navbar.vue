@@ -1,4 +1,14 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { logout } from "../../login/store/authentication";
+import { router } from "../../router";
+import { unloadAssets } from "../../login/store/authentication";
+
+const logUserOut = async () => {
+    await logout();
+    unloadAssets();
+    router.push({ name: "loginView" });
+};
+</script>
 
 <template>
     <nav>
@@ -10,6 +20,7 @@
         <router-link :to="{ name: 'ingredient_userCreate' }"
             >ADD TO STOCKLIST</router-link
         >
+        <button @click="logUserOut()">LOGOUT</button>
     </nav>
 </template>
 
