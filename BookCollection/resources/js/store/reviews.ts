@@ -21,8 +21,6 @@ export const addReview = async (review: Review) => {
         content: review.content,
         book_id: review.book_id,
     });
-    // TODO: setReviews loskoppelen van andere actions zodat code modulairder wordt.
-    // setReview kan dus in bijv. de show pagina die ook de addReview action aanroept
     setReviews();
 };
 

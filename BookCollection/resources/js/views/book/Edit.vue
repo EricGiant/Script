@@ -5,7 +5,6 @@ import { router } from "../../router";
 import { useRoute } from "vue-router";
 import { Book } from "../../types/book";
 
-// TODO: gebruik camelCase, dus bookId ipv bookID
 const bookData = getBookById(+useRoute().params.bookID);
 
 const submitBook = async (data: Book) => {
