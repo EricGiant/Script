@@ -14,8 +14,8 @@ class AddIngredientsRequest extends FormRequest
     public function rules()
     {
         return [
-            '*' => 'required|array|min:1|max:1000',
-            '*.ingredient_id' => 'required|integer|distinct|exists:ingredients,id',
+            '*' => 'required|array|min:1|max:100',
+            '*.ingredientId' => 'required|integer|distinct|exists:ingredients,id',
             '*.amount' => 'required|integer|min:1|max:1000'
         ];
     }

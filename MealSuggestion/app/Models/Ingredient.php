@@ -16,12 +16,12 @@ class Ingredient extends Model
 
     public function category(): BelongsTo
     {
-        return $this -> belongsTo(Category::class);
+        return $this->belongsTo(Category::class);
     }
 
     public function recipes(): BelongsToMany
     {
-        return $this -> belongsToMany(Recipe::class);
+        return $this->belongsToMany(Recipe::class);
     }
 
     use HasFactory;

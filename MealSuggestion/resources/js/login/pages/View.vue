@@ -1,18 +1,19 @@
 <script setup lang="ts">
-import LoginForm from "../pages/components/LoginForm.vue";
-import { Login } from "./types/login";
-import { authenticateUser, loadAssets } from "../store/authentication";
-import { getErrorsAsSingleString } from "../../error/store/error";
-import { router } from "../../router";
+import type {Login} from '../types/login';
+
+import {getErrorsAsSingleString} from '@/error/store/error';
+import {router} from '@/router';
+
+import LoginForm from '../components/LoginForm.vue';
+import {authenticateUser, loadAssets} from '../store/authentication';
 
 const logUserIn = async (login: Login) => {
     const data = await authenticateUser(login);
     if (data) {
         await loadAssets();
-        router.push({ name: "homeOverview" });
-    } else if (!data) {
-        alert(getErrorsAsSingleString());
-    }
+        router.push({name: 'homeOverview'});
+        // eslint-disable-next-line no-alert
+    } else if (!data) alert(getErrorsAsSingleString());
 };
 </script>
 

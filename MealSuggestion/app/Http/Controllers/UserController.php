@@ -66,27 +66,36 @@ class UserController extends Controller
 
     public function addIngredients(AddIngredientsRequest $request)
     {
-        // $this->authorize('addIngredients', User::class);
+        $this->authorize('addIngredients', User::class);
 
         $validated = $request->validated();
 
-        $ingredients = user::find(1)->ingredients;
-        // $ingredients = auth()->user()->ingredients;
+        $ingredients = auth()->user()->ingredients;
 
         //check for duplicate entries and if found remove it and add the amount to the validated so a new entry can be made
         foreach($ingredients as $ingredient)
         {
             for($i = 0; $i < count($validated); $i++)
             {
-                if($validated[$i]['ingredient_id'] == $ingredient->id)
+                if($validated[$i]['ingredientId'] == $ingredient->id)
                 {
                     $validated[$i]['amount'] += $ingredient->pivot->amount;
-                    // auth() -> user() -> ingredients() ->detach($ingredient);
-                    user::find(1) -> ingredients() -> detach($ingredient);
-                    continue;
+                    auth()->user()->ingredients()->detach($ingredient);
+                    break;
                 }
             }
         }
-        user::find(1)->ingredients()->attach($validated);
+
+        $ingredientIds = [];
+        $extraData = [];
+        foreach($validated as $entry)
+        {
+            array_push($ingredientIds, $entry['ingredientId']);
+            array_push($extraData, ['user_id' => auth()->user()->id, 'amount' => $entry["amount"], ]);
+        }
+
+        $attachcData = array_combine($ingredientIds, $extraData);
+
+        auth()->user()->ingredients()->attach($attachcData);
     }
 }

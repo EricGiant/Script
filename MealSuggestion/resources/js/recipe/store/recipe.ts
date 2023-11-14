@@ -1,11 +1,12 @@
-import { ref } from "vue";
-import { Recipe } from "../types/recipe";
-import axios from "axios";
+import type {Recipe} from '../types/recipe';
+
+import axios from 'axios';
+import {ref} from 'vue';
 
 const recipes = ref<Recipe[]>();
 
 export const setRecipes = async () => {
-    const { data } = await axios.get("/api/getRecipes");
+    const {data} = await axios.get('/api/getRecipes');
     if (!data) return;
     recipes.value = data;
 };
@@ -13,6 +14,6 @@ export const setRecipes = async () => {
 export const unloadRecipes = () => (recipes.value = []);
 
 export const createRecipe = async (recipe: Recipe) => {
-    const { data } = await axios.post("/api/storeRecipe", recipe);
+    await axios.post('/api/storeRecipe', recipe);
     await setRecipes();
 };

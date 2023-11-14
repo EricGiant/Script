@@ -1,32 +1,31 @@
-import axios from "axios";
-import { Login } from "../pages/types/login";
-import { setErrors } from "../../error/store/error";
-import {
-    setIngredients,
-    unloadIngredients,
-} from "../../ingredient/store/ingredient";
-import { setCategories, unloadCategories } from "../../category/store/category";
-import { setRecipes, unloadRecipes } from "../../recipe/store/recipe";
-import { setUser, unloadUser } from "../../user/store/user";
-import { router } from "../../router";
+import type {Login} from '../types/login';
+
+import axios from 'axios';
+
+import {setCategories, unloadCategories} from '@/category/store/category';
+import {setErrors} from '@/error/store/error';
+import {setIngredients, unloadIngredients} from '@/ingredient/store/ingredient';
+import {setRecipes, unloadRecipes} from '@/recipe/store/recipe';
+import {router} from '@/router';
+import {setUser, unloadUser} from '@/user/store/user';
 
 export const authenticateUser = async (login: Login) => {
-    //does CRSF protection need to be in all submits?
-
     try {
-        const { data } = await axios.post("/api/authenticateUser", login);
+        await axios.post('/api/authenticateUser', login);
+
         return true;
-    } catch (error: any) {
+    } catch (error: unknown) {
         setErrors(error);
+
         return false;
     }
 };
 
 export const loadAssets = async () => {
+    await setUser();
     await setIngredients();
     await setCategories();
     await setRecipes();
-    await setUser();
 };
 
 export const unloadAssets = () => {
@@ -38,13 +37,12 @@ export const unloadAssets = () => {
 
 export const reloadData = async () => {
     try {
-        const user = await axios.get("/api/getAuthenticatedUser");
         await loadAssets();
     } catch (error) {
-        router.push({ name: "loginView" });
+        router.push({name: 'loginView'});
     }
 };
 
 export const logout = async () => {
-    const { data } = await axios.delete("/api/logUserOut");
+    await axios.delete('/api/logUserOut');
 };

@@ -1,24 +1,33 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
-import { searchIngredients } from "../store/ingredient";
+import type {Ingredient} from '../types/ingredient';
 
-defineEmits(["pressIngredient"]);
+import {computed, ref} from 'vue';
+
+import {searchIngredients} from '../store/ingredient';
+
+const emit = defineEmits<{
+    (event: 'pressIngredient', ingredient: Ingredient): void;
+}>();
 
 const ingredients = computed(() => searchIngredients(search.value));
-const search = ref("");
+const search = ref('');
 </script>
 
 <template>
+    <label>INGREDIENTS</label>
+
     <div id="box">
-        <input type="text" v-model="search" placeholder="SEARCH" />
+        <input v-model="search" type="text" placeholder="SEARCH" />
+
         <div id="content">
-            <div v-for="ingredient in ingredients">
+            <div v-for="ingredient in ingredients" :key="ingredient.id">
                 <label :for="ingredient.name">{{ ingredient.name }}</label>
+
                 <input
+                    :id="ingredient.name"
                     type="radio"
                     name="ingredient"
-                    :id="ingredient.name"
-                    @click="$emit('pressIngredient', ingredient)"
+                    @click="emit('pressIngredient', ingredient)"
                 />
             </div>
         </div>
@@ -34,14 +43,12 @@ const search = ref("");
     text-align: left;
     font-size: 0; /* this is to fix the random whitespace that now appears between the box and the input search because of a recent chrome update this started to happen */
 }
-input[type="text"] {
+input[type='text'] {
     overflow: hidden;
     outline: none;
     border: 1px solid black;
     font-size: 14px;
-}
-label {
-    font-size: 16px;
+    margin-bottom: 0px;
 }
 #content {
     overflow-y: scroll;

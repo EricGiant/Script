@@ -1,7 +1,7 @@
 export class Error {
     message: string;
 
-    constructor(message = "") {
+    constructor(message = '') {
         this.message = message;
     }
 }

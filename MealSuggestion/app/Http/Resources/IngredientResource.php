@@ -18,7 +18,7 @@ class IngredientResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'category_id' => $this->category_id,
+            'categoryId' => $this->category_id,
             'created_at' => Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at)->toDateTimeString(),
             'updated_at' => Carbon::createFromFormat('Y-m-d H:i:s', $this->updated_at)->toDateTimeString(),
         ];
