@@ -3,14 +3,33 @@ import type {Ingredient} from '../types/ingredient';
 
 import {computed, ref} from 'vue';
 
+import {getCategories} from '@/category/store/category';
+
 import {searchIngredients} from '../store/ingredient';
 
 const emit = defineEmits<{
     (event: 'pressIngredient', ingredient: Ingredient): void;
 }>();
 
-const ingredients = computed(() => searchIngredients(search.value));
+const ingredients = computed(() => searchIngredients(search.value, selectedCategoryIds.value));
 const search = ref('');
+
+const categories = getCategories();
+
+const displayValue = ref('none');
+
+const filterMenuToggle = () => {
+    if (displayValue.value === 'none') displayValue.value = 'block';
+    else displayValue.value = 'none';
+};
+
+const selectedCategoryIds = ref<number[]>([]);
+
+const toggleCategoryFilter = (categoryId: number) => {
+    const index = selectedCategoryIds.value.findIndex(entry => entry === categoryId);
+    if (index === -1) selectedCategoryIds.value.push(categoryId);
+    else selectedCategoryIds.value.splice(index, 1);
+};
 </script>
 
 <template>
@@ -18,6 +37,21 @@ const search = ref('');
 
     <div id="box">
         <input v-model="search" type="text" placeholder="SEARCH" />
+
+        <button id="filterButton" @click.prevent="filterMenuToggle">FILTER</button>
+
+        <div id="filterMenu" :style="{display: displayValue}">
+            <div v-for="category in categories" :key="category.id">
+                <label :for="category.name">{{ category.name }}</label>
+
+                <input
+                    :id="category.name"
+                    type="checkbox"
+                    name="categories"
+                    @click="toggleCategoryFilter(category.id)"
+                />
+            </div>
+        </div>
 
         <div id="content">
             <div v-for="ingredient in ingredients" :key="ingredient.id">
@@ -47,12 +81,23 @@ input[type='text'] {
     overflow: hidden;
     outline: none;
     border: 1px solid black;
+    border-top: none;
     font-size: 14px;
     margin-bottom: 0px;
+}
+#filterButton {
+    border: none;
+    background-color: white;
+    border-bottom: 1px solid black;
+}
+#filterMenu {
+    padding-left: 5px;
+    padding-bottom: 3px;
 }
 #content {
     overflow-y: scroll;
     max-height: 120px;
+    border: 1px solid black;
 }
 #content label {
     padding-left: 5px;
