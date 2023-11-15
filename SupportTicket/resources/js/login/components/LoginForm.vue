@@ -1,39 +1,38 @@
-<script setup lang = "ts">
+<script setup lang="ts">
 const emit = defineEmits(["submitForm"]);
 
+// TODO: vergeet niet onderstaande data reactive te maken, omdat je in de template een v-model gebruikt
 const data = {
-    "email": "",
-    "password": ""
+    email: "",
+    password: "",
 };
 </script>
 
 <template>
     <form>
-        <label for = "email">EMAIL</label>
-        <input type = "text" id = "email" v-model = "data.email">
-        <slot name = "email_error"></slot>
-        <label for = "password">PASSWORD</label>
-        <input type = "password" id = "password" v-model = "data.password">
-        <slot name = "password_error"></slot>
-        <input type = "submit" @click.prevent = "$emit('submitForm', data)">
+        <label for="email">EMAIL</label>
+        <input type="text" id="email" v-model="data.email" />
+        <slot name="email_error"></slot>
+        <label for="password">PASSWORD</label>
+        <input type="password" id="password" v-model="data.password" />
+        <slot name="password_error"></slot>
+        <input type="submit" @click.prevent="$emit('submitForm', data)" />
     </form>
 </template>
 
 <style>
-form{
+form {
     text-align: center;
     margin: auto;
 }
-label{
+label {
     display: block;
     margin-bottom: 5px;
 }
-input
-{
+input {
     margin-bottom: 5px;
 }
-input[type = submit]
-{
+input[type="submit"] {
     display: block;
     margin: auto;
 }

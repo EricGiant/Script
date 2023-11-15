@@ -1,16 +1,27 @@
 import axios from "../../api";
 import { getAllCategories } from "../../category/store/category";
 import { getAllNotes, removeNoteStore } from "../../note/store/note";
-import { getAllResponses, removeResponseStore } from "../../responses/store/response";
+import {
+    getAllResponses,
+    removeResponseStore,
+} from "../../responses/store/response";
 import { getAllStatuses } from "../../status/store/status";
-import { getAllTickets, getTickets, removeTicketStore } from "../../ticket/store/ticket";
+import {
+    getAllTickets,
+    getTickets,
+    removeTicketStore,
+} from "../../ticket/store/ticket";
 import { removeUserStore } from "../../user/store/user";
 import { getAllUsers, removeUsersStore } from "../../user/store/users";
 import { IUser } from "../../user/types/user";
 import { Login } from "../types/login";
 
 export const authenticateUser = async (formData: Login) => {
-    const {data} = await axios.post("/api/authenticate/authenticateUser", {email: formData.email, password: formData.password});
+    // TODO: gebruik object destructuring voor email en password zodat je kortere code in onderstaande regel krijgt
+    const { data } = await axios.post("/api/authenticate/authenticateUser", {
+        email: formData.email,
+        password: formData.password,
+    });
     return data;
 };
 
@@ -19,11 +30,16 @@ export const logout = async () => {
 };
 
 export const forgotPassword = async (email: string) => {
-    await axios.post("/api/authenticate/sendResetPasswordEmail", {email: email});
+    await axios.post("/api/authenticate/sendResetPasswordEmail", {
+        email: email,
+    });
 };
 
 export const updatePassword = async (password: string, token: string) => {
-    await axios.patch("/api/authenticate/updatePassword", {password: password, token: token});
+    await axios.patch("/api/authenticate/updatePassword", {
+        password: password,
+        token: token,
+    });
 };
 
 export const loadAssets = async (user: IUser) => {
@@ -32,12 +48,11 @@ export const loadAssets = async (user: IUser) => {
     await getAllTickets();
     await getAllResponses();
     await getAllUsers();
-    if(user.is_admin)
-    {
+    if (user.is_admin) {
         await getAllNotes();
         await getAllUsers();
     }
-}
+};
 
 export const unloadAssets = async () => {
     await removeTicketStore();
@@ -45,4 +60,4 @@ export const unloadAssets = async () => {
     await removeUsersStore();
     await removeUserStore();
     await removeResponseStore();
-}
+};
