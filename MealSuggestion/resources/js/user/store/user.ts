@@ -1,7 +1,7 @@
 import type {IngredientAmount} from '@/ingredient/types/ingredientAmount';
 
 import axios from 'axios';
-import {ref} from 'vue';
+import {computed, ref} from 'vue';
 
 import {User} from '../types/user';
 
@@ -15,6 +15,13 @@ export const setUser = async () => {
 export const unloadUser = () => (user.value = new User());
 
 export const addIngredients = async (ingredients: IngredientAmount[]) => {
-    await axios.post('/api/addIngredients', ingredients);
-    setUser();
+    await axios.post('/api/addUserIngredients', ingredients);
+    await setUser();
 };
+
+export const updateIngredient = async (ingredient: IngredientAmount) => {
+    await axios.patch('/api/updateUserIngredient', ingredient);
+    await setUser();
+};
+
+export const getUser = () => computed(() => user.value);

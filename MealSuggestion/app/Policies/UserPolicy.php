@@ -95,4 +95,9 @@ class UserPolicy
     {
         return $user != null;
     }
+
+    public function updateIngredient(User $user)
+    {
+        return $user != null;
+    }
 }

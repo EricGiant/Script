@@ -4,6 +4,7 @@ import {createWebHistory, createRouter} from 'vue-router';
 import HomeOverview from '../home/pages/Overview.vue';
 import IngredientCreate from '../ingredient/pages/Create.vue';
 import StockListCreate from '../ingredient_user/pages/Create.vue';
+import StockListOverview from '../ingredient_user/pages/Overview.vue';
 import LoginView from '../login/pages/View.vue';
 import RecipeCreate from '../recipe/pages/Create.vue';
 
@@ -22,6 +23,7 @@ const routes = [
         name: 'ingredient_userCreate',
     },
     {path: '/login', component: LoginView, name: 'loginView'},
+    {path: '/ingredient_user/overview', component: StockListOverview, name: 'ingredient_userOverview'},
 ];
 
 // router creation

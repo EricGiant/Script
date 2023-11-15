@@ -19,6 +19,8 @@ const logUserOut = async () => {
 
         <router-link :to="{name: 'ingredient_userCreate'}">ADD TO STOCKLIST</router-link>
 
+        <router-link :to="{name: 'ingredient_userOverview'}">SEE STOCKLIST</router-link>
+
         <button @click="logUserOut()">LOGOUT</button>
     </nav>
 </template>

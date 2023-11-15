@@ -5,13 +5,20 @@ import {computed, ref} from 'vue';
 
 import {getCategories} from '@/category/store/category';
 
-import {searchIngredients} from '../store/ingredient';
+import {getIngredients, searchIngredients} from '../store/ingredient';
 
 const emit = defineEmits<{
     (event: 'pressIngredient', ingredient: Ingredient): void;
 }>();
 
-const ingredients = computed(() => searchIngredients(search.value, selectedCategoryIds.value));
+const allIngredients = getIngredients();
+
+const ingredients = computed(() => {
+    if (allIngredients.value) return searchIngredients(allIngredients.value, search.value, selectedCategoryIds.value);
+
+    return allIngredients.value;
+});
+
 const search = ref('');
 
 const categories = getCategories();

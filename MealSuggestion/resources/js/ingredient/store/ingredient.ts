@@ -20,17 +20,14 @@ export const storeIngredient = async (ingredient: Ingredient) => {
 
 export const getIngredients = () => computed(() => ingredients.value);
 
-// eslint-disable-next-line complexity
-export const searchIngredients = (search: string, categoryFilterIds: number[]) => {
-    if (!search && categoryFilterIds.length === 0) return ingredients.value;
-    if (!search && categoryFilterIds.length !== 0)
-        return ingredients.value?.filter(ingredient => categoryFilterIds.includes(ingredient.categoryId));
-    if (search && categoryFilterIds.length === 0)
-        return ingredients.value?.filter(ingredient => ingredient.name.toLowerCase().includes(search.toLowerCase()));
+export const searchIngredients = (givenIngredients: Ingredient[], search: string, categoryFilterIds: number[]) => {
+    const searchedIngredients = givenIngredients.filter(ingredient =>
+        ingredient.name.toLowerCase().includes(search.toLowerCase()),
+    );
 
-    return ingredients.value
-        ?.filter(ingredient => categoryFilterIds.includes(ingredient.categoryId))
-        .filter(ingredient => ingredient.name.toLowerCase().includes(search.toLowerCase()));
+    if (categoryFilterIds.length === 0) return searchedIngredients;
+
+    return searchedIngredients.filter(ingredient => categoryFilterIds.includes(ingredient.categoryId));
 };
 
 export const getIngredientById = (id: number) => ingredients.value?.find(ingredient => ingredient.id === id);

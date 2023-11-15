@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AddIngredientsRequest;
-use App\Http\Resources\UserResource;
+use App\Http\Requests\AddUserIngredientsRequest;
+use App\Http\Requests\UpdateUserIngredientRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Log\Logger;
 
 class UserController extends Controller
 {
@@ -64,38 +65,53 @@ class UserController extends Controller
         //
     }
 
-    public function addIngredients(AddIngredientsRequest $request)
+    public function addIngredients(AddUserIngredientsRequest $request)
     {
         $this->authorize('addIngredients', User::class);
 
         $validated = $request->validated();
 
-        $ingredients = auth()->user()->ingredients;
-
-        //check for duplicate entries and if found remove it and add the amount to the validated so a new entry can be made
-        foreach($ingredients as $ingredient)
+        $userIngredients = auth()->user()->ingredients->toArray();
+        foreach($validated as $entry)
         {
-            for($i = 0; $i < count($validated); $i++)
+            for($i = 0; $i < count($userIngredients); $i++)
             {
-                if($validated[$i]['ingredientId'] == $ingredient->id)
+                if($userIngredients[$i]['id'] === $entry['ingredientId'])
                 {
-                    $validated[$i]['amount'] += $ingredient->pivot->amount;
-                    auth()->user()->ingredients()->detach($ingredient);
-                    break;
+                    $entry['amount'] += $userIngredients[$i]['pivot']['amount'];
+                    auth()->user()->ingredients()->updateExistingPivot($entry['ingredientId'], ['amount' => $entry['amount']]);
+                    continue 2;
                 }
+            }
+            auth()->user()->ingredients()->attach($entry['ingredientId'], ['amount' => $entry['amount'], 'user_id' => auth()->user()->id]);
+        }
+    }
+
+    public function updateIngredient(UpdateUserIngredientRequest $request)
+    {
+        $this->authorize('updateIngredient', User::class);
+
+        $validated = $request->validated();
+
+        //check if the user has this ingredient in there list, if this is not done it could try to update a value that doesn't exist
+        //this doesn't seem to cause an error but I think something fishy could happen anyway so run the check here,
+        //later do this check in the request but me and jeroen couldn't figure that out
+
+        $foundIngredient = false;
+        foreach(auth()->user()->ingredients as $ingredient)
+        {
+            if($ingredient['id'] === $validated['ingredientId'])
+            {
+                $foundIngredient = true;
+                break;
             }
         }
 
-        $ingredientIds = [];
-        $extraData = [];
-        foreach($validated as $entry)
+        if(!$foundIngredient)
         {
-            array_push($ingredientIds, $entry['ingredientId']);
-            array_push($extraData, ['user_id' => auth()->user()->id, 'amount' => $entry["amount"], ]);
+            return response("NOT IN YOUR LIST", 404);
         }
 
-        $attachcData = array_combine($ingredientIds, $extraData);
-
-        auth()->user()->ingredients()->attach($attachcData);
+        auth()->user()->ingredients()->updateExistingPivot($validated['ingredientId'], ['amount' => $validated['amount']]);
     }
 }
