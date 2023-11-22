@@ -2,7 +2,7 @@
 import type {IngredientAmount} from '../types/ingredientAmount';
 import type {IngredientTable} from '../types/ingredientTable';
 
-import {ref} from 'vue';
+import {computed} from 'vue';
 
 import {getIngredientById} from '@/ingredient/store/ingredient';
 
@@ -12,9 +12,10 @@ const props = defineProps<{
 
 const emit = defineEmits<{
     (event: 'updateIngredient', ingredient: IngredientAmount): void;
+    (event: 'deleteIngredient', id: number): void;
 }>();
 
-const ingredients = ref<IngredientTable[]>(<IngredientTable[]>[...props.ingredients]);
+const ingredients = computed<IngredientTable[]>(() => <IngredientTable[]>[...props.ingredients]);
 
 const saveEdit = (ingredient: IngredientTable) => {
     emit('updateIngredient', ingredient);
@@ -56,7 +57,7 @@ const saveEdit = (ingredient: IngredientTable) => {
                 EDIT
             </button>
 
-            <button>DELETE</button>
+            <button @click.prevent="emit('deleteIngredient', ingredient.ingredientId)">DELETE</button>
         </tr>
     </table>
 </template>

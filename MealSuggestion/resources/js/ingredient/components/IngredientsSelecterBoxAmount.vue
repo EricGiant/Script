@@ -17,8 +17,6 @@ const amount = ref<number>();
 const selectedIngredient = ref<Ingredient>();
 const selectedIngredients = ref<IngredientAmount[]>([]);
 
-// ask jasper when he is bloody back
-// eslint-disable-next-line complexity
 const addIngredient = () => {
     if (!selectedIngredient.value || !amount.value || amount.value <= 0) return;
 

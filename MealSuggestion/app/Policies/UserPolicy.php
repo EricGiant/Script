@@ -100,4 +100,9 @@ class UserPolicy
     {
         return $user != null;
     }
+
+    public function deleteIngredient(User $user)
+    {
+        return $user != null;
+    }
 }

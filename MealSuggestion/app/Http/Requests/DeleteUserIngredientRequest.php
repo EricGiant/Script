@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class UpdateUserIngredientRequest extends FormRequest
+class DeleteUserIngredientRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -15,8 +14,7 @@ class UpdateUserIngredientRequest extends FormRequest
     public function rules()
     {
         return [
-            'ingredientId' => 'required|exists:ingredients,id',
-            'amount' => 'required|integer|min:1|max:1000'
+            'id' => 'required|exists:ingredients,id'
         ];
     }
 }

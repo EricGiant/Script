@@ -16,7 +16,7 @@ class RecipeController extends Controller
      */
     public function index()
     {
-        $this->authorize('viewAny', Recipe::class); //for some reason this is unauthrized
+        $this->authorize('viewAny', Recipe::class);
 
         return response(RecipeResource::collection(Recipe::all()));
     }

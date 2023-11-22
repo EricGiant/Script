@@ -25,3 +25,8 @@ export const updateIngredient = async (ingredient: IngredientAmount) => {
 };
 
 export const getUser = () => computed(() => user.value);
+
+export const deleteIngredient = async (id: number) => {
+    await axios.delete('/api/deleteUserIngredient', {data: {id}});
+    await setUser();
+};
