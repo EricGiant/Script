@@ -16,7 +16,7 @@ class RecipeSeeder extends Seeder
      */
     public function run()
     {
-        Recipe::factory(10) -> create() -> each(function ($recipe)
+        Recipe::factory(10)->create()->each(function ($recipe)
         {
             $loopValue = rand(2, 4);
             $ingredientIds = [];
@@ -33,7 +33,7 @@ class RecipeSeeder extends Seeder
 
             $syncData = array_combine($ingredientIds, $amountValues);
 
-            $recipe -> ingredients() -> sync($syncData);
+            $recipe->ingredients()->sync($syncData);
         });
     }
 }

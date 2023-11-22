@@ -1,30 +1,42 @@
 <script setup lang="ts">
-import { Ingredient } from "../types/ingredient";
-import CategorySelecterBox from "../../category/components/CategorySelecterBox.vue";
-import { Category } from "../../category/types/category";
-import Navbar from "../../navbar/components/Navbar.vue";
+import type {Ingredient} from '../types/ingredient';
+import type {Category} from '@/category/types/category';
+
+import CategorySelecterBox from '@/category/components/CategorySelecterBox.vue';
+import Navbar from '@/navbar/components/Navbar.vue';
 
 const props = defineProps<{
     ingredient: Ingredient;
 }>();
 
-defineEmits(["submitForm"]);
+const emit = defineEmits<{
+    (event: 'submitForm', ingredient: Ingredient): void;
+}>();
 
-const ingredient = { ...props.ingredient };
+const ingredient = {...props.ingredient};
 
 const categorySelect = (category: Category) => {
-    ingredient.category_id = category.id;
+    ingredient.categoryId = category.id;
 };
 </script>
 
 <template>
     <Navbar />
+
     <form>
         <label id="categoryLabel">CATEGORY</label>
+
         <CategorySelecterBox @press-category="categorySelect" />
-        <label for="name">NAME</label><br />
-        <input type="text" id="name" v-model="ingredient.name" /><br />
-        <input type="submit" @click.prevent="$emit('submitForm', ingredient)" />
+
+        <label for="name">NAME</label>
+
+        <br />
+
+        <input id="name" v-model="ingredient.name" type="text" />
+
+        <br />
+
+        <input type="submit" @click.prevent="emit('submitForm', ingredient)" />
     </form>
 </template>
 
@@ -40,7 +52,7 @@ label {
     display: inline-block;
     margin-bottom: 5px;
 }
-input[type="text"] {
+input[type='text'] {
     margin-bottom: 10px;
 }
 </style>

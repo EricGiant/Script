@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import { router } from "../../router";
-import IngredientUserForm from "../components/IngredientUserForm.vue";
-import { IngredientUser } from "../types/ingredientUser";
-import { addIngredients } from "../../user/store/user";
-import NavBar from "../../navbar/components/Navbar.vue";
+import type {IngredientAmount} from '@/ingredient/types/ingredientAmount';
 
-const ingredientIds: IngredientUser[] = [];
+import NavBar from '@/navbar/components/Navbar.vue';
+import {router} from '@/router/index';
+import {addIngredients} from '@/user/store/user';
 
-const submitForm = async (ingredients: IngredientUser[]) => {
+import IngredientUserForm from '../components/IngredientUserForm.vue';
+
+const ingredientIds: IngredientAmount[] = [];
+
+const submitForm = async (ingredients: IngredientAmount[]) => {
     await addIngredients(ingredients);
-    router.push({ name: "homeOverview" });
+    router.push({name: 'homeOverview'});
 };
 </script>
 
 <template>
     <NavBar />
-    <IngredientUserForm
-        :ingredients="ingredientIds"
-        @submit-form="submitForm"
-    />
+
+    <IngredientUserForm :ingredients="ingredientIds" @submit-form="submitForm" />
 </template>

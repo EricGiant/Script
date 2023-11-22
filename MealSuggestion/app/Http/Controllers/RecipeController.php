@@ -16,7 +16,7 @@ class RecipeController extends Controller
      */
     public function index()
     {
-        // $this->authorize('viewAny', Recipe::class);
+        $this->authorize('viewAny', Recipe::class); //for some reason this is unauthrized
 
         return response(RecipeResource::collection(Recipe::all()));
     }
@@ -29,7 +29,7 @@ class RecipeController extends Controller
      */
     public function store(StoreRecipeRequest $request)
     {
-        // $this->authorize('create', Recipe::class);
+        $this->authorize('create', Recipe::class);
 
         $validated = $request->validated();
 
@@ -38,7 +38,7 @@ class RecipeController extends Controller
         $ingredientIds = [];
         foreach($validated['ingredients'] as $ingredient)
         {
-            array_push($ingredientIds, $ingredient['id']);
+            array_push($ingredientIds, $ingredient['ingredientId']);
         }
 
         $amountValues = [];

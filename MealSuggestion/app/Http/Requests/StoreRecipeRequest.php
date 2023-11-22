@@ -17,7 +17,7 @@ class StoreRecipeRequest extends FormRequest
             'name' => 'required|min:1|max:255|unique:recipes,name',
             'content' => 'required|min:1|max:4000',
             'ingredients' => 'required|array|min:1|max:50',
-            'ingredients.*.id' => 'required|integer|distinct|exists:ingredients,id',
+            'ingredients.*.ingredientId' => 'required|integer|distinct|exists:ingredients,id',
             'ingredients.*.amount' => 'required|integer|min:1|max:100'
         ];
     }

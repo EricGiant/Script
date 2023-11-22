@@ -1,21 +1,21 @@
 <script setup lang="ts">
-import { getCategories } from "../store/category";
+import type {Category} from '../types/category';
 
-defineEmits(["pressCategory"]);
+import {getCategories} from '../store/category';
+
+const emit = defineEmits<{
+    (event: 'pressCategory', category: Category): void;
+}>();
 
 const categories = getCategories();
 </script>
 
 <template>
     <div id="box">
-        <div v-for="category in categories">
+        <div v-for="category in categories" :key="category.id">
             <label :for="category.name">{{ category.name }}</label>
-            <input
-                type="radio"
-                name="category"
-                :id="category.name"
-                @click="$emit('pressCategory', category)"
-            />
+
+            <input :id="category.name" type="radio" name="category" @click="emit('pressCategory', category)" />
         </div>
     </div>
 </template>

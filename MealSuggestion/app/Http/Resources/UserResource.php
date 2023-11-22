@@ -15,11 +15,10 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
-        //build a function to do this? and if so where would I store this
         $ingredients = [];
         foreach($this->ingredients as $ingredient )
         {
-            array_push($ingredients, ['id' => $ingredient->id, 'amount' => $ingredient->pivot->amount]);
+            array_push($ingredients, ['ingredientId' => $ingredient->id, 'amount' => $ingredient->pivot->amount]);
         }
 
         return [

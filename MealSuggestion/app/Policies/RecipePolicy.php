@@ -18,7 +18,7 @@ class RecipePolicy
      */
     public function viewAny(User $user)
     {
-        $user != null;
+        return $user != null;
     }
 
     /**
@@ -41,7 +41,7 @@ class RecipePolicy
      */
     public function create(User $user)
     {
-        $user != null;
+        return $user != null;
     }
 
     /**

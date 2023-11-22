@@ -16,7 +16,7 @@ class IngredientController extends Controller
      */
     public function index()
     {
-        // $this->authorize('viewAny', Ingredient::class);
+        $this->authorize('viewAny', Ingredient::class);
 
         return response(IngredientResource::collection(Ingredient::all()));
     }
@@ -29,7 +29,7 @@ class IngredientController extends Controller
      */
     public function store(StoreIngredientRequest $request)
     {
-        // $this->authorize('create', Ingredient::class);
+        $this->authorize('create', Ingredient::class);
 
         $validated = $request->validated();
 

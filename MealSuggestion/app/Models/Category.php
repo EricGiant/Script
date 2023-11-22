@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
-    public function ingredients():HasMany
+    public function ingredients(): HasMany
     {
-        return $this -> hasMany(Ingredient::class);
+        return $this->hasMany(Ingredient::class);
     }
     use HasFactory;
 }
