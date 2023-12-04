@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AddUserIngredientsRequest;
 use App\Http\Requests\DeleteUserIngredientRequest;
+use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserIngredientRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Log\Logger;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -27,9 +29,12 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $validated['password'] = Hash::make(($validated['password']));
+        User::create($validated);
     }
 
     /**
