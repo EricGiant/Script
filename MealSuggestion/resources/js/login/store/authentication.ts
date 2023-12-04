@@ -36,6 +36,10 @@ export const unloadAssets = () => {
 };
 
 export const reloadData = async () => {
+    await router.isReady();
+
+    if (router.currentRoute.value.name === 'loginEdit') return;
+
     try {
         await loadAssets();
     } catch (error) {
@@ -54,4 +58,8 @@ export const logUserIn = async (login: Login) => {
         router.push({name: 'homeOverview'});
         // eslint-disable-next-line no-alert
     } else if (!data) alert(getErrorsAsSingleString());
+};
+
+export const forgotPassword = async (email: string) => {
+    await axios.post('/api/forgotPassword', {email});
 };

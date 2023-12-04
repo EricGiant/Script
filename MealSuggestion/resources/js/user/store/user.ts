@@ -35,3 +35,7 @@ export const deleteIngredient = async (id: number) => {
 export const createUser = async (userAccount: UserAccount) => {
     await axios.post('/api/createUser', userAccount);
 };
+
+export const updateUserPassword = async (password: string, token: string) => {
+    await axios.patch('/api/updateUserPassword', {password, token});
+};

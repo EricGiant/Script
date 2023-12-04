@@ -6,9 +6,11 @@ use App\Http\Requests\AddUserIngredientsRequest;
 use App\Http\Requests\DeleteUserIngredientRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserIngredientRequest;
+use App\Http\Requests\UpdateUserPasswordRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Log\Logger;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -109,5 +111,14 @@ class UserController extends Controller
         $validated = $request->validated();
 
         auth()->user()->ingredients()->detach($validated['id']);
+    }
+
+    public function updatePassword(UpdateUserPasswordRequest $request)
+    {
+        $validated = $request->validated();
+
+        User::where('email', DB::table('password_resets')->where('token', $validated['token'])->pluck('email'))->update(['password' => Hash::make($validated['password'])]);
+
+        DB::table('password_resets')->where('token', $validated['token'])->delete();
     }
 }

@@ -16,15 +16,15 @@ const userAccount = {...props.userAccount};
     <form class="col-sm-3 m-auto text-center">
         <label for="name" class="h3">NAME</label>
 
-        <input v-model="userAccount.name" type="text" class="form-control m-auto w-75" />
+        <input id="name" v-model="userAccount.name" type="text" class="form-control m-auto w-75" />
 
         <label for="email" class="h3 mt-2">EMAIL</label>
 
-        <input v-model="userAccount.email" type="email" class="form-control m-auto w-75" />
+        <input id="email" v-model="userAccount.email" type="email" class="form-control m-auto w-75" />
 
         <label for="password" class="h3 mt-2">PASSWORD</label>
 
-        <input v-model="userAccount.password" type="password" class="form-control m-auto w-75" />
+        <input id="password" v-model="userAccount.password" type="password" class="form-control m-auto w-75" />
 
         <input
             type="submit"
