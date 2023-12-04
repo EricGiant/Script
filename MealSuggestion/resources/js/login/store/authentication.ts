@@ -3,7 +3,7 @@ import type {Login} from '../types/login';
 import axios from 'axios';
 
 import {setCategories, unloadCategories} from '@/category/store/category';
-import {setErrors} from '@/error/store/error';
+import {getErrorsAsSingleString, setErrors} from '@/error/store/error';
 import {setIngredients, unloadIngredients} from '@/ingredient/store/ingredient';
 import {setRecipes, unloadRecipes} from '@/recipe/store/recipe';
 import {router} from '@/router';
@@ -45,4 +45,13 @@ export const reloadData = async () => {
 
 export const logout = async () => {
     await axios.delete('/api/logUserOut');
+};
+
+export const logUserIn = async (login: Login) => {
+    const data = await authenticateUser(login);
+    if (data) {
+        await loadAssets();
+        router.push({name: 'homeOverview'});
+        // eslint-disable-next-line no-alert
+    } else if (!data) alert(getErrorsAsSingleString());
 };

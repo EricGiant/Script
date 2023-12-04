@@ -11,26 +11,19 @@ const categories = getCategories();
 </script>
 
 <template>
-    <div id="box">
-        <div v-for="category in categories" :key="category.id">
-            <label :for="category.name">{{ category.name }}</label>
+    <div class="border border-3 overflow-y-hidden rounded" style="height: 100px">
+        <div class="h-100 overflow-y-auto">
+            <div v-for="category in categories" :key="category.id">
+                <label :for="category.name" class="ms-1">{{ category.name }}</label>
 
-            <input :id="category.name" type="radio" name="category" @click="emit('pressCategory', category)" />
+                <input
+                    :id="category.name"
+                    class="me-1 ms-1"
+                    type="radio"
+                    name="category"
+                    @click="emit('pressCategory', category)"
+                />
+            </div>
         </div>
     </div>
 </template>
-
-<style scoped>
-#box {
-    height: fit-content;
-    max-height: 100px;
-    width: fit-content;
-    margin: auto;
-    overflow-y: scroll;
-    border: 2px solid black;
-    text-align: left;
-}
-label {
-    padding-left: 5px;
-}
-</style>

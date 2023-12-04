@@ -23,34 +23,27 @@ const addIngredientsToRecipe = (ingredients: IngredientAmount[]) => {
 
 <template>
     <form>
-        <label for="name">NAME</label>
+        <div class="col-sm-3 m-auto text-center">
+            <label for="name" class="h3">NAME</label>
 
-        <br />
+            <input id="name" v-model="recipe.name" type="text" class="form-control" />
+        </div>
 
-        <input id="name" v-model="recipe.name" type="text" />
+        <div class="col-sm-6 m-auto text-center">
+            <label for="content" class="h3">CONTENT</label>
 
-        <br />
-
-        <label for="content">CONTENT</label>
-
-        <br />
-
-        <textarea id="content" v-model="recipe.content" />
-        >
-
-        <br />
+            <textarea
+                id="content"
+                v-model="recipe.content"
+                class="form-control overflow-hidden"
+                style="resize: none; height: 200px"
+            />
+        </div>
 
         <IngredientsSelecterBoxAmount @send-data="addIngredientsToRecipe" />
 
-        <input type="submit" @click.prevent="emit('submitForm', recipe)" />
+        <div class="mt-3 text-center">
+            <button type="submit" class="btn btn-primary fs-4" @click.prevent="emit('submitForm', recipe)">ADD</button>
+        </div>
     </form>
 </template>
-
-<style>
-textarea {
-    margin-bottom: 5px;
-    resize: none;
-    width: 400px;
-    height: 200px;
-}
-</style>

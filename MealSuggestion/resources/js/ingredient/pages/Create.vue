@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Navbar from '@/navbar/components/Navbar.vue';
 import {router} from '@/router';
 
 import IngredientForm from '../components/IngredientForm.vue';
@@ -14,5 +15,7 @@ const submitForm = async (ingredient: Ingredient) => {
 </script>
 
 <template>
+    <Navbar />
+
     <IngredientForm :ingredient="ingredient" @submit-form="submitForm" />
 </template>

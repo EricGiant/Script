@@ -32,6 +32,7 @@ Route::get('/getStockList', [StockListController::class, 'index']);
 Route::post('/addUserIngredients', [UserController::class, 'addIngredients']);
 Route::patch('/updateUserIngredient', [UserController::class, 'updateIngredient']);
 Route::delete('/deleteUserIngredient', [UserController::class, 'deleteIngredient']);
+Route::post('/createUser', [UserController::class, 'store']);
 
 Route::get('/getAuthenticatedUser', [AuthenticationController::class, 'getAuthenticatedUser']);
 Route::post('/authenticateUser', [AuthenticationController::class, 'authenticateUser']);

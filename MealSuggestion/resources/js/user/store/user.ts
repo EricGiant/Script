@@ -1,3 +1,4 @@
+import type {UserAccount} from '../types/userAccount';
 import type {IngredientAmount} from '@/ingredient/types/ingredientAmount';
 
 import axios from 'axios';
@@ -29,4 +30,8 @@ export const getUser = () => computed(() => user.value);
 export const deleteIngredient = async (id: number) => {
     await axios.delete('/api/deleteUserIngredient', {data: {id}});
     await setUser();
+};
+
+export const createUser = async (userAccount: UserAccount) => {
+    await axios.post('/api/createUser', userAccount);
 };

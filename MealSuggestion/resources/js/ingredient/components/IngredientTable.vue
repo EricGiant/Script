@@ -4,7 +4,7 @@ import type {IngredientTable} from '../types/ingredientTable';
 
 import {computed} from 'vue';
 
-import {getIngredientById} from '@/ingredient/store/ingredient';
+import {getIngredientById} from '../store/ingredient';
 
 const props = defineProps<{
     ingredients: IngredientAmount[];
@@ -29,55 +29,49 @@ const saveEdit = (ingredient: IngredientTable) => {
 </script>
 
 <template>
-    <table>
-        <tr>
-            <th>INGREDIENT</th>
+    <div class="border border-5 container rounded text-center" style="width: fit-content; height: fit-content">
+        <div class="border-5 border-bottom h3 mb-0 row">
+            <div class="col-sm">INGREDIENT</div>
 
-            <th>AMOUNT</th>
-        </tr>
+            <div class="col-sm">AMOUNT</div>
+        </div>
 
-        <tr v-for="ingredient in ingredients" :key="ingredient.ingredientId">
-            <td>{{ getIngredientById(ingredient.ingredientId)?.name }}</td>
+        <div v-for="ingredient in ingredients" :key="ingredient.ingredientId" class="row">
+            <div class="col-sm-3">{{ getIngredientById(ingredient.ingredientId)?.name }}</div>
 
-            <td>
-                <span v-if="!ingredient.editable">{{ ingredient.amount }}</span>
+            <div v-if="!ingredient.editable" class="col-sm-3">{{ ingredient.amount }}</div>
 
-                <div v-if="ingredient.editable">
-                    <input v-model="ingredient.amount" type="number" class="inputAmount" />
+            <div v-if="ingredient.editable" class="col-sm-6 p-0">
+                <input
+                    v-model="ingredient.amount"
+                    type="number"
+                    class="border-2 d-inline form-control rounded-0 w-50"
+                />
 
-                    <button class="save" @click.prevent="saveEdit(ingredient)">SAVE</button>
-                </div>
-            </td>
+                <button
+                    class="btn btn-primary btn-sm h-100 rounded-0 w-50"
+                    style="margin-top: -4px"
+                    @click.prevent="saveEdit(ingredient)"
+                >
+                    <!-- temp fix by doing -4 to mt this mostly fixed it visually, fix it for real with help because this issue is also on other parts of the site -->
+                    SAVE
+                </button>
+            </div>
 
             <button
                 v-if="!ingredient.editable"
-                class="edit"
+                class="btn btn-info col-sm-3 p-0 rounded-0 text-white"
                 @click.prevent="ingredient.editable = !ingredient.editable"
             >
                 EDIT
             </button>
 
-            <button @click.prevent="emit('deleteIngredient', ingredient.ingredientId)">DELETE</button>
-        </tr>
-    </table>
+            <button
+                class="btn btn-danger col-sm-3 p-0 rounded-0"
+                @click.prevent="emit('deleteIngredient', ingredient.ingredientId)"
+            >
+                DELETE
+            </button>
+        </div>
+    </div>
 </template>
-
-<style>
-table {
-    margin: auto;
-    margin-top: 5px;
-    text-align: center;
-}
-th {
-    padding: 5px;
-}
-.inputAmount {
-    margin-right: 10px;
-}
-.save {
-    margin-right: 10px;
-}
-.edit {
-    margin-right: 10px;
-}
-</style>

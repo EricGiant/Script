@@ -3,7 +3,6 @@ import type {Ingredient} from '../types/ingredient';
 import type {Category} from '@/category/types/category';
 
 import CategorySelecterBox from '@/category/components/CategorySelecterBox.vue';
-import Navbar from '@/navbar/components/Navbar.vue';
 
 const props = defineProps<{
     ingredient: Ingredient;
@@ -21,38 +20,25 @@ const categorySelect = (category: Category) => {
 </script>
 
 <template>
-    <Navbar />
-
     <form>
-        <label id="categoryLabel">CATEGORY</label>
+        <div class="m-auto" style="width: fit-content">
+            <div class="text-center">
+                <label class="h3 mb-2">CATEGORY</label>
+            </div>
 
-        <CategorySelecterBox @press-category="categorySelect" />
+            <CategorySelecterBox @press-category="categorySelect" />
+        </div>
 
-        <label for="name">NAME</label>
+        <div class="col-sm-2 m-auto mt-3 text-center">
+            <label for="name" class="h3">NAME</label>
 
-        <br />
+            <input id="name" v-model="ingredient.name" type="text" class="form-control" />
+        </div>
 
-        <input id="name" v-model="ingredient.name" type="text" />
-
-        <br />
-
-        <input type="submit" @click.prevent="emit('submitForm', ingredient)" />
+        <div class="mt-3 text-center">
+            <button type="submit" class="btn btn-primary fs-4" @click.prevent="emit('submitForm', ingredient)">
+                ADD
+            </button>
+        </div>
     </form>
 </template>
-
-<style scoped>
-form {
-    margin-top: 5px;
-    text-align: center;
-}
-#box {
-    margin-bottom: 5px;
-}
-label {
-    display: inline-block;
-    margin-bottom: 5px;
-}
-input[type='text'] {
-    margin-bottom: 10px;
-}
-</style>

@@ -10,38 +10,22 @@ const login = new Login();
 
 <template>
     <form>
-        <label for="name">NAME</label>
+        <div class="col-sm-2 m-auto text-center">
+            <label for="name" class="h3">NAME</label>
 
-        <br />
+            <input id="name" v-model="login.name" type="email" class="form-control" />
+        </div>
 
-        <input id="name" v-model="login.name" type="text" />
+        <div class="col-sm-2 m-auto mt-3 text-center">
+            <label for="name" class="h3">PASSWORD</label>
 
-        <br />
+            <input id="password" v-model="login.password" type="password" class="form-control" />
+        </div>
 
-        <label>PASSWORD</label>
-
-        <br />
-
-        <input id="password" v-model="login.password" type="password" />
-
-        <br />
-
-        <input type="submit" @click.prevent="emit('submitForm', login)" />
+        <div class="m-auto mt-3">
+            <button type="submit" class="btn btn-primary fs-4" @click.prevent="emit('submitForm', login)">
+                SIGN IN
+            </button>
+        </div>
     </form>
 </template>
-
-<style>
-form {
-    text-align: center;
-    font-size: 0;
-}
-label {
-    font-size: 16px;
-}
-input[type='text'] {
-    margin-bottom: 6px;
-}
-input[type='password'] {
-    margin-bottom: 10px;
-}
-</style>

@@ -46,57 +46,37 @@ const addSelectedIngredient = (ingredient: Ingredient) => {
 <template>
     <IngredientSelecterBox @press-ingredient="addSelectedIngredient" />
 
-    <label for="amount">AMOUNT</label>
+    <div class="col-sm-2 m-auto mb-2 mt-2 text-center">
+        <label class="h3">AMOUNT</label>
 
-    <br />
+        <input id="amount" v-model="amount" type="number" class="form-control m-auto w-50" />
+    </div>
 
-    <input id="amount" v-model="amount" type="number" />
+    <div class="m-auto text-center">
+        <input type="submit" value="ADD" class="btn btn-primary" @click.prevent="addIngredient()" />
+    </div>
 
-    <br />
+    <div class="text-center">
+        <label class="h3 mb-2 mt-2">SELECTED INGREDIENTS</label>
+    </div>
 
-    <input type="submit" value="ADD" @click.prevent="addIngredient()" />
+    <div
+        class="border border-3 m-auto overflow-y-auto rounded"
+        style="min-width: 200px; height: 100px; width: fit-content"
+    >
+        <div class="d-inline h-100 overflow-y-auto text-left">
+            <div v-for="ingredient in selectedIngredients" :key="ingredient.ingredientId" class="clearfix ms-1">
+                <label class="me-1 w-auto">
+                    {{ getIngredientById(ingredient.ingredientId)?.name + ' ' + ingredient.amount }}
+                </label>
 
-    <br />
-
-    <label>SELECTED INGREDIENTS</label>
-
-    <div id="selectedIngredients">
-        <p v-for="ingredient in selectedIngredients" :key="ingredient.ingredientId">
-            {{ getIngredientById(ingredient.ingredientId)?.name + ' ' + ingredient.amount }}
-            <button @click.prevent="removeIngredient(ingredient.ingredientId)">REMOVE</button>
-        </p>
+                <button
+                    class="btn btn-danger btn-sm float-end rounded-0 w-auto"
+                    @click.prevent="removeIngredient(ingredient.ingredientId)"
+                >
+                    REMOVE
+                </button>
+            </div>
+        </div>
     </div>
 </template>
-
-<style>
-form {
-    margin-top: 10px;
-}
-#selectedIngredients {
-    border: 2px solid black;
-    max-height: 150px;
-    min-height: 75px;
-    width: fit-content;
-    min-width: 200px;
-    margin: auto;
-    margin-bottom: 5px;
-    overflow-y: scroll;
-}
-#selectedIngredients p {
-    font-size: 16px;
-    text-align: left;
-    margin: 10px;
-}
-#box {
-    margin-bottom: 10px !important;
-}
-#selectedIngredients {
-    margin-bottom: 10px;
-}
-input[type='number'] {
-    margin-bottom: 10px;
-}
-input[type='submit'] {
-    margin-bottom: 10px;
-}
-</style>

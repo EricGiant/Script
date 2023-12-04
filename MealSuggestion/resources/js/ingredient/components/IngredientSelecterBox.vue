@@ -23,11 +23,11 @@ const search = ref('');
 
 const categories = getCategories();
 
-const displayValue = ref('none');
+const displayCategoryFilterMenu = ref('none');
 
 const filterMenuToggle = () => {
-    if (displayValue.value === 'none') displayValue.value = 'block';
-    else displayValue.value = 'none';
+    if (displayCategoryFilterMenu.value === 'none') displayCategoryFilterMenu.value = 'block';
+    else displayCategoryFilterMenu.value = 'none';
 };
 
 const selectedCategoryIds = ref<number[]>([]);
@@ -40,19 +40,26 @@ const toggleCategoryFilter = (categoryId: number) => {
 </script>
 
 <template>
-    <label>INGREDIENTS</label>
+    <div class="text-center">
+        <label class="h3 mb-2 mt-2">INGREDIENTS</label>
+    </div>
 
-    <div id="box">
-        <input v-model="search" type="text" placeholder="SEARCH" />
+    <div style="width: fit-content; height: fit-content" class="border border-3 m-auto rounded">
+        <div>
+            <input v-model="search" class="d-inline form-control rounded-0 w-auto" type="search" placeholder="SEARCH" />
 
-        <button id="filterButton" @click.prevent="filterMenuToggle">FILTER</button>
+            <button class="btn btn-secondary d-inline h-100 rounded-0 w-auto" @click.prevent="filterMenuToggle">
+                FILTER
+            </button>
+        </div>
 
-        <div id="filterMenu" :style="{display: displayValue}">
-            <div v-for="category in categories" :key="category.id">
-                <label :for="category.name">{{ category.name }}</label>
+        <div :style="{display: displayCategoryFilterMenu}" class="border border-3 overflow-y-hidden">
+            <div v-for="category in categories" :key="category.id" class="h-100 overflow-y-auto text-left">
+                <label :for="category.name" class="ms-1">{{ category.name }}</label>
 
                 <input
                     :id="category.name"
+                    class="ms-1"
                     type="checkbox"
                     name="categories"
                     @click="toggleCategoryFilter(category.id)"
@@ -60,53 +67,18 @@ const toggleCategoryFilter = (categoryId: number) => {
             </div>
         </div>
 
-        <div id="content">
+        <div class="border border-3 overflow-y-auto text-left" style="max-height: 150px; height: fit-content">
             <div v-for="ingredient in ingredients" :key="ingredient.id">
-                <label :for="ingredient.name">{{ ingredient.name }}</label>
+                <label :for="ingredient.name" class="ms-1">{{ ingredient.name }}</label>
 
                 <input
                     :id="ingredient.name"
                     type="radio"
                     name="ingredient"
+                    class="ms-1"
                     @click="emit('pressIngredient', ingredient)"
                 />
             </div>
         </div>
     </div>
 </template>
-
-<style scoped>
-#box {
-    height: fit-content;
-    width: fit-content;
-    margin: auto;
-    border: 2px solid black;
-    text-align: left;
-    font-size: 0; /* this is to fix the random whitespace that now appears between the box and the input search because of a recent chrome update this started to happen */
-}
-input[type='text'] {
-    overflow: hidden;
-    outline: none;
-    border: 1px solid black;
-    border-top: none;
-    font-size: 14px;
-    margin-bottom: 0px;
-}
-#filterButton {
-    border: none;
-    background-color: white;
-    border-bottom: 1px solid black;
-}
-#filterMenu {
-    padding-left: 5px;
-    padding-bottom: 3px;
-}
-#content {
-    overflow-y: scroll;
-    max-height: 120px;
-    border: 1px solid black;
-}
-#content label {
-    padding-left: 5px;
-}
-</style>

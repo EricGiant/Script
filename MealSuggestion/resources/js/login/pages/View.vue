@@ -1,22 +1,12 @@
 <script setup lang="ts">
-import type {Login} from '../types/login';
-
-import {getErrorsAsSingleString} from '@/error/store/error';
-import {router} from '@/router';
-
 import LoginForm from '../components/LoginForm.vue';
-import {authenticateUser, loadAssets} from '../store/authentication';
-
-const logUserIn = async (login: Login) => {
-    const data = await authenticateUser(login);
-    if (data) {
-        await loadAssets();
-        router.push({name: 'homeOverview'});
-        // eslint-disable-next-line no-alert
-    } else if (!data) alert(getErrorsAsSingleString());
-};
+import {logUserIn} from '../store/authentication';
 </script>
 
 <template>
-    <LoginForm @submit-form="logUserIn" />
+    <div class="col-md mt-3 text-center">
+        <LoginForm @submit-form="logUserIn" />
+
+        <router-link :to="{name: 'userCreate'}" class="btn btn-secondary fs-5 mt-3">CREATE ACCOUNT</router-link>
+    </div>
 </template>

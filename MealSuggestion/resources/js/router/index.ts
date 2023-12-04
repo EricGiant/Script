@@ -7,6 +7,7 @@ import StockListCreate from '../ingredient_user/pages/Create.vue';
 import StockListOverview from '../ingredient_user/pages/Overview.vue';
 import LoginView from '../login/pages/View.vue';
 import RecipeCreate from '../recipe/pages/Create.vue';
+import UserCreate from '../user/pages/Create.vue';
 
 // URLS
 const routes = [
@@ -17,13 +18,14 @@ const routes = [
         name: 'ingredientCreate',
     },
     {path: '/recipe/create', component: RecipeCreate, name: 'recipeCreate'},
+    {path: '/login', component: LoginView, name: 'loginView'},
+    {path: '/user/create', component: UserCreate, name: 'userCreate'},
+    {path: '/ingredient_user/overview', component: StockListOverview, name: 'ingredient_userOverview'},
     {
         path: '/ingredient_user/create',
         component: StockListCreate,
         name: 'ingredient_userCreate',
     },
-    {path: '/login', component: LoginView, name: 'loginView'},
-    {path: '/ingredient_user/overview', component: StockListOverview, name: 'ingredient_userOverview'},
 ];
 
 // router creation

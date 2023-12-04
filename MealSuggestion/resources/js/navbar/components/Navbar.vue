@@ -10,27 +10,31 @@ const logUserOut = async () => {
 </script>
 
 <template>
-    <nav>
-        <router-link :to="{name: 'homeOverview'}">HOME</router-link>
+    <nav class="navbar navbar-expand">
+        <ul class="mx-auto navbar-nav text-center">
+            <li class="h5 nav-item">
+                <router-link :to="{name: 'homeOverview'}" class="nav-link">Home</router-link>
+            </li>
 
-        <router-link :to="{name: 'ingredientCreate'}">CREATE INGREDIENT</router-link>
+            <li class="h5 nav-item">
+                <router-link :to="{name: 'ingredientCreate'}" class="nav-link">Add Ingredient</router-link>
+            </li>
 
-        <router-link :to="{name: 'recipeCreate'}">CREATE RECIPE</router-link>
+            <li class="h5 nav-item">
+                <router-link :to="{name: 'recipeCreate'}" class="nav-link">Add Recipe</router-link>
+            </li>
 
-        <router-link :to="{name: 'ingredient_userCreate'}">ADD TO STOCKLIST</router-link>
+            <li class="h5 nav-item">
+                <router-link :to="{name: 'ingredient_userCreate'}" class="nav-link">Add To Stocklist</router-link>
+            </li>
 
-        <router-link :to="{name: 'ingredient_userOverview'}">SEE STOCKLIST</router-link>
+            <li class="h5 nav-item">
+                <router-link :to="{name: 'ingredient_userOverview'}" class="nav-link">See Stocklist</router-link>
+            </li>
 
-        <button @click="logUserOut()">LOGOUT</button>
+            <li class="h5 m-1 nav-item">
+                <button class="btn btn-primary" @click="logUserOut()">LOGOUT</button>
+            </li>
+        </ul>
     </nav>
 </template>
-
-<style scoped>
-nav {
-    text-align: center;
-}
-a {
-    padding-left: 5px;
-    padding-right: 5px;
-}
-</style>
