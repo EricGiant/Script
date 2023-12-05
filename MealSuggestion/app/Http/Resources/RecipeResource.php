@@ -19,7 +19,7 @@ class RecipeResource extends JsonResource
         $ingredients = [];
         foreach($this->ingredients as $ingredient )
         {
-            array_push($ingredients, ['id' => $ingredient->id, 'amount' => $ingredient->pivot->amount]);
+            array_push($ingredients, ['ingredientId' => $ingredient->id, 'amount' => $ingredient->pivot->amount]);
         }
 
         return [

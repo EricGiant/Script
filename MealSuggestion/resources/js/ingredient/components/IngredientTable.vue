@@ -20,9 +20,7 @@ const ingredients = computed<IngredientTable[]>(() => <IngredientTable[]>[...pro
 const saveEdit = (ingredient: IngredientTable) => {
     emit('updateIngredient', ingredient);
 
-    const index = ingredients.value.findIndex(
-        currentIngredient => currentIngredient.ingredientId === ingredient.ingredientId,
-    );
+    const index = ingredients.value.findIndex(currentIngredient => currentIngredient.id === ingredient.id);
 
     ingredients.value[index].editable = false;
 };
@@ -37,23 +35,20 @@ const saveEdit = (ingredient: IngredientTable) => {
         </div>
 
         <div v-for="ingredient in ingredients" :key="ingredient.ingredientId" class="row">
-            <div class="col-sm-3">{{ getIngredientById(ingredient.ingredientId)?.name }}</div>
+            <div class="align-items-center col-sm-4 d-flex justify-content-center">
+                {{ getIngredientById(ingredient.ingredientId)?.name }}
+            </div>
 
-            <div v-if="!ingredient.editable" class="col-sm-3">{{ ingredient.amount }}</div>
+            <div v-if="!ingredient.editable" class="col-sm-2">{{ ingredient.amount }}</div>
 
-            <div v-if="ingredient.editable" class="col-sm-6 p-0">
+            <div v-if="ingredient.editable" class="align-items-center col-sm-5 d-flex p-0">
                 <input
                     v-model="ingredient.amount"
                     type="number"
                     class="border-2 d-inline form-control rounded-0 w-50"
                 />
 
-                <button
-                    class="btn btn-primary btn-sm h-100 rounded-0 w-50"
-                    style="margin-top: -4px"
-                    @click.prevent="saveEdit(ingredient)"
-                >
-                    <!-- temp fix by doing -4 to mt this mostly fixed it visually, fix it for real with help because this issue is also on other parts of the site -->
+                <button class="btn btn-primary btn-sm h-100 rounded-0 w-50" @click.prevent="saveEdit(ingredient)">
                     SAVE
                 </button>
             </div>

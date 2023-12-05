@@ -45,7 +45,7 @@ const toggleCategoryFilter = (categoryId: number) => {
     </div>
 
     <div style="width: fit-content; height: fit-content" class="border border-3 m-auto rounded">
-        <div>
+        <div class="align-items-center d-flex">
             <input v-model="search" class="d-inline form-control rounded-0 w-auto" type="search" placeholder="SEARCH" />
 
             <button class="btn btn-secondary d-inline h-100 rounded-0 w-auto" @click.prevent="filterMenuToggle">

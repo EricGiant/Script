@@ -9,6 +9,7 @@ import LoginEdit from '../login/pages/EditPassword.vue';
 import LoginForgot from '../login/pages/ForgotPassword.vue';
 import LoginView from '../login/pages/View.vue';
 import RecipeCreate from '../recipe/pages/Create.vue';
+import RecipeOverview from '../recipe/pages/Overview.vue';
 import UserCreate from '../user/pages/Create.vue';
 
 // URLS
@@ -20,6 +21,7 @@ const routes = [
         name: 'ingredientCreate',
     },
     {path: '/recipe/create', component: RecipeCreate, name: 'recipeCreate'},
+    {path: '/recipe/overview', component: RecipeOverview, name: 'recipeOverview'},
     {path: '/login', component: LoginView, name: 'loginView'},
     {path: '/login/forgot', component: LoginForgot, name: 'loginForgot'},
     {path: '/login/editPassword/:token', component: LoginEdit, name: 'loginEdit'},
