@@ -7,11 +7,14 @@ use App\Http\Requests\DeleteUserIngredientRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserIngredientRequest;
 use App\Http\Requests\UpdateUserPasswordRequest;
+use App\Http\Requests\UserMadeRecipeRequest;
+use App\Models\Recipe;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Log\Logger;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use PhpParser\Node\Stmt\Break_;
 
 class UserController extends Controller
 {
@@ -120,5 +123,48 @@ class UserController extends Controller
         User::where('email', DB::table('password_resets')->where('token', $validated['token'])->pluck('email'))->update(['password' => Hash::make($validated['password'])]);
 
         DB::table('password_resets')->where('token', $validated['token'])->delete();
+    }
+
+    public function madeRecipe(UserMadeRecipeRequest $request)
+    {
+        $this->authorize('madeRecipe', User::class);
+
+        $validated = $request->validated();
+
+        $userIngredients = auth()->user()->ingredients->toArray();
+        $currentRecipe = Recipe::find($validated['recipeId']);
+        foreach($currentRecipe->ingredients as $recipeIngredient)
+        {
+            foreach($userIngredients as $userIngredient)
+            {
+                if($userIngredient['id'] === $recipeIngredient['id'])
+                {
+                    $amount = $userIngredient['pivot']['amount'] - $recipeIngredient['pivot']['amount'];
+                    if($amount <= 0)
+                    {
+                        auth()->user()->ingredients()->detach($userIngredient['id']);
+                    }
+                    else
+                    {
+                        auth()->user()->ingredients()->updateExistingPivot($userIngredient['id'], ['amount' => $amount]);
+                    }
+                    break;
+                }
+            }
+        }
+
+
+        $userRecipes = auth()->user()->recipes->toArray();
+        foreach($userRecipes as $recipe)
+        {
+            if($recipe['id'] === $validated['recipeId'])
+            {
+                $amount = $recipe['pivot']['amount'] + 1;
+                auth()->user()->recipes()->updateExistingPivot($validated['recipeId'], ['amount' => $amount]);
+                return;
+            }
+        }
+
+        auth()->user()->recipes()->attach($validated['recipeId'], ['amount' => 1, 'user_id' => auth()->user()->id]);
     }
 }

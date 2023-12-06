@@ -25,6 +25,10 @@ const logUserOut = async () => {
             </li>
 
             <li class="h5 nav-item">
+                <router-link :to="{name: 'recipeOverview'}" class="nav-link">Find Recipes</router-link>
+            </li>
+
+            <li class="h5 nav-item">
                 <router-link :to="{name: 'ingredient_userCreate'}" class="nav-link">Add To Stocklist</router-link>
             </li>
 

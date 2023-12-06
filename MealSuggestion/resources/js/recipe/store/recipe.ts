@@ -3,6 +3,8 @@ import type {Recipe} from '../types/recipe';
 import axios from 'axios';
 import {computed, ref} from 'vue';
 
+import {setUser} from '@/user/store/user';
+
 const recipes = ref<Recipe[]>();
 
 export const setRecipes = async () => {
@@ -51,4 +53,14 @@ const findViableRecipes = (recipes: Recipe[], ingredientIds: number[]) => {
     }
 
     return viableRecipes;
+};
+
+export const searchRecipes = (givenRecipes: Recipe[], search: string) =>
+    givenRecipes.filter(recipe => recipe.name.toLowerCase().includes(search.toLowerCase()));
+
+export const getRecipeById = (id: number) => recipes.value?.find(recipe => recipe.id === id);
+
+export const recipeMade = async (recipeId: number) => {
+    await axios.patch('/api/userRecipe', {recipeId});
+    await setUser();
 };

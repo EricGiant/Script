@@ -34,6 +34,7 @@ Route::patch('/updateUserIngredient', [UserController::class, 'updateIngredient'
 Route::delete('/deleteUserIngredient', [UserController::class, 'deleteIngredient']);
 Route::post('/createUser', [UserController::class, 'store']);
 Route::patch('/updateUserPassword', [UserController::class, 'updatePassword']);
+Route::patch('/userRecipe', [UserController::class, 'madeRecipe']);
 
 Route::get('/getAuthenticatedUser', [AuthenticationController::class, 'getAuthenticatedUser']);
 Route::post('/authenticateUser', [AuthenticationController::class, 'authenticateUser']);

@@ -38,5 +38,8 @@ class User extends Authenticatable
         return $this->belongsToMany(Ingredient::class)->withPivot('amount');
     }
 
-    //public function madeRecipes() no clue what relationship yet
+    public function recipes(): BelongsToMany
+    {
+        return $this->belongsToMany(Recipe::class)->withPivot('amount');
+    }
 }
