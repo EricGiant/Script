@@ -15,7 +15,6 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        define('CATEGORIES', ['Grains', 'Milk Products', 'Fruit Products', 'Eggs', 'Meats', 'Fishes', 'Vegtables', 'Fats', 'Nuts/Seeds', 'Suger Products', "Non-alcoholic Beverages", "Alcoholic Beverages"]);
         for($i = 0; $i < count(CATEGORIES); $i++)
         {
             Category::create(['name' => CATEGORIES[$i]]);

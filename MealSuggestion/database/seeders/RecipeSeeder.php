@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\Ingredient;
 use App\Models\Recipe;
 use Illuminate\Database\Seeder;
-use PHPUnit\Framework\Constraint\Count;
 
 class RecipeSeeder extends Seeder
 {
@@ -22,7 +21,12 @@ class RecipeSeeder extends Seeder
             $ingredientIds = [];
             for($i = 0; $i < $loopValue; $i++)
             {
-                array_push($ingredientIds, rand(1, Count(Ingredient::all())));
+                $ingredientId = rand(1, Count(Ingredient::all()));
+                while(in_array($ingredientId, $ingredientIds))
+                {
+                    $ingredientId = rand(1, Count(Ingredient::all()));
+                }
+                array_push($ingredientIds, $ingredientId);
             }
 
             $amountValues = [];

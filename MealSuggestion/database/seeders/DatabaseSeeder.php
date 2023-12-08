@@ -14,6 +14,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        define('CATEGORIES', ['Grains', 'Milk Products', 'Fruit Products', 'Eggs', 'Meats', 'Fishes', 'Vegtables', 'Fats', 'Nuts/Seeds', 'Suger Products', "Non-alcoholic Beverages", "Alcoholic Beverages"]);
+
         $this->call([
             CategorySeeder::class,
             IngredientSeeder::class,

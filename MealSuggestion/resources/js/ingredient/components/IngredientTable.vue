@@ -20,7 +20,9 @@ const ingredients = computed<IngredientTable[]>(() => <IngredientTable[]>[...pro
 const saveEdit = (ingredient: IngredientTable) => {
     emit('updateIngredient', ingredient);
 
-    const index = ingredients.value.findIndex(currentIngredient => currentIngredient.id === ingredient.id);
+    const index = ingredients.value.findIndex(
+        currentIngredient => currentIngredient.ingredientId === ingredient.ingredientId,
+    );
 
     ingredients.value[index].editable = false;
 };

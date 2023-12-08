@@ -8,7 +8,6 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserIngredientRequest;
 use App\Http\Requests\UpdateUserPasswordRequest;
 use App\Http\Requests\UserMadeRecipeRequest;
-use App\Http\Resources\RecipeResource;
 use App\Models\Recipe;
 use App\Models\User;
 use Illuminate\Http\Request;

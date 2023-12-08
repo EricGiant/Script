@@ -3,7 +3,7 @@ export class Ingredient {
     name: string;
     categoryId: number;
     created_at: string;
-    updated_at;
+    updated_at: string;
 
     constructor(id = NaN, name = '', categoryId = NaN, created_at = '', updated_at = '') {
         this.id = id;

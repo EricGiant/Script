@@ -49,14 +49,14 @@ class AuthenticationController extends Controller
         $validated = $request->validated();
 
         $token = Str::random(50);
-        while(DB::table("password_resets") -> where("token", $token) -> exists())
+        while(DB::table('password_resets')->where('token', $token)->exists())
         {
             $token = Str::random(50);
         }
 
-        $validated["token"] = $token;
-        $validated["created_at"] = Carbon::now() -> toDateTimeString();
-        DB::table("password_resets") -> insert($validated);
+        $validated['token'] = $token;
+        $validated['created_at'] = Carbon::now()->toDateTimeString();
+        DB::table('password_resets')->insert($validated);
 
         Mail::to($validated['email'])->send(new ForgotPassword($token));
     }

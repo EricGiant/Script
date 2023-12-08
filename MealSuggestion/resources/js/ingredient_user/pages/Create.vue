@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type {IngredientAmount} from '@/ingredient/types/ingredientAmount';
+import type {Recipe} from '@/recipe/types/recipe';
 
 import {ref} from 'vue';
 
@@ -13,7 +14,7 @@ import IngredientUserForm from '../components/IngredientUserForm.vue';
 const ingredientIds: IngredientAmount[] = [];
 
 const showRecipeSuggestions = ref(false);
-const suggestedRecipes = ref(); // for now type any
+const suggestedRecipes = ref<Recipe[]>();
 
 const submitForm = async (ingredients: IngredientAmount[]) => {
     await addIngredients(ingredients);
@@ -32,7 +33,7 @@ const submitForm = async (ingredients: IngredientAmount[]) => {
 
     <IngredientUserForm v-if="!showRecipeSuggestions" :ingredients="ingredientIds" @submit-form="submitForm" />
 
-    <RecipeSuggestions v-if="showRecipeSuggestions" :recipes="suggestedRecipes" />
+    <RecipeSuggestions v-if="showRecipeSuggestions && suggestedRecipes" :recipes="suggestedRecipes" />
 
     <div v-if="showRecipeSuggestions" class="text-center">
         <router-link :to="{name: 'homeOverview'}" class="btn btn-primary fs-5 mt-3">TO HOME PAGE</router-link>

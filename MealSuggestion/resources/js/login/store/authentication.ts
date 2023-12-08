@@ -14,7 +14,7 @@ export const authenticateUser = async (login: Login) => {
         await axios.post('/api/authenticateUser', login);
 
         return true;
-    } catch (error: unknown) {
+    } catch (error) {
         setErrors(error);
 
         return false;
