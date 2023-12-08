@@ -110,4 +110,9 @@ class UserPolicy
     {
         return $user != null;
     }
+
+    public function getMadeRecipes(User $user)
+    {
+        return $user != null;
+    }
 }

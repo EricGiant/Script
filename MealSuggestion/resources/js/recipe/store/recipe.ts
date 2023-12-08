@@ -3,7 +3,7 @@ import type {Recipe} from '../types/recipe';
 import axios from 'axios';
 import {computed, ref} from 'vue';
 
-import {setUser} from '@/user/store/user';
+import {getUser, setUser} from '@/user/store/user';
 
 const recipes = ref<Recipe[]>();
 
@@ -63,4 +63,16 @@ export const getRecipeById = (id: number) => recipes.value?.find(recipe => recip
 export const recipeMade = async (recipeId: number) => {
     await axios.patch('/api/userRecipe', {recipeId});
     await setUser();
+};
+
+export const getFavoriteRecipes = (amount = 5) => {
+    const user = getUser();
+
+    if (!user.value) return;
+
+    const sortedRecipes = [...user.value.recipes].sort((old, current) => current.amount - old.amount);
+
+    sortedRecipes?.splice(amount - 1, sortedRecipes.length - amount);
+
+    return sortedRecipes;
 };

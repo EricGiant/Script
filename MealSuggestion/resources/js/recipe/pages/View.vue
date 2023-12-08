@@ -3,6 +3,7 @@ import {computed} from 'vue';
 import {useRoute} from 'vue-router';
 
 import Navbar from '@/navbar/components/Navbar.vue';
+import {router} from '@/router';
 
 import RecipeInfo from '../components/RecipeInfo.vue';
 import {getRecipeById, recipeMade} from '../store/recipe';
@@ -12,7 +13,7 @@ const recipe = computed(() => getRecipeById(recipeId));
 
 const madeRecipe = () => {
     recipeMade(recipeId);
-    // router.push({name: 'homeOverview'});
+    router.push({name: 'homeOverview'});
 };
 </script>
 

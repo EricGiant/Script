@@ -1,10 +1,12 @@
 import type {IngredientAmount} from '@/ingredient/types/ingredientAmount';
+import type {RecipeAmount} from '@/recipe/types/recipeAmount';
 
 export class User {
     id: number;
     name: string;
     email: string;
     ingredients: IngredientAmount[];
+    recipes: RecipeAmount[];
     created_at: string;
     updated_at: string;
 
@@ -13,6 +15,7 @@ export class User {
         name = '',
         email = '',
         ingredients: IngredientAmount[] = [],
+        recipes: RecipeAmount[] = [],
         created_at = '',
         updated_at = '',
     ) {
@@ -20,6 +23,7 @@ export class User {
         this.name = name;
         this.email = email;
         this.ingredients = ingredients;
+        this.recipes = recipes;
         this.created_at = created_at;
         this.updated_at = updated_at;
     }
