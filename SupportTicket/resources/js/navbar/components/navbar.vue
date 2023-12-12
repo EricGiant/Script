@@ -1,5 +1,4 @@
 <script setup>
-// TODO: gebruik uppercasefirst, dus NavBar.vue, als naamgeving voor deze file
 import LogoutButton from "../../login/components/LogoutButton.vue";
 import { getUser } from "../../user/store/user";
 

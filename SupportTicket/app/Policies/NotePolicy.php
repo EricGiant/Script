@@ -18,8 +18,7 @@ class NotePolicy
      */
     public function viewAny(User $user)
     {
-        // TODO: probeer zoveel mogelijk === te gebruiken
-        return $user -> is_admin == true;
+        return (bool)$user -> is_admin === true;
     }
 
     /**
@@ -30,6 +29,6 @@ class NotePolicy
      */
     public function create(User $user)
     {
-        return $user -> is_admin == true;
+        return (bool)$user -> is_admin === true;
     }
 }

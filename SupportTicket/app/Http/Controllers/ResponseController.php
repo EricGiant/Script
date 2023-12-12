@@ -19,29 +19,18 @@ class ResponseController extends Controller
 
         if(auth() -> user() -> is_admin)
         {
-            return response(ResponseResource::collection(Response::all()));
+            return (ResponseResource::collection(Response::all()));
         }
-        $responses = [];
-        // TODO: onderstaande loop is overbodig; je kunt gewoon ResponseResource::collection($ticket -> responses)) gebruiken
-        foreach(auth() -> user() -> tickets as $ticket)
-        {
-            foreach($ticket -> responses as $response)
-            {
-                array_push($responses, $response);
-            }
-        }
-        return response(ResponseResource::collection($responses));
+
+        return (ResponseResource::collection(auth() -> user() -> tickets -> responses));
     }
 
-    // TODO: route-model binding zoals hier onder gaat niet werken omdat er geen ticket id in de url (parameter) is?
     public function store(StoreResponseRequest $request, Ticket $ticket)
     {
-        $validated = $request -> validated();
-
-        // TODO: authorization altijd bovenaan plaatsen voor hogere efficientie
         $this -> authorize("create", Response::class);
 
-        // TODO: vreemde constructie, $ticket is altijd null?
+        $validated = $request -> validated();
+
         if($ticket -> user_id != $validated["ticket_user_id"])
         {
             return response() -> json(["message" => "given user_id is not corresponding to ticket_user_id"], 422);
@@ -50,20 +39,19 @@ class ResponseController extends Controller
         $validated["ticket_id"] = $ticket -> id;
         Response::create($validated);
 
-        // TODO: gebruik model relations, dus Mail::to($ticket->user->email)
-        Mail::to(User::find($ticket -> user_id) -> email) -> send(new TicketResponse($ticket -> id));
+        Mail::to($ticket -> user-> email) -> send(new TicketResponse($ticket -> id));
 
-        return response($this -> index());
+        return ($this -> index());
     }
 
     public function update(UpdateResponseRequest $request, Response $response)
     {
-        $validated = $request -> validated();
-
         $this -> authorize("update", Response::class);
+
+        $validated = $request -> validated();
 
         $response -> update($validated);
 
-        return response($this -> index());
+        return ($this -> index());
     }
 }

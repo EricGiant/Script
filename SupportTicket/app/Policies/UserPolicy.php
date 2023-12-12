@@ -18,7 +18,7 @@ class UserPolicy
      */
     public function update(User $user)
     {
-        return $user -> is_admin == true;
+        return (bool)$user -> is_admin === true;
     }
 
     /**
@@ -30,6 +30,6 @@ class UserPolicy
      */
     public function delete(User $user)
     {
-        return $user -> is_admin == true;
+        return (bool)$user -> is_admin === true;
     }
 }

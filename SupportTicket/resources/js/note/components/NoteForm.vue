@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { INote } from "../types/note";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 
 const props = defineProps<{
     note: INote;
@@ -8,8 +8,7 @@ const props = defineProps<{
 
 const emits = defineEmits(["submitForm"]);
 
-// TODO: gebruik ref met deep copy van props.note ipv computed property
-const note = computed(() => ({ ...props.note }));
+const note = ref({...props.note});
 </script>
 
 <template>

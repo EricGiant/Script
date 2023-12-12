@@ -18,7 +18,7 @@ class ResponsePolicy
      */
     public function viewAny(User $user)
     {
-        return $user != null;
+        return $user !== null;
     }
 
     /**
@@ -29,7 +29,7 @@ class ResponsePolicy
      */
     public function create(User $user)
     {
-       return $user -> is_admin == true;
+       return (bool)$user -> is_admin === true;
     }
 
     /**
@@ -41,6 +41,6 @@ class ResponsePolicy
      */
     public function update(User $user)
     {
-        return $user -> is_admin == true;
+        return (bool)$user -> is_admin === true;
     }
 }

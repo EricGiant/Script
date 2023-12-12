@@ -32,13 +32,13 @@ class UserController extends Controller
 
     public function update(UpdateUserRequest $request, User $user)
     {
-        $validated = $request -> validated();
-
         $this -> authorize("update", User::class);
+
+        $validated = $request -> validated();
 
         $user -> update($validated);
 
-        return response($this -> index());
+        return ($this -> index());
     }
 
     public function delete(User $user)
@@ -59,7 +59,7 @@ class UserController extends Controller
 
         $user -> delete();
      
-        return response($this -> index());
+        return ($this -> index());
     }
 
     public function store(StoreUserRequest $request)
@@ -73,6 +73,6 @@ class UserController extends Controller
 
         Mail::to($user -> email) -> send(new NewUser);
 
-        return response($this -> index());
+        return ($this -> index());
     }
 }

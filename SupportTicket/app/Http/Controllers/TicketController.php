@@ -27,48 +27,48 @@ class TicketController extends Controller
 
     public function store(StoreTicketRequest $request)
     {
-        $validated = $request -> validated();
-
         $this -> authorize("create", Ticket::class);
+
+        $validated = $request -> validated();
 
         $validated["user_id"] = auth() -> user() -> id;
         $ticket = Ticket::create($validated);
         $ticket -> categories() -> sync($validated["category_ids"]);
 
-        return response($this -> index());
+        return ($this -> index());
     }
 
     public function update(UpdateTicketRequest $request, Ticket $ticket)
     {
-        $validated = $request -> validated();
-
         $this -> authorize("update", $ticket);
+
+        $validated = $request -> validated();
 
         $ticket -> update($validated);
         $ticket -> categories() -> sync($validated["category_ids"]);
 
-        return response($this -> index());
+        return ($this -> index());
     }
 
     public function updateAppointedTo(UpdateTicketAppointedToRequest $request, Ticket $ticket)
     {
-        $validated = $request -> validated();
-
         $this -> authorize("updateAppointedTo", Ticket::class);
+
+        $validated = $request -> validated();
 
         $ticket -> update(["appointed_to_id" => $validated["appointed_to_id"]]);
 
-        return response($this -> index());
+        return ($this -> index());
     }
 
     public function updateStatus(UpdateTicketStatusRequest $request, Ticket $ticket)
     {
-        $validated = $request -> validated();
-
         $this -> authorize("updateStatus", Ticket::class);
+
+        $validated = $request -> validated();
 
         $ticket -> update(["status_id" => $validated["status_id"]]);
 
-        return response($this -> index());
+        return ($this -> index());
     }
 }

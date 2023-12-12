@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { IUser } from "../types/user";
 
 const props = defineProps<{
@@ -11,19 +11,10 @@ const props = defineProps<{
 const emits = defineEmits(["submitForm"]);
 
 // TODO: ref toevoegen, want je gebruikt een v-model op user, dus deze moet reactive zijn
-const user = { ...props.user };
-
-// TODO: gebruik andere naam, bijv. toggleAdmin. Kan ook nog iets korter, bijv. user.is_admin = !user.is_admin;
-const onIs_adminChange = () => {
-    if (user.is_admin) {
-        user.is_admin = false;
-    } else {
-        user.is_admin = true;
-    }
-};
+const user = ref({ ...props.user });
 
 const setIs_adminChangeChecked = computed(() => {
-    if (user.is_admin) {
+    if (user.value.is_admin) {
         return true;
     } else {
         return false;
@@ -57,7 +48,7 @@ const setIs_adminChangeChecked = computed(() => {
             v-if="props.needIs_admin"
             type="checkbox"
             id="is_admin"
-            @click="onIs_adminChange"
+            @click="user.is_admin = !user.is_admin"
             :checked="setIs_adminChangeChecked"
         />
         <input type="submit" @click.prevent="$emit('submitForm', user)" />

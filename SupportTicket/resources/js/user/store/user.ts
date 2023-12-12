@@ -11,7 +11,6 @@ export const setUser = (info: IUser) => (user.value = info);
 export const removeUserStore = () => (user.value = new User());
 export const getLoggedInUser = async () => {
     const { data } = await axios.get("/api/authenticate/getLoggedInUser");
-    // TODO: laat controller een error (4xx code) maken zodat je met try en catch kunt werken
     if (data == "noLogin") {
         if (router.currentRoute.value.name == "loginEdit") {
             return;

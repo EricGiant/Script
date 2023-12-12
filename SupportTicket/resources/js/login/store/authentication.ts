@@ -17,7 +17,6 @@ import { IUser } from "../../user/types/user";
 import { Login } from "../types/login";
 
 export const authenticateUser = async (formData: Login) => {
-    // TODO: gebruik object destructuring voor email en password zodat je kortere code in onderstaande regel krijgt
     const { data } = await axios.post("/api/authenticate/authenticateUser", {
         email: formData.email,
         password: formData.password,
@@ -55,9 +54,9 @@ export const loadAssets = async (user: IUser) => {
 };
 
 export const unloadAssets = async () => {
-    await removeTicketStore();
-    await removeNoteStore();
-    await removeUsersStore();
-    await removeUserStore();
-    await removeResponseStore();
+    removeTicketStore();
+    removeNoteStore();
+    removeUsersStore();
+    removeUserStore();
+    removeResponseStore();
 };

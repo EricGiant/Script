@@ -1,11 +1,11 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+
 const emit = defineEmits(["submitForm"]);
 
-// TODO: vergeet niet onderstaande data reactive te maken, omdat je in de template een v-model gebruikt
-const data = {
+const data = ref<{
     email: "",
-    password: "",
-};
+    password: ""}>({email: "", password: ""});
 </script>
 
 <template>

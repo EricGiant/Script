@@ -12,7 +12,6 @@ export const getAllTickets = async () => {
 
 export const getTickets = () => computed(() => tickets.value);
 
-// TODO: destruct de 3 benodigde parameters mbv object destructuring
 export const storeTicket = async (ticket: Ticket) => {
     const { data } = await axios.post("/api/tickets/store", {
         title: ticket.title,

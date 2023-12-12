@@ -18,7 +18,7 @@ class TicketPolicy
      */
     public function viewAny(User $user)
     {
-        return $user != null;
+        return $user !== null;
     }
 
     /**
@@ -29,7 +29,7 @@ class TicketPolicy
      */
     public function create(User $user)
     {
-        return $user != null;
+        return $user !== null;
     }
 
     /**
@@ -41,18 +41,18 @@ class TicketPolicy
      */
     public function update(User $user, Ticket $ticket)
     {
-        return $ticket -> user_id == $user -> id || $user -> is_admin == true;
+        return $ticket -> user_id === $user -> id || (bool)$user -> is_admin === true;
     }
 
     //determine if user can update the appointed user
     public function updateAppointedTo(User $user)
     {
-        return $user -> is_admin == true;
+        return (bool)$user -> is_admin === true;
     }
 
     //determine if user can update the status
     public function updateStatus(User $user)
     {
-        return $user -> is_admin == true;
+        return(bool) $user -> is_admin === true;
     }
 }
