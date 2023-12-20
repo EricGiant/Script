@@ -1,0 +1,15 @@
+C:\Users\EricG\Desktop\Mastermind c#\bin\Debug\net6.0\Mastermind c#.exe
+C:\Users\EricG\Desktop\Mastermind c#\bin\Debug\net6.0\Mastermind c#.deps.json
+C:\Users\EricG\Desktop\Mastermind c#\bin\Debug\net6.0\Mastermind c#.runtimeconfig.json
+C:\Users\EricG\Desktop\Mastermind c#\bin\Debug\net6.0\Mastermind c#.dll
+C:\Users\EricG\Desktop\Mastermind c#\bin\Debug\net6.0\ref\Mastermind c#.dll
+C:\Users\EricG\Desktop\Mastermind c#\bin\Debug\net6.0\Mastermind c#.pdb
+C:\Users\EricG\Desktop\Mastermind c#\obj\Debug\net6.0\Mastermind c#.csproj.AssemblyReference.cache
+C:\Users\EricG\Desktop\Mastermind c#\obj\Debug\net6.0\Mastermind c#.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\EricG\Desktop\Mastermind c#\obj\Debug\net6.0\Mastermind c#.AssemblyInfoInputs.cache
+C:\Users\EricG\Desktop\Mastermind c#\obj\Debug\net6.0\Mastermind c#.AssemblyInfo.cs
+C:\Users\EricG\Desktop\Mastermind c#\obj\Debug\net6.0\Mastermind c#.csproj.CoreCompileInputs.cache
+C:\Users\EricG\Desktop\Mastermind c#\obj\Debug\net6.0\Mastermind c#.dll
+C:\Users\EricG\Desktop\Mastermind c#\obj\Debug\net6.0\ref\Mastermind c#.dll
+C:\Users\EricG\Desktop\Mastermind c#\obj\Debug\net6.0\Mastermind c#.pdb
+C:\Users\EricG\Desktop\Mastermind c#\obj\Debug\net6.0\Mastermind c#.genruntimeconfig.cache
