@@ -1,0 +1,15 @@
+C:\Users\EricG\Desktop\Maze c#\bin\Debug\net6.0\Maze c#.exe
+C:\Users\EricG\Desktop\Maze c#\bin\Debug\net6.0\Maze c#.deps.json
+C:\Users\EricG\Desktop\Maze c#\bin\Debug\net6.0\Maze c#.runtimeconfig.json
+C:\Users\EricG\Desktop\Maze c#\bin\Debug\net6.0\Maze c#.dll
+C:\Users\EricG\Desktop\Maze c#\bin\Debug\net6.0\ref\Maze c#.dll
+C:\Users\EricG\Desktop\Maze c#\bin\Debug\net6.0\Maze c#.pdb
+C:\Users\EricG\Desktop\Maze c#\obj\Debug\net6.0\Maze c#.csproj.AssemblyReference.cache
+C:\Users\EricG\Desktop\Maze c#\obj\Debug\net6.0\Maze c#.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\EricG\Desktop\Maze c#\obj\Debug\net6.0\Maze c#.AssemblyInfoInputs.cache
+C:\Users\EricG\Desktop\Maze c#\obj\Debug\net6.0\Maze c#.AssemblyInfo.cs
+C:\Users\EricG\Desktop\Maze c#\obj\Debug\net6.0\Maze c#.csproj.CoreCompileInputs.cache
+C:\Users\EricG\Desktop\Maze c#\obj\Debug\net6.0\Maze c#.dll
+C:\Users\EricG\Desktop\Maze c#\obj\Debug\net6.0\ref\Maze c#.dll
+C:\Users\EricG\Desktop\Maze c#\obj\Debug\net6.0\Maze c#.pdb
+C:\Users\EricG\Desktop\Maze c#\obj\Debug\net6.0\Maze c#.genruntimeconfig.cache
