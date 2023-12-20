@@ -15,6 +15,9 @@ export const authenticateUser = async (login: Login) => {
 
         return true;
     } catch (error) {
+        // TODO: errors via axios interceptor dispatchen naar error store, scheelt veel
+        // extra error dispatch code in store modules
+        // en in dit catch blok een toast message met error weergeven
         setErrors(error);
 
         return false;

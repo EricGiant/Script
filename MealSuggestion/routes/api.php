@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// TODO: auth middleware toevoegen
+
 Route::get('/getIngredients', [IngredientController::class, 'index']);
 Route::post('/storeIngredient', [IngredientController::class, 'store']);
 

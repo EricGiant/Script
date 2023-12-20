@@ -17,6 +17,9 @@ export const getErrorsAsSingleString = () => {
     let string = '';
     if (errors.value) {
         for (let index = 0; index < errors.value?.length; index++) {
+            // TODO: als je toch al een aparte Error class hebt, zou ik er een toString method
+            // aan toevoegen zodat je elegant onderstaande string kunt opvragen en de logica
+            // hiervoor niet in deze error store, maar in de Error class zelf herbergt
             string += errors.value[index].message;
             string += '\n';
         }

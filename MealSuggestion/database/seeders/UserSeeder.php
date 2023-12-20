@@ -18,6 +18,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        // TODO: onderstaande code is de cryptisch. Kan eenvoudiger.
         User::create(['name' => 'ellie', 'email' => 'ellie@mail.com', 'password' => Hash::make('test')])->each(function ($user)
         {
             $this->addUserInfo($user);

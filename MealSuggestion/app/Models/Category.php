@@ -12,5 +12,8 @@ class Category extends Model
     {
         return $this->hasMany(Ingredient::class);
     }
+
+    // TODO: traits bij  voorkeur bovenaan class definition plaatsen, gevolgd door relations
+    // (probeer consistent met volgorde te zijn tussen verschillende classes)
     use HasFactory;
 }

@@ -36,6 +36,7 @@ class RecipeController extends Controller
         $recipe = Recipe::create($validated);
 
         $ingredientIds = [];
+        // TODO: onderstaande foreach loops kunnen tot 1 loop gereduceerd worden
         foreach($validated['ingredients'] as $ingredient)
         {
             array_push($ingredientIds, $ingredient['ingredientId']);

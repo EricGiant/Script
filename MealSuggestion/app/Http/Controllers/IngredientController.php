@@ -29,6 +29,9 @@ class IngredientController extends Controller
      */
     public function store(StoreIngredientRequest $request)
     {
+        // TODO: onderstaande policy lijkt overbodig, want je kunt het controleren
+        // op het ingelogd zijn van een gebruiker ook via de auth middleware op 
+        // de corresponderende route doen in api.php?
         $this->authorize('create', Ingredient::class);
 
         $validated = $request->validated();

@@ -19,6 +19,7 @@ class RecipeSeeder extends Seeder
         {
             $loopValue = rand(2, 4);
             $ingredientIds = [];
+            // TODO: onderstaande loops kunnen tot 1 vereenvoudigd worden
             for($i = 0; $i < $loopValue; $i++)
             {
                 $ingredientId = rand(1, Count(Ingredient::all()));

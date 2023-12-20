@@ -38,6 +38,9 @@ class UserController extends Controller
 
         $validated['password'] = Hash::make(($validated['password']));
         User::create($validated);
+
+        // TODO: het is een goede gewoonte om de opgeslagen entiteit (User in dit geval) te returnen,
+        // zodat je API ook goed te testen is in de toekomst
     }
 
     /**

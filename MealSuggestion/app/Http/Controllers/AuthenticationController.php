@@ -19,6 +19,7 @@ class AuthenticationController extends Controller
 
         if(auth()->attempt($validated))
         {
+            // TODO: User object returnen bij succesvolle login
             return response(1, 202);
         }
         else
@@ -29,6 +30,7 @@ class AuthenticationController extends Controller
 
     public function getAuthenticatedUser()
     {
+        // TODO: onderstaande check is overbodig
         if(auth()->user())
         {
             return response(new UserResource(auth()->user()));
@@ -48,6 +50,8 @@ class AuthenticationController extends Controller
     {
         $validated = $request->validated();
 
+        // TODO: gebruik de standaard Laravel password broker om een reset token
+        // te genereren en een mail te sturen, zie: https://laravel.com/docs/10.x/passwords
         $token = Str::random(50);
         while(DB::table('password_resets')->where('token', $token)->exists())
         {

@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        // TODO: onderstaande regel hoort in de CategorySeeder thuis
         define('CATEGORIES', ['Grains', 'Milk Products', 'Fruit Products', 'Eggs', 'Meats', 'Fishes', 'Vegtables', 'Fats', 'Nuts/Seeds', 'Suger Products', "Non-alcoholic Beverages", "Alcoholic Beverages"]);
 
         $this->call([

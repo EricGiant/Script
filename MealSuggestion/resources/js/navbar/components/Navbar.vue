@@ -2,6 +2,7 @@
 import {logout, unloadAssets} from '@/login/store/authentication';
 import {router} from '@/router';
 
+// TODO: deze method hoort in een store, niet in een component
 const logUserOut = async () => {
     await logout();
     unloadAssets();
